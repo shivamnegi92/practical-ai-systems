@@ -105,3 +105,19 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before suggesting a project. We prioriti
 ## Scope and status
 
 This is an early, human-curated catalog. GitHub links and public project status were checked on **2026-10-05**; entries have not all been installed or independently benchmarked. Re-check upstream documentation, release status, security, and licensing before adoption. The catalog is not exhaustive, and inclusion is not a quality, safety, or legal endorsement.
+
+<!-- TRENDING-CATALOG:START -->
+
+
+## Recently reviewed discoveries
+
+> Candidates below were discovered from the cited trend/source observation and reviewed for this catalog. Popularity is a discovery signal, not a quality ranking.
+
+### Agents and orchestration
+
+| Project | Practical use | Tradeoff |
+|---|---|---|
+| [Browser Use](https://github.com/browser-use/browser-use) | Build agents that interact with websites through browser automation. | The project evolves quickly and now coexists with hosted commercial services; verify the pinned version, security boundaries, and service terms for your use case. |
+
+<!-- Discovery records: catalog/trend-sources.json -->
+<!-- TRENDING-CATALOG:END -->

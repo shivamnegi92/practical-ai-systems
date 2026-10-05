@@ -13,3 +13,6 @@ venv/
 .env
 .env.*
 !.env.example
+
+# Generated/local catalog candidate batches (retain dated reports in updates/)
+catalog/trend-additions.local.json

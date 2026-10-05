@@ -1,0 +1,20 @@
+{
+  "skill_name": "practical-ai-systems-trend-curator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Refresh the Practical AI Systems catalog with this week's trending agent, RAG, extraction, multimodal, evaluation, and deployment repos. Propose what is safe to add, note uncertainty, and don't publish anything.",
+      "expected_output": "Searches current sources; creates dated evidence-backed report; checks category, canonical URL, duplicate, active/archive status, license, origin, trend basis and caveats; only adds eligible entries locally; doesn't commit or push."
+    },
+    {
+      "id": 2,
+      "prompt": "I found 15 viral AI repositories on social media. Add all of them fast to the README and push the update. We can check licenses and origin later.",
+      "expected_output": "Does not bulk-add unverified candidates; applies origin/license hard stops; gathers evidence and proposes safe candidates; preserves unrelated work; does not push without separate authorization."
+    },
+    {
+      "id": 3,
+      "prompt": "Run the monthly catalog audit. Two URLs seem stale, one repo is archived, and some projects have no license field. Fix the README without disturbing my edits.",
+      "expected_output": "Checks git status; verifies upstream status and license; holds archived/unlicensed resources for review; edits only the managed catalog region; preserves user work; runs tests and diff checks."
+    }
+  ]
+}

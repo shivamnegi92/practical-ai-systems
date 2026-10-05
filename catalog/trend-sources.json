@@ -1,0 +1,46 @@
+{
+  "retrieved_at": "2026-10-05",
+  "sources": [
+    {
+      "name": "GitHub Trending",
+      "url": "https://github.com/trending?since=weekly",
+      "method": "Manual review or web-retriever inspection; not a stable public API",
+      "signal": "Weekly trending status is a discovery signal only"
+    },
+    {
+      "name": "GitHub repository search",
+      "url": "https://github.com/search?q=agent+RAG+evaluation&type=repositories",
+      "method": "Search GitHub public repository pages/API with relevant topic queries",
+      "signal": "Sort by updated or stars as a candidate-discovery hint; verify recency and activity directly"
+    },
+    {
+      "name": "Shubham Saboo awesome-llm-apps",
+      "url": "https://github.com/Shubhamsaboo/awesome-llm-apps",
+      "method": "Monitor upstream commits and its application taxonomy",
+      "signal": "New runnable application examples and category gaps"
+    },
+    {
+      "name": "Nir Diamant agents-towards-production",
+      "url": "https://github.com/NirDiamant/agents-towards-production",
+      "method": "Monitor upstream commits and tutorial/contribution structure",
+      "signal": "Production engineering patterns and tutorials"
+    },
+    {
+      "name": "Nir Diamant GenAI_Agents",
+      "url": "https://github.com/NirDiamant/GenAI_Agents",
+      "method": "Monitor upstream tutorial content and validation scripts",
+      "signal": "Agent techniques and runnable tutorial patterns"
+    },
+    {
+      "name": "Nir Diamant RAG_Techniques",
+      "url": "https://github.com/NirDiamant/RAG_Techniques",
+      "method": "Monitor technique, runnable script, evaluation, and test structure",
+      "signal": "Retrieval methods, runnable examples, and evaluation practices"
+    }
+  ],
+  "notes": [
+    "Upstream repositories are inspiration and discovery inputs, not permission to copy their code or text.",
+    "Check current public GitHub metadata and source page at every run; never treat old snapshots as current trending results.",
+    "Apply the repository origin and license policies to each candidate before proposing inclusion."
+  ]
+}
