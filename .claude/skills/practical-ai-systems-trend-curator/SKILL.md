@@ -26,9 +26,9 @@ Do not use for competitor pricing/assortment scraping or policy changes.
 - **Origin policy:** do not include China-origin models, vendors, or frameworks. Assess the project/vendor/model itself from reliable public evidence; never infer origin from a contributor's name or nationality. If unclear, hold it—no guessing or substitution.
 - **License:** verify current upstream license. Missing, custom, conflicting, or unclear terms mean `HOLD`; do not claim compatibility or copy upstream material.
 - **Evidence:** record source URLs, retrieval timestamp and time zone, trend window/basis, and exact observed metrics if used. Do not invent rankings, trend counts, commit activity, or testing.
-- **Local edits:** the user's request to run a refresh authorizes safe local catalog updates, but only after the hard checks pass. Keep uncertain entries out of the README and explain them in the report. `report-only` or `dry-run` means no README edits.
+- **Local edits:** the user's request to run a refresh authorizes safe local catalog updates, but only after the hard checks pass. Keep uncertain entries out of active generated pages and explain them in `catalog/review-queue.json` plus the dated report. `report-only` or `dry-run` means no catalog edits.
 - **No publishing:** never commit, push, create a GitHub repo, publish, or open a PR unless separately asked.
-- **Preserve work:** check `git status --short` before edits. Never revert, overwrite, or include unrelated user changes. Modify only the managed README region and dated report.
+- **Preserve work:** check `git status --short` before edits. Never revert, overwrite, or include unrelated user changes. Canonical records live in `catalog/projects.json`; generated views are `catalog/*.md` and the README's `CATALOG` block. Do not edit generated files by hand.
 - Do not mirror external catalogs wholesale or represent upstream work as Shivam's original work. Link canonical sources and attribute accurately.
 
 ## Discovery sources and research method
@@ -55,26 +55,19 @@ For viable items prioritize practical fit, active maintenance, clear documentati
 
 ## Workflow
 
-1. **Baseline:** confirm repo path, inspect `git status --short`, read `README.md`, `CONTRIBUTING.md`, `catalog/trend-sources.json`, and current entries. Note pre-existing edits.
+1. **Baseline:** confirm repo path, inspect `git status --short`, read the current README, `catalog/projects.json`, category views, recipes, `catalog/review-queue.json`, and `catalog/trend-sources.json`. Do not use legacy update tooling as the active source of truth. Note pre-existing edits.
 2. **Discover:** search the current requested period and the configured source repositories; verify candidates at canonical upstream sources.
 3. **Check:** verify duplicates, archive/activity status, license, origin policy, and factual wording. Record uncertainty rather than smoothing it over.
 4. **Report:** create `updates/YYYY-MM-DD.md` containing search window/timezone, sources checked, candidates added/held/rejected with evidence and reasons, stale-entry findings, proposed descriptions/tradeoffs, and access limitations.
-5. **Apply locally:** unless `report-only`/`dry-run` was requested, apply only entries that pass every hard check. Use a modest batch. The request to refresh is enough approval for these safe, local, reversible catalog changes; do not stop just to ask permission again. If safe isolation is impossible, do not edit and explain why.
-6. **Validate:** run the commands below, inspect exact diffs, check only intended paths changed, and report all holds/rejections. Never represent SSL/network failure as a dead link.
+5. **Apply locally:** unless `report-only`/`dry-run` was requested, add only fully eligible projects to `catalog/projects.json`. Place uncertain candidates in `catalog/review-queue.json` with reason and evidence; do not show them as active.
+6. **Regenerate:** run `python3 scripts/build_catalog.py --write` to render README navigation and six category pages from canonical records.
+7. **Validate:** run `python3 -m unittest discover -s tests -v`, `python3 scripts/build_catalog.py`, `git diff --check`; inspect exact diffs and report decisions and limitations. Never represent network failure as proof a link is dead.
 
 ### README and data structure
 
-The current README is the easy-to-browse landing page. Keep its top-level user journeys and stable category navigation. New recurring discoveries go **only** between `<!-- TRENDING-CATALOG:START -->` and `<!-- TRENDING-CATALOG:END -->`; never replace the README wholesale. Avoid a monorepo of copied examples: link to canonical repos, label what was actually tested, and keep deep tutorials/tools as separate upstream projects unless they are authored here.
+`catalog/projects.json` is the canonical active catalog; `scripts/build_catalog.py` renders six browsable `catalog/*.md` views and the marked README navigation block. Keep the opening promise, task journeys, original recipes, and inclusion policy human-edited. Candidate evidence belongs in `updates/YYYY-MM-DD.md`; unresolved candidates belong in `catalog/review-queue.json`. Do not use legacy `catalog/trend-additions.json` as an active source.
 
-Each proposed structured entry in `catalog/trend-additions.json` must include:
-
-- `name`, canonical `url`, `category`, `kind`, factual `summary`, candid `tradeoff`;
-- `archived: false` and `stars: {count, observed_at}` (a dated snapshot; not an inclusion score);
-- `license: {spdx, status: "verified", evidence}`;
-- `origin: {status: "screened", evidence}`;
-- `discovery: {source, observed_at, basis}`.
-
-Use `catalog/trend-sources.json` for durable source configuration. Keep it concise; candidate evidence belongs in that run's dated update report. The current README entry format may differ from these structured inputs; render only after checking existing display conventions and reviewing the diff.
+Each active project record must include a stable owner/repository ID, canonical URL, category, capabilities, delivery mode, factual summary, best-fit uses, concrete tradeoffs, SPDX and direct upstream `LICENSE` URL, origin evidence URL plus a short basis, current maintenance state/date, and evidence level. A screened origin without an evidence basis or a license based only on API metadata must fail validation. Do not add star counts by default; if popularity is relevant, record the source and date and treat it only as discovery context.
 
 ## Inspiration translated into project structure
 
@@ -87,15 +80,15 @@ Use `catalog/trend-sources.json` for durable source configuration. Keep it conci
 Run from the repository root:
 
 ```bash
-python3 scripts/catalog_update.py
+python3 scripts/build_catalog.py --write
 python3 -m unittest discover -s tests -v
-python3 -m json.tool catalog/trend-sources.json >/dev/null
-python3 -m json.tool catalog/trend-additions.json >/dev/null
+python3 scripts/build_catalog.py
+python3 -m json.tool catalog/projects.json >/dev/null
+python3 -m json.tool catalog/review-queue.json >/dev/null
 git diff --check
 git status --short
 ```
 
-Before rendering reviewed additions, inspect the intended diff. `catalog_update.py` without `--apply` validates only; `--apply` modifies only the marked README region. Never claim external links were checked if local TLS/network prevented verification; current browser/API evidence may still support checks.
 
 ## Finish with
 

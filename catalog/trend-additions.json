@@ -1,31 +1,3 @@
 {
-  "entries": [
-    {
-      "name": "Browser Use",
-      "url": "https://github.com/browser-use/browser-use",
-      "category": "agents",
-      "kind": "browser-agent framework",
-      "summary": "Build agents that interact with websites through browser automation.",
-      "tradeoff": "The project evolves quickly and now coexists with hosted commercial services; verify the pinned version, security boundaries, and service terms for your use case.",
-      "archived": false,
-      "stars": {
-        "count": 117206,
-        "observed_at": "2026-10-05"
-      },
-      "license": {
-        "spdx": "MIT",
-        "status": "verified",
-        "evidence": "https://github.com/browser-use/browser-use/blob/main/LICENSE; GitHub repository metadata reports MIT"
-      },
-      "origin": {
-        "status": "screened",
-        "evidence": "Official company terms identify Browser Use Inc.; official careers page identifies its San Francisco operation: https://browser-use.com/legal/terms-of-service and https://browser-use.com/careers"
-      },
-      "discovery": {
-        "source": "https://github.com/trending?since=weekly and https://github.com/Shubhamsaboo/awesome-llm-apps",
-        "observed_at": "2026-10-05",
-        "basis": "Found during practical AI repository scan; verified directly that it did not appear in the weekly Trending list inspected. Inclusion is based on catalog fit and repository evidence, not a claim of trending rank."
-      }
-    }
-  ]
+  "entries": []
 }

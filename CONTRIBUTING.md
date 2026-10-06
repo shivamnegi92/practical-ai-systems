@@ -1,48 +1,68 @@
-# Contributing
+# Contributing to Practical AI Systems
 
-Thanks for helping make Practical AI Systems useful and trustworthy. This is a curated practitioner catalog, not a contest to maximize entry count.
+Thanks for helping builders choose and operate AI-system components responsibly. This is an evidence-backed catalog and field guide—not a popularity contest, product ranking, or home for copied tutorials.
 
-## Inclusion criteria
+## What belongs
 
-A proposed entry should:
+A contribution should help someone make or evaluate a practical AI-system decision:
 
-1. Solve a concrete AI-system building, evaluation, or operations problem.
-2. Link to its canonical public project or documentation.
-3. Have a clear, factual description and a meaningful practical fit.
-4. Include a candid limitation or tradeoff where one matters.
-5. Have a public license/status that can be checked—or be clearly identified as a hosted service whose terms users must review.
-6. Pass the repository's origin policy. Do not add China-origin models, vendors, or frameworks. Assess the project/vendor/model itself, not an individual's name or nationality. If origin is ambiguous, flag it for maintainer review instead of guessing.
-7. Be labeled accurately: original, external, tested, or merely reviewed. Do not imply testing that did not happen.
+- add or correct a project record;
+- improve an original recipe, failure-mode guide, or evaluation protocol;
+- report stale links, changed license/status, or origin evidence;
+- improve catalog tooling and tests.
 
-## Entry format
+Before proposing a new project, check `catalog/projects.json` and `catalog/review-queue.json` for duplicates or an existing hold.
 
-Keep table entries concise and factual:
+## Project record requirements
 
-```markdown
-| [Project](https://canonical-url) | Type | Practical use | Tradeoff or limitation | YYYY-MM-DD |
-```
+Edit the canonical record in `catalog/projects.json`; generated category pages and the README index are not hand-edited. Each active entry requires:
 
-Use the date for the last public-status/link review. It does not mean the project was installed, security-audited, or benchmarked.
+Each active record needs: stable owner/repository ID; canonical URL; controlled category/capability/mode; factual summary, best-fit uses, tradeoffs; SPDX and direct `LICENSE` file URL; official origin evidence and a concise screening basis; maintenance review date; evidence level.
 
-## Pull request checklist
+### Evidence levels
 
-- [ ] Canonical URL works and points to the intended project.
-- [ ] The project belongs in the selected category.
-- [ ] Description is factual and avoids unsupported superlatives.
-- [ ] Tradeoff is useful and not just marketing copy.
-- [ ] Project origin has been reviewed against the stated policy; uncertain items are flagged, not silently included.
-- [ ] License/terms were checked or the entry clearly says they need review.
-- [ ] Upstream authors and licenses are not misrepresented.
-- [ ] Links and formatting pass the automated checks.
+- `metadata-reviewed`: public metadata and evidence sources checked; no installation or independent testing implied.
+- `docs-reviewed`: relevant upstream documentation read.
+- `smoke-tested`: a narrow install/example test actually run and reproducible scope recorded.
+- `independently-tested`: a documented test was run outside upstream claims with method/results available.
 
-## What we generally do not accept
+Never upgrade the evidence label based on intent or popularity.
 
-- Duplicate listings, referral links, unmaintained projects without clear historical value, and entries with no practical explanation.
-- Unsupported rankings, benchmark claims, security claims, or production-readiness claims.
-- Copied third-party code or datasets without permission, compatible licensing, and attribution.
-- Bulk link dumps that bypass editorial review.
-- Projects whose origin conflicts with the catalog policy, or where origin remains unclear.
+## Origin, licenses, and attribution
 
-## Review and lifecycle
+- The active catalog excludes China-origin models, vendors, and frameworks. Evaluate the project/vendor/model itself with reliable public evidence; never infer origin from names or nationality. If unclear, put it in the review queue, not the active catalog.
+- Verify a direct upstream license file, not API metadata alone. A recognized SPDX string does not grant permission for models, datasets, optional modules, or hosted services.
+- Link to original work and write descriptions in your own words. Do not copy upstream prose, diagrams, code, datasets, or screenshots without compatible license and attribution.
+- Explain hosted-vs-self-hosted boundaries, optional dependencies, and meaningful limitations where relevant.
 
-Maintainers may request clarification, revise a description for accuracy, reject an entry that does not fit, or move an obsolete resource to an archive section. When possible, explain decisions in the pull request so future contributors can apply the same standard. Please open an issue for major policy or taxonomy changes before doing a large rewrite.
+## Pull request workflow
+
+1. Edit records or original guides.
+2. Run:
+
+   ```bash
+   python3 scripts/build_catalog.py --write
+   python3 -m unittest discover -s tests -v
+   python3 -m unittest discover -s examples -p 'test_*.py' -v
+   python3 scripts/build_catalog.py
+   git diff --check
+   ```
+
+3. Inspect the generated README and category-page diffs; keep unrelated content untouched.
+4. Include source links and a brief decision rationale in the PR.
+
+Checklist:
+
+- [ ] Canonical URL and current public status checked.
+- [ ] No duplicate ID or URL.
+- [ ] Category/capabilities/delivery modes accurately describe the project.
+- [ ] Practical use and candid tradeoff included.
+- [ ] License evidence and origin evidence linked.
+- [ ] Origin policy passed; ambiguous cases held.
+- [ ] Evidence label reflects what was actually checked/tested.
+- [ ] No copied upstream material or unsupported ranking/security/production claim.
+- [ ] Generated views and tests pass.
+
+## Curation lifecycle
+
+Active catalog records should be reviewed periodically. Move changed, archived, stale, or unresolved records to `catalog/review-queue.json` with the reason and date; do not silently delete history or keep a questionable entry active. Discovery reports belong in `updates/YYYY-MM-DD.md` and should distinguish observed facts from recommendations.
