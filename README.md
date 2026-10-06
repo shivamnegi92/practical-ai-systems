@@ -11,9 +11,7 @@
   <a href="catalog/README.md"><img src="https://img.shields.io/badge/catalog-structured%20%2B%20curated-2f6fdb.svg" alt="Structured catalog" /></a>
 </p>
 
-**Practical AI Systems is a curated decision layer for the AI application ecosystem.** Find the right building blocks, understand tradeoffs, and use original recipes to move from a demo to a system you can evaluate and operate.
-
-> Not a framework, leaderboard, or copied link dump. Each active catalog record has a practical use, a caveat, upstream license evidence, an origin-policy review, and an explicit evidence level. Inclusion is not an endorsement or production-readiness guarantee.
+**Build practical AI systems—from choosing the right tools to evaluating how they perform.** This guide connects useful projects, runnable starting points, and implementation paths across agents, retrieval, document AI, evaluation, and operations.
 
 ## Choose a path
 
@@ -91,6 +89,8 @@ tests/                    Offline tests for policy, data, paths, and generated p
 ```
 
 ## Inclusion and trust policy
+
+The catalog is a practical starting point, not a certification. A listing does not mean the project is endorsed, production-ready, secure, or independently benchmarked. Evidence labels show what this repo actually reviewed; check the linked source, license, terms, and operational fit before adopting anything.
 
 - Only list public projects with a clear practical purpose, a canonical source, a candid limitation, direct license-file evidence, and a screened origin record with basis.
 - Do not include China-origin models, vendors, or frameworks. Assess a project/vendor's origin using reliable public evidence; never infer from names or nationality. **Unclear means hold.**
