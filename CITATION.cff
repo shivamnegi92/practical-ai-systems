@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use these educational examples, please cite the repository and the specific system folder you used."
+title: "Practical AI Systems"
+type: software
+authors:
+  - family-names: "Negi"
+    given-names: "Shivam"
+repository-code: "https://github.com/shivamnegi92/practical-ai-systems"
+license: "CC0-1.0"
+version: "0.1.0"
+date-released: "2026-10-06"
+abstract: "Small, runnable AI system examples with synthetic evaluations, reproducible results, tests, and explicit limitations."

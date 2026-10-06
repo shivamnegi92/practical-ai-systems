@@ -1,0 +1,14 @@
+{
+  "dataset": {
+    "cases": 4,
+    "source": "synthetic fixtures committed with system"
+  },
+  "method": "deterministic evaluation on synthetic fixtures",
+  "metrics": {
+    "micro_like_average_f1": 0.6286,
+    "micro_like_average_precision": 0.625,
+    "micro_like_average_recall": 0.6667
+  },
+  "notes": "Macro average across cases; small synthetic set.",
+  "system": "entity_extraction"
+}

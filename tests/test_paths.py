@@ -51,7 +51,7 @@ class DecisionPathTests(unittest.TestCase):
         self.assertIn("](../catalog/extraction.md)", rendered)
 
     def test_readme_renders_generated_paths_section(self):
-        readme = "Intro\n<!-- CATALOG:START -->\n<!-- CATALOG:END -->\n## Choose a path\n<!-- PATHS:START -->\n<!-- PATHS:END -->\nFooter\n"
+        readme = "Intro\n<!-- SYSTEMS:START --><!-- SYSTEMS:END -->\n<!-- CATALOG:START -->\n<!-- CATALOG:END -->\n## Choose a path\n<!-- PATHS:START -->\n<!-- PATHS:END -->\nFooter\n"
         rendered = render_readme(readme, self.projects, self.paths)
         self.assertIn("Build a document-search baseline", rendered)
         self.assertIn("catalog/paths.md#build-a-document-search-baseline", rendered)
@@ -62,17 +62,18 @@ class DecisionPathTests(unittest.TestCase):
         from build_catalog import render_readme
 
         with self.assertRaisesRegex(ValueError, "overlap"):
-            render_readme("<!-- CATALOG:START -->text<!-- PATHS:START -->middle<!-- PATHS:END -->more<!-- CATALOG:END -->", self.projects, self.paths)
+            render_readme("<!-- SYSTEMS:START --><!-- SYSTEMS:END --><!-- CATALOG:START -->text<!-- PATHS:START -->middle<!-- PATHS:END -->more<!-- CATALOG:END -->", self.projects, self.paths)
 
     def test_readme_renderer_rejects_duplicate_markers(self):
         from build_catalog import render_readme
 
-        readme = "<!-- CATALOG:START --><!-- CATALOG:END --><!-- CATALOG:START --><!-- CATALOG:END --><!-- PATHS:START --><!-- PATHS:END -->"
+        readme = "<!-- SYSTEMS:START --><!-- SYSTEMS:END --><!-- CATALOG:START --><!-- CATALOG:END --><!-- CATALOG:START --><!-- CATALOG:END --><!-- PATHS:START --><!-- PATHS:END -->"
         with self.assertRaisesRegex(ValueError, "exactly one"):
             render_readme(readme, self.projects, self.paths)
 
     def test_paths_output_is_up_to_date(self):
         self.assertEqual(check_generated(ROOT), [])
+
 
 
 if __name__ == "__main__":

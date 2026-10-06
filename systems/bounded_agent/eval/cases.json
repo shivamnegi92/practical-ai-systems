@@ -1,0 +1,5 @@
+[
+ {"request":{"action":"lookup_order","arguments":{"order_id":"A-1"}},"approved":true,"expected":"completed"},
+ {"request":{"action":"send_refund","arguments":{"amount":900}},"approved":false,"expected":"awaiting_approval"},
+ {"request":{"action":"delete_account","arguments":{}},"approved":true,"expected":"rejected"}
+]

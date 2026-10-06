@@ -1,0 +1,5 @@
+[
+ {"lines":[{"text":"INVOICE # ACME-42","bbox":[10,10,200,30]},{"text":"Date: 2026-04-02","bbox":[10,40,130,60]},{"text":"Total: $145.90","bbox":[10,80,140,100]}],"gold":{"invoice_number":"ACME-42","date":"2026-04-02","total":"145.90"}},
+ {"lines":[{"text":"Total: 20.00","bbox":[10,50,100,70]},{"text":"Invoice No: B-2","bbox":[10,10,120,30]},{"text":"Date: 2026-01-01","bbox":[10,30,120,45]}],"gold":{"invoice_number":"B-2","date":"2026-01-01","total":"20.00"}},
+ {"lines":[{"text":"Invoice: C-7","bbox":[0,0,90,15]},{"text":"Total $4.00","bbox":[0,20,80,35]}],"gold":{"invoice_number":"C-7","date":null,"total":"4.00"}}
+]

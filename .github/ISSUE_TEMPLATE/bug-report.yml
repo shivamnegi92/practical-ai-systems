@@ -1,0 +1,26 @@
+name: Report a broken system example
+description: Report a reproducible issue in a runnable system
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: input
+    id: system
+    attributes:
+      label: System folder
+      placeholder: systems/doc_qa
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include commands, observed output, and expected output.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS and Python version; do not include secrets or private data.
+    validations:
+      required: true

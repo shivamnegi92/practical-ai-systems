@@ -102,12 +102,13 @@ class CatalogRenderingTests(unittest.TestCase):
             render_category("miscellaneous", [])
 
     def test_readme_renderer_updates_only_managed_region(self):
-        readme = "Intro\n<!-- CATALOG:START -->\nold\n<!-- CATALOG:END -->\n## Choose a path\n<!-- PATHS:START -->\n<!-- PATHS:END -->\nFooter\n"
+        readme = "Intro\n<!-- SYSTEMS:START -->\nold system index\n<!-- SYSTEMS:END -->\n## Catalog\n<!-- CATALOG:START -->\nold\n<!-- CATALOG:END -->\n## Choose a path\n<!-- PATHS:START -->\n<!-- PATHS:END -->\nFooter\n"
         rendered = render_readme(readme, [project()], [])
         self.assertIn("[Agents and orchestration](catalog/agents.md)", rendered)
         self.assertIn("Intro\n", rendered)
         self.assertIn("Footer\n", rendered)
-        self.assertNotIn("old", rendered)
+        self.assertNotIn("old\n", rendered)
+        self.assertIn("old system index", rendered)
 
     def test_readme_renderer_requires_both_markers(self):
         with self.assertRaises(ValueError):

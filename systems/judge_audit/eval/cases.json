@@ -1,0 +1,8 @@
+[
+ {"claim":"The subscription costs eight dollars monthly","evidence":"Pro costs $8 per user per month.","human_a":"supported","human_b":"supported"},
+ {"claim":"Refunds are always available","evidence":"Unused subscription time is not refunded.","human_a":"unsupported","human_b":"unsupported"},
+ {"claim":"Offline mode retains fifty notebooks","evidence":"The fifty most recently opened notebooks remain available offline.","human_a":"supported","human_b":"supported"},
+ {"claim":"SMS is supported for authentication","evidence":"Authenticator apps and hardware keys are supported, but not SMS.","human_a":"unsupported","human_b":"supported"},
+ {"claim":"Version history lasts ninety days on Pro","evidence":"Pro history is retained for 90 days.","human_a":"supported","human_b":"supported"},
+ {"claim":"Links expire after an hour","evidence":"Password-reset links expire after 30 minutes.","human_a":"unsupported","human_b":"unsupported"}
+]

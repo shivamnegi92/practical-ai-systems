@@ -1,0 +1,6 @@
+[
+ {"text":"Vendor: Northwind Paper\nInvoice: NW-1042\nDate: 2026-03-01\nSubtotal: $100.00\nTax: $8.00\nTotal: $108.00", "fields":{"vendor":"Northwind Paper","invoice_number":"NW-1042","invoice_date":"2026-03-01","subtotal":"100.00","tax":"8.00","total":"108.00"},"valid":true},
+ {"text":"Vendor: Cedar Works\nInvoice No.: C-7\nDate: 2026-01-19\nSubtotal: 20.00\nTax: 1.60\nTotal: 21.60", "fields":{"vendor":"Cedar Works","invoice_number":"C-7","invoice_date":"2026-01-19","subtotal":"20.00","tax":"1.60","total":"21.60"},"valid":true},
+ {"text":"Vendor: Grey Finch\nInvoice: GF-88\nDate: 2026-02-02\nSubtotal: 50.00\nTax: 4.00\nTotal: 60.00", "fields":{"vendor":"Grey Finch","invoice_number":"GF-88","invoice_date":"2026-02-02","subtotal":"50.00","tax":"4.00","total":"60.00"},"valid":false},
+ {"text":"Vendor: Lake House\nInvoice: LH-5\nDate: unknown\nSubtotal: 15.00\nTax: 1.20\nTotal: 16.20", "fields":{"vendor":"Lake House","invoice_number":"LH-5","invoice_date":null,"subtotal":"15.00","tax":"1.20","total":"16.20"},"valid":false}
+]

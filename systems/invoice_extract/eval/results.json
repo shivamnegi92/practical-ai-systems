@@ -1,0 +1,14 @@
+{
+  "dataset": {
+    "cases": 4,
+    "source": "synthetic fixtures committed with system"
+  },
+  "method": "deterministic evaluation on synthetic fixtures",
+  "metrics": {
+    "field_exact_match": 1.0,
+    "validity_precision": 1.0,
+    "validity_recall": 1.0
+  },
+  "notes": "",
+  "system": "invoice_extract"
+}

@@ -1,0 +1,6 @@
+[
+ {"query":"What is the Pro plan price?","response":"The Pro plan costs $8 per user per month."},
+ {"query":"How long do reset links last?","response":"Reset links expire after 30 minutes."},
+ {"query":"How often do notes sync?","response":"Notes sync every 60 seconds."},
+ {"query":"How long is history kept?","response":"Pro history is retained for 90 days."}
+]

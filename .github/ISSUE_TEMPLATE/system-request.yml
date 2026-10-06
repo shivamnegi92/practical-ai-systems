@@ -1,0 +1,33 @@
+name: Request an AI system example
+description: Propose a useful, testable system for this collection
+title: "[System request]: "
+labels: [system-request]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: What concrete task should the example solve?
+    validations:
+      required: true
+  - type: textarea
+    id: evaluation
+    attributes:
+      label: How could we evaluate it?
+      description: Name observable success and failure cases, not just a preferred tool.
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Data and provenance
+      description: What synthetic or licensed data can reproduce the example?
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints and risks
+      description: Credentials, privacy, side effects, cost, or maintenance risks.
+    validations:
+      required: true

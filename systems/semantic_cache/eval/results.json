@@ -1,0 +1,13 @@
+{
+  "dataset": {
+    "cases": 4,
+    "source": "synthetic fixtures committed with system"
+  },
+  "method": "deterministic evaluation on synthetic fixtures",
+  "metrics": {
+    "estimated_call_reduction_on_repeated_identical_workload": 0.5,
+    "exact_replay_rate": 1.0
+  },
+  "notes": "Illustrative two-pass exact-key workload, not production savings; similar paraphrases intentionally miss.",
+  "system": "semantic_cache"
+}

@@ -25,7 +25,12 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Run decision path tests
         run: python -m unittest discover -s tests -p 'test_paths.py' -v
-      - name: Run example tests
+      - name: Run shared and system tests
+        run: python -m unittest discover -s common -t . -v && python -m unittest discover -s systems -p 'test_*.py' -v
+      - name: Verify reproducible system reports
+        run: python scripts/evaluate_systems.py --check && python scripts/evaluate_systems.py --write && git diff --exit-code -- systems/*/eval/results.json
+      - name: Validate system README index
+        run: python scripts/render_systems.py
         run: python -m unittest discover -s examples -p 'test_*.py' -v
       - name: Check whitespace errors
         run: git diff --check

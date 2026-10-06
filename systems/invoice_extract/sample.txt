@@ -1,0 +1,6 @@
+Vendor: Northwind Paper
+Invoice: NW-1042
+Date: 2026-03-01
+Subtotal: $100.00
+Tax: $8.00
+Total: $108.00

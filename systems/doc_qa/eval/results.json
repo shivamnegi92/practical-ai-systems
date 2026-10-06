@@ -1,0 +1,16 @@
+{
+  "dataset": {
+    "cases": 22,
+    "source": "synthetic fixtures committed with system"
+  },
+  "method": "bm25 + extractive sentence (offline baseline)",
+  "metrics": {
+    "answer_contains_fact": 0.8823529411764706,
+    "citation_accuracy": 0.9444444444444444,
+    "correct_abstention_rate": 1.0,
+    "false_abstention_rate": 0.05555555555555555,
+    "recall_at_3": 1.0
+  },
+  "notes": "",
+  "system": "doc_qa"
+}

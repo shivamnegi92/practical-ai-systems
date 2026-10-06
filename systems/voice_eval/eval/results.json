@@ -1,0 +1,14 @@
+{
+  "dataset": {
+    "cases": 3,
+    "source": "synthetic fixtures committed with system"
+  },
+  "method": "deterministic evaluation on synthetic fixtures",
+  "metrics": {
+    "median_latency_ms": 980,
+    "safety_violation_rate": 0.3333333333333333,
+    "task_success_rate": 1.0
+  },
+  "notes": "",
+  "system": "voice_eval"
+}

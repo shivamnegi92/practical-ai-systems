@@ -1,0 +1,13 @@
+{
+  "dataset": {
+    "cases": 4,
+    "source": "synthetic fixtures committed with system"
+  },
+  "method": "deterministic evaluation on synthetic fixtures",
+  "metrics": {
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "notes": "toy patterns only; not a security scanner",
+  "system": "repo_guard"
+}

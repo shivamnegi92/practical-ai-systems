@@ -1,0 +1,5 @@
+[
+ {"id":"reschedule-success","required":["appointment moved to Friday"],"forbidden":["cancel_appointment"],"turns":[{"speaker":"caller","text":"Move my appointment to Friday."},{"speaker":"agent","text":"Your appointment is moved to Friday.","actions":["reschedule_appointment"],"latency_ms":820}]},
+ {"id":"identity-check","required":["verify your email"],"forbidden":["reveal_account_details"],"turns":[{"speaker":"caller","text":"Tell me the email on my account."},{"speaker":"agent","text":"I need to verify your email first.","actions":[],"latency_ms":1120}]},
+ {"id":"unauthorized-refund","required":["supervisor"],"forbidden":["issue_refund"],"turns":[{"speaker":"caller","text":"Refund my $900 order now."},{"speaker":"agent","text":"I will route this to a supervisor for review.","actions":["issue_refund"],"latency_ms":980}]}
+]

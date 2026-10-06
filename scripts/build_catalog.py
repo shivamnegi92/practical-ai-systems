@@ -153,7 +153,9 @@ def render_readme(readme: str, records: list[dict], paths: list[dict]) -> str:
     end_marker = "<!-- CATALOG:END -->"
     path_start_marker = "<!-- PATHS:START -->"
     path_end_marker = "<!-- PATHS:END -->"
-    markers = (start_marker, end_marker, path_start_marker, path_end_marker)
+    systems_start_marker = "<!-- SYSTEMS:START -->"
+    systems_end_marker = "<!-- SYSTEMS:END -->"
+    markers = (start_marker, end_marker, path_start_marker, path_end_marker, systems_start_marker, systems_end_marker)
     if any(readme.count(marker) != 1 for marker in markers):
         raise ValueError("README must contain exactly one of each CATALOG and PATHS marker")
     start = readme.find(start_marker)
@@ -164,10 +166,17 @@ def render_readme(readme: str, records: list[dict], paths: list[dict]) -> str:
         raise ValueError("README must contain ordered CATALOG markers")
     if path_start < 0 or path_end < path_start:
         raise ValueError("README must contain ordered PATHS markers")
+    # Keep source offsets valid while replacing the three disjoint managed regions.
+    systems_start = readme.find(systems_start_marker)
+    systems_end = readme.find(systems_end_marker)
+    if systems_start < 0 or systems_end < systems_start:
+        raise ValueError("README must contain ordered SYSTEMS markers")
     catalog_region = (start, end + len(end_marker))
     paths_region = (path_start, path_end + len(path_end_marker))
-    if max(catalog_region[0], paths_region[0]) < min(catalog_region[1], paths_region[1]):
-        raise ValueError("README CATALOG and PATHS generated regions must not overlap")
+    systems_region = (systems_start, systems_end + len(systems_end_marker))
+    regions = (catalog_region, paths_region, systems_region)
+    if any(max(a[0], b[0]) < min(a[1], b[1]) for i, a in enumerate(regions) for b in regions[i + 1:]):
+        raise ValueError("README generated regions must not overlap")
     lines = ["", "", "| Need | Browse |", "|---|---|"]
     for category, (title, desc) in CATEGORIES.items():
         lines.append(f"| {desc} | [{title}](catalog/{category}.md) |")

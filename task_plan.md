@@ -51,6 +51,27 @@ Levels: `starter`, `intermediate`, `advanced`. Areas reuse the existing six cate
 
 Generated index: extend `scripts/build_catalog.py` so that each system's front-matter generates README tables and paths. One source of truth, the same DRY approach as the catalog today.
 
+## 4. First 10 systems (in progress)
+
+The content sprint is under way, but these ten are NOT launch-ready yet. Every system must have: a standard template, runnable code, a focused offline test suite, synthetic or licensed eval cases, reproducible `eval/results.json`, known failure modes, and one clear example of when not to use it.
+
+1. Document Q&A with citations and abstention — `systems/doc_qa/`
+2. Invoice field extraction with consistency checks — `systems/invoice_extract/`
+3. Entity extraction + error analysis — `systems/entity_extraction/`
+4. Voice-agent transcript evaluator — `systems/voice_eval/`
+5. Multimodal document pipeline with an explicit OCR boundary — `systems/multimodal_ocr/`
+6. Approval-gated tool-using workflow — `systems/bounded_agent/`
+7. Local knowledge-base MCP server — `systems/mcp_kb/`
+8. Judge-agreement audit with human-rater comparison — `systems/judge_audit/`
+9. Exact-response cache with TTL/LRU/model isolation — `systems/semantic_cache/`
+10. Repository hygiene toy scanner with loud limitations — `systems/repo_guard/`
+
+The common test/evaluation infrastructure exists under `common/` and CI now runs it, but README templates, quality review, richer diagnostics, and smoke tests remain to do. Current evals are small, synthetic, and best treated as regression fixtures—not evidence of production performance.
+
+## 5. Phased plan after the first 10
+
+### Phase 0 — Packaging and foundation (week 1)
+
 ## 5. Phased plan
 
 ### Phase 0 — Packaging and foundation (week 1)
@@ -62,39 +83,43 @@ Generated index: extend `scripts/build_catalog.py` so that each system's front-m
 - [ ] `llms.txt`, `CITATION.cff`, `.env.example`, devcontainer.
 - [ ] Move `catalog/` under a "Toolbox" section—supporting, not the headline.
 
-### Phase 1 — Flagship content sprint (weeks 1–4): 10 systems before launch
-Seed list (adjust to taste; favor Shivam's existing work so attention consolidates instead of scattering):
-1. Document Q&A with retrieval eval (recall@k, answer faithfulness) — starter
-2. Invoice/receipt structured extraction with field-level accuracy — starter
-3. Entity extraction pipeline + error analysis (port Shivam's work) — intermediate
-4. Voice agent evaluation harness (port `voice-agent-eval-corpus`) — advanced
-5. Multimodal document extraction (port existing project) — intermediate
-6. Bounded tool-using agent with guardrails + approval step — intermediate
-7. MCP server for a local knowledge base — wave
-8. LLM-as-judge done carefully: judge agreement vs. human labels — intermediate
-9. Semantic cache + cost/latency dashboard — operations
-10. Agent skill: repo-maintenance skill with an eval (dogfoods our trend curator) — wave
+## 4. First 10 systems (in progress)
 
-Acceptance per system: runs locally in 3 commands or fewer, eval results committed, offline tests green, GIF recorded, and no copied third-party tutorial content.
+The content sprint is under way, but these ten are NOT launch-ready yet. Every system must have: a standard template, runnable code, a focused offline test suite, synthetic or licensed eval cases, reproducible `eval/results.json`, known failure modes, and one clear example of when not to use it.
 
-### Phase 2 — Launch (end of week 4, not before)
+1. Document Q&A with citations and abstention — `systems/doc_qa/`
+2. Invoice field extraction with consistency checks — `systems/invoice_extract/`
+3. Entity extraction + error analysis — `systems/entity_extraction/`
+4. Voice-agent transcript evaluator — `systems/voice_eval/`
+5. Multimodal document pipeline with an explicit OCR boundary — `systems/multimodal_ocr/`
+6. Approval-gated tool-using workflow — `systems/bounded_agent/`
+7. Local knowledge-base MCP server — `systems/mcp_kb/`
+8. Judge-agreement audit with human-rater comparison — `systems/judge_audit/`
+9. Exact-response cache with TTL/LRU/model isolation — `systems/semantic_cache/`
+10. Repository hygiene toy scanner with loud limitations — `systems/repo_guard/`
+
+The common test/evaluation infrastructure exists under `common/` and CI now runs it, but README templates, quality review, richer diagnostics, and smoke tests remain to do. Current evals are small, synthetic, and best treated as regression fixtures—not evidence of production performance.
+
+## 5. Phased plan after the first 10
+
+### Launch (after all 10 pass the quality bar)
 - [ ] Launch only with 10 or more working systems; an empty repo wastes the one first impression.
 - [ ] Coordinated posts: LinkedIn (long-form), X thread, Show HN, r/LocalLLaMA, relevant Discords.
 - [ ] Each post leads with one striking eval finding (e.g., "the judge disagreed with humans 31% of the time"), not with "I made a repo."
 - [ ] Submit to awesome lists where genuinely relevant.
 
-### Phase 3 — Cadence and waves (months 2–3): 30 systems
+### Cadence and waves (months 2–3): 30 systems
 - [ ] Ship 2 systems/week; "New this week" section generated in the README.
 - [ ] Wave watch: run the trend-curator skill weekly; when a topic peaks, ship a system within 1–2 weeks (only vetted, policy-compliant tools).
 - [ ] One write-up per system (LinkedIn/blog), linking back to the folder.
 
-### Phase 4 — Community engine (month 3+)
+### Community engine (month 3+)
 - [ ] Issue forms: system request, new system proposal, bug, stale entry.
 - [ ] Label 10 good-first-issues at all times (e.g., add an eval case, port to another local model).
 - [ ] Contributor credit in each system README + an all-contributors table.
 - [ ] Review SLA: first response within 72 hours.
 
-### Phase 5 — Scale and authority (months 4–6): 50+ systems
+### Scale and authority (months 4–6): 50+ systems
 - [ ] Docs site (MkDocs or Astro) generated from the same metadata; only now, once content justifies it.
 - [ ] Cross-system results page: comparable eval numbers across local models (reproducible, with exact versions, no "best" claims).
 - [ ] Optional: notebook/Colab variants for the most popular systems, translations driven by demand.

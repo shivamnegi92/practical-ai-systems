@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+  <title id="title">Document Q and A with cited evidence</title>
+  <desc id="desc">A question connects to two retrieved document snippets and a cited answer.</desc>
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101b32"/><stop offset="1" stop-color="#213c60"/></linearGradient></defs>
+  <rect width="720" height="360" rx="24" fill="url(#bg)"/>
+  <text x="36" y="52" fill="#a8c7fa" font-family="system-ui,sans-serif" font-size="16" font-weight="700" letter-spacing="2">SEARCH / GROUND / CITE</text>
+  <rect x="36" y="86" width="285" height="76" rx="14" fill="#fff" opacity=".96"/>
+  <text x="56" y="119" fill="#18304f" font-family="system-ui,sans-serif" font-size="17" font-weight="700">How much does Pro cost?</text>
+  <text x="56" y="143" fill="#58708b" font-family="system-ui,sans-serif" font-size="13">Question</text>
+  <path d="M321 124h58m0 0-12-10m12 10-12 10" stroke="#69dbb4" stroke-width="4" fill="none"/>
+  <rect x="395" y="78" width="285" height="84" rx="14" fill="#d9f6eb"/>
+  <text x="415" y="111" fill="#15563f" font-family="system-ui,sans-serif" font-size="16" font-weight="700">Pro costs $8 per user / month</text>
+  <text x="415" y="138" fill="#39765f" font-family="system-ui,sans-serif" font-size="13">Answer + source citation</text>
+  <rect x="92" y="217" width="235" height="82" rx="12" fill="#fff" opacity=".12" stroke="#a8c7fa"/>
+  <text x="112" y="249" fill="#e6efff" font-family="system-ui,sans-serif" font-size="14" font-weight="700">billing.md · paragraph 1</text>
+  <text x="112" y="274" fill="#a8c7fa" font-family="system-ui,sans-serif" font-size="13">Retrieved evidence</text>
+  <path d="M510 163v35H327" stroke="#69dbb4" stroke-width="3" fill="none" stroke-dasharray="7 6"/>
+  <circle cx="327" cy="198" r="5" fill="#69dbb4"/>
+  <text x="395" y="268" fill="#b8c8dc" font-family="system-ui,sans-serif" font-size="14">No evidence?</text>
+  <text x="395" y="291" fill="#ffcf70" font-family="system-ui,sans-serif" font-size="14" font-weight="700">Abstain instead</text>
+</svg>

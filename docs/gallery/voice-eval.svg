@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+  <title id="title">Voice agent evaluation scorecard</title>
+  <desc id="desc">A synthetic voice call scorecard separates task success, safety violations, and latency.</desc>
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#201436"/><stop offset="1" stop-color="#42265b"/></linearGradient></defs>
+  <rect width="720" height="360" rx="24" fill="url(#bg)"/>
+  <text x="36" y="52" fill="#e7b8ff" font-family="system-ui,sans-serif" font-size="16" font-weight="700" letter-spacing="2">VOICE AGENT / TEST THE CALL</text>
+  <rect x="36" y="84" width="296" height="228" rx="16" fill="#fff" opacity=".96"/>
+  <text x="60" y="120" fill="#302049" font-family="system-ui,sans-serif" font-size="15" font-weight="700">CALL · REFUND REQUEST</text>
+  <circle cx="74" cy="169" r="15" fill="#7051a3"/><text x="68" y="175" fill="#fff" font-family="system-ui,sans-serif" font-size="13">U</text>
+  <rect x="98" y="148" width="206" height="43" rx="12" fill="#eee8f6"/>
+  <text x="112" y="175" fill="#493c5b" font-family="system-ui,sans-serif" font-size="13">Refund my $900 order now.</text>
+  <circle cx="74" cy="227" r="15" fill="#1d8f70"/><text x="69" y="233" fill="#fff" font-family="system-ui,sans-serif" font-size="13">A</text>
+  <rect x="98" y="204" width="206" height="56" rx="12" fill="#d9f6eb"/>
+  <text x="112" y="229" fill="#15563f" font-family="system-ui,sans-serif" font-size="12">Routes to supervisor,</text><text x="112" y="247" fill="#15563f" font-family="system-ui,sans-serif" font-size="12">but calls refund tool</text>
+  <rect x="372" y="93" width="312" height="66" rx="14" fill="#d9f6eb"/>
+  <text x="394" y="122" fill="#15563f" font-family="system-ui,sans-serif" font-size="14">TASK SUCCESS</text><text x="394" y="146" fill="#15563f" font-family="system-ui,sans-serif" font-size="22" font-weight="800">1.00</text>
+  <rect x="372" y="174" width="312" height="66" rx="14" fill="#ffe0dc"/>
+  <text x="394" y="203" fill="#762d2a" font-family="system-ui,sans-serif" font-size="14">FORBIDDEN ACTION RATE</text><text x="394" y="227" fill="#762d2a" font-family="system-ui,sans-serif" font-size="22" font-weight="800">0.33</text>
+  <rect x="372" y="255" width="312" height="57" rx="14" fill="#fff" opacity=".15"/>
+  <text x="394" y="290" fill="#f0e9fa" font-family="system-ui,sans-serif" font-size="15">A fluent call can still fail safely.</text>
+</svg>

@@ -1,19 +1,45 @@
 # Contributing to Practical AI Systems
 
-Thanks for helping builders choose and operate AI-system components responsibly. This is an evidence-backed catalog and field guide—not a popularity contest, product ranking, or home for copied tutorials.
+Thanks for helping builders learn through small, runnable AI systems with honest evaluations. Contributions should make an example easier to run, measure, understand, or maintain.
 
 ## What belongs
 
 A contribution should help someone make or evaluate a practical AI-system decision:
 
-- add or correct a project record;
+- add or improve a runnable system with an offline test and reproducible evaluation;
 - improve an original recipe, failure-mode guide, or evaluation protocol;
-- report stale links, changed license/status, or origin evidence;
-- improve catalog tooling and tests.
+- report a stale example, broken setup, changed dependency, or evaluation regression;
+- improve catalog tooling, generated views, docs, or tests.
 
 Before proposing a new project, check `catalog/projects.json` and `catalog/review-queue.json` for duplicates or an existing hold.
 
-## Project record requirements
+## System contribution contract
+
+Each system lives in `systems/<system-id>/` and includes:
+
+- `README.md`: problem, one-command quickstart, measured result, limitations, and when not to use it;
+- runnable code with dependencies stated and optional network/model calls clearly separated from the offline baseline;
+- `eval/cases.json` (or a clearly documented equivalent) with synthetic or licensed cases;
+- reproducible `eval/results.json` containing method, scope, dataset size, metrics, and caveats;
+- focused offline `test_*.py` checks; tests must not require credentials or network access.
+
+Run from the repository root:
+
+```bash
+python3 scripts/evaluate_systems.py --check --write
+python3 -m unittest discover -s common -t . -v
+python3 -m unittest discover -s systems -p 'test_*.py' -v
+python3 scripts/render_systems.py --write
+python3 scripts/render_systems.py
+python3 -m unittest discover -s tests -v
+python3 -m unittest discover -s examples -p 'test_*.py' -v
+git diff --check
+```
+
+A generated report changing after evaluation means either the code/data changed or results were not reproducible; investigate and include the intentional result update. Never describe small synthetic fixtures as production benchmarks. Do not include private/employer-confidential material or imply any employer endorsement.
+
+## Catalog changes
+
 
 Edit the canonical record in `catalog/projects.json`; generated category pages and the README index are not hand-edited. Each active entry requires:
 
