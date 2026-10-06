@@ -23,7 +23,7 @@ Do not use for competitor pricing/assortment scraping or policy changes.
 ## Hard guardrails
 
 - Discovery is not acceptance. Trending status, stars, or forks are signals—not quality rankings.
-- **Origin policy:** do not include China-origin models, vendors, or frameworks. Assess the project/vendor/model itself from reliable public evidence; never infer origin from a contributor's name or nationality. If unclear, hold it—no guessing or substitution.
+- **Provenance policy:** apply the maintainer's provenance policy (see the maintainer's private agent instructions). Assess the project/vendor/model itself from reliable public evidence; never infer origin from a contributor's name or nationality. If unclear, hold it—no guessing or substitution.
 - **License:** verify current upstream license. Missing, custom, conflicting, or unclear terms mean `HOLD`; do not claim compatibility or copy upstream material.
 - **Evidence:** record source URLs, retrieval timestamp and time zone, trend window/basis, and exact observed metrics if used. Do not invent rankings, trend counts, commit activity, or testing.
 - **Local edits:** the user's request to run a refresh authorizes safe local catalog updates, but only after the hard checks pass. Keep uncertain entries out of active generated pages and explain them in `catalog/review-queue.json` plus the dated report. `report-only` or `dry-run` means no catalog edits.

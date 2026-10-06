@@ -93,7 +93,7 @@ tests/                    Offline tests for policy, data, paths, and generated p
 The catalog is a practical starting point, not a certification. A listing does not mean the project is endorsed, production-ready, secure, or independently benchmarked. Evidence labels show what this repo actually reviewed; check the linked source, license, terms, and operational fit before adopting anything.
 
 - Only list public projects with a clear practical purpose, a canonical source, a candid limitation, direct license-file evidence, and a screened origin record with basis.
-- Do not include China-origin models, vendors, or frameworks. Assess a project/vendor's origin using reliable public evidence; never infer from names or nationality. **Unclear means hold.**
+- Every project gets a provenance and governance review based on reliable public evidence. **Unclear means hold.**
 - Do not copy third-party tutorials, code, data, screenshots, or README text. Link to canonical sources; respect their licenses.
 - Popularity is a discovery signal, not a score. No bare star rankings or unsupported “best” claims.
 - Check upstream security advisories, data handling, version support, and service terms before adopting a tool. The catalog is not a security audit or legal review.

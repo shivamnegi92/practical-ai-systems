@@ -30,7 +30,7 @@ Never upgrade the evidence label based on intent or popularity.
 
 ## Origin, licenses, and attribution
 
-- The active catalog excludes China-origin models, vendors, and frameworks. Evaluate the project/vendor/model itself with reliable public evidence; never infer origin from names or nationality. If unclear, put it in the review queue, not the active catalog.
+- Maintainers review each project's provenance, governance, and terms against the repository's inclusion policy. Evaluate the project/vendor/model itself with reliable public evidence; never infer from names or nationality. If unclear, put it in the review queue, not the active catalog.
 - Verify a direct upstream license file, not API metadata alone. A recognized SPDX string does not grant permission for models, datasets, optional modules, or hosted services.
 - Link to original work and write descriptions in your own words. Do not copy upstream prose, diagrams, code, datasets, or screenshots without compatible license and attribution.
 - Explain hosted-vs-self-hosted boundaries, optional dependencies, and meaningful limitations where relevant.

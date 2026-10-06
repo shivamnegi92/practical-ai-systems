@@ -31,8 +31,8 @@ Cloning awesome-llm-apps at 140k stars is a losing game. The gap none of them fi
 
 Why this wedge:
 - It matches Shivam's real strengths (voice-agent evaluation, entity/multimodal extraction, evaluation discipline).
-- Our origin policy (no China-origin models) becomes a feature: "runs on open-weight Llama, Gemma, Mistral, Phi."
-- It produces genuine original-contribution evidence (adoption, forks, citations)—useful for RACEtoEB1 `OSS-01`.
+- Defaults run on widely used open-weight models through a local provider, so anyone can try every system for free.
+- It produces genuine, measurable open-source adoption (forks, citations, contributors).
 - Hard to copy cheaply: anyone can wrap an LLM call; few ship reproducible evals.
 
 ## 4. The unit of content: a "system"
@@ -115,18 +115,18 @@ Acceptance per system: runs locally in 3 commands or fewer, eval results committ
 | Distinct contributors | 1–3 | 10 | 25+ |
 | Posts/write-ups published | 4 | 20 | 40 |
 
-Stars and forks are outcomes, not plans; track them monthly (GitHub traffic API: views, clones, referrers) and use referrers to double down on channels that work. A monthly adoption snapshot also feeds RACEtoEB1 evidence.
+Stars and forks are outcomes, not plans; track them monthly (GitHub traffic API: views, clones, referrers) and use referrers to double down on channels that work. Keep a monthly adoption snapshot.
 
 ## 7. What we will not do
 - Buy stars, run star-for-star swaps, or post spammy self-promotion.
 - Copy or lightly reskin other repos' tutorials.
 - Ship 100 shallow API wrappers to inflate the headline number.
-- Use China-origin models/vendors/frameworks (hard rule; unclear origin means hold).
+- Add models, vendors, or frameworks that fail the maintainer provenance review (unclear means hold).
 - Launch before 10 solid systems exist.
 - Build a docs site before the content exists to fill it.
 
 ## 8. Risks and constraints
-- **Employer policy:** confirm Walmart's outside-activity/open-source policy before launch. Use no internal code, data, or branding, and imply no Walmart endorsement.
+- **Independence:** personal project. No employer-internal code, data, names, or branding, and nothing implying any employer's endorsement.
 - **Time capacity:** 2 systems/week is ambitious beside a day job; quality over count—drop to 1/week before lowering the bar.
 - **Cost:** local-first by default keeps it free for us and for users.
 - **Data licensing:** eval datasets must be synthetic or clearly licensed; no PII.
