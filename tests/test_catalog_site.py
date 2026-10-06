@@ -102,8 +102,8 @@ class CatalogRenderingTests(unittest.TestCase):
             render_category("miscellaneous", [])
 
     def test_readme_renderer_updates_only_managed_region(self):
-        readme = "Intro\n<!-- CATALOG:START -->\nold\n<!-- CATALOG:END -->\nFooter\n"
-        rendered = render_readme(readme, [project()])
+        readme = "Intro\n<!-- CATALOG:START -->\nold\n<!-- CATALOG:END -->\n## Choose a path\n<!-- PATHS:START -->\n<!-- PATHS:END -->\nFooter\n"
+        rendered = render_readme(readme, [project()], [])
         self.assertIn("[Agents and orchestration](catalog/agents.md)", rendered)
         self.assertIn("Intro\n", rendered)
         self.assertIn("Footer\n", rendered)
@@ -111,7 +111,7 @@ class CatalogRenderingTests(unittest.TestCase):
 
     def test_readme_renderer_requires_both_markers(self):
         with self.assertRaises(ValueError):
-            render_readme("No markers", [project()])
+            render_readme("No markers", [project()], [])
 
 
     def test_queued_candidates_are_not_rendered_as_active(self):

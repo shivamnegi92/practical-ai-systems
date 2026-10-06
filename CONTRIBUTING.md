@@ -35,14 +35,20 @@ Never upgrade the evidence label based on intent or popularity.
 - Link to original work and write descriptions in your own words. Do not copy upstream prose, diagrams, code, datasets, or screenshots without compatible license and attribution.
 - Explain hosted-vs-self-hosted boundaries, optional dependencies, and meaningful limitations where relevant.
 
+## Path records
+
+Use `catalog/paths.json` to assemble a user workflow from ordered steps. Link existing recipes, examples, and category pages; reference projects by stable ID in `project_ids`. Do not re-copy project descriptions into a path. The generator validates each ID and local file link, then renders `catalog/paths.md` and the README path block.
+
+
 ## Pull request workflow
 
-1. Edit records or original guides.
+1. Edit project records, decision paths, or original guides.
 2. Run:
 
    ```bash
    python3 scripts/build_catalog.py --write
    python3 -m unittest discover -s tests -v
+   python3 -m unittest discover -s tests -p 'test_paths.py' -v
    python3 -m unittest discover -s examples -p 'test_*.py' -v
    python3 scripts/build_catalog.py
    git diff --check

@@ -17,14 +17,14 @@
 
 ## Choose a path
 
-| If you need to… | Start here |
-|---|---|
-| Build a tool-using or stateful workflow | [Agents and orchestration](catalog/agents.md) · [Agent workflow recipe](recipes/tool-using-workflow/README.md) |
-| Search a document collection | [Retrieval and knowledge systems](catalog/retrieval.md) · [Document search recipe](recipes/document-search/README.md) |
-| Turn files into trustworthy structured data | [Document AI and extraction](catalog/extraction.md) · [Structured extraction recipe](recipes/structured-extraction/README.md) |
-| Build an image, audio, or interactive experience | [Multimodal application tools](catalog/multimodal.md) |
-| Measure quality and inspect behavior | [Evaluation and observability](catalog/evaluation.md) · [Evaluation playbook](benchmarks/README.md) |
-| Package, serve, or scale workloads | [Deployment and operations](catalog/operations.md) |
+<!-- PATHS:START -->
+
+Browse curated workflows generated from the same catalog records—no project is duplicated across path docs.
+
+- [Build a document-search baseline](catalog/paths.md#build-a-document-search-baseline)
+- [Evaluate an AI feature before scaling it](catalog/paths.md#evaluate-an-ai-feature-before-scaling-it)
+- [Operate a bounded tool-using agent](catalog/paths.md#operate-a-bounded-tool-using-agent)
+<!-- PATHS:END -->
 
 ## How the pieces fit
 
@@ -76,8 +76,10 @@ These guides are written for this catalog; they synthesize decision-making and f
 ## Project structure
 
 ```text
-catalog/projects.json    Canonical structured project records
-catalog/*.md             Generated category views (do not hand-edit)
+README.md                 Promise, task paths, guides, and policy
+catalog/projects.json     Canonical structured project records
+catalog/paths.json       Declarative learning paths over existing resources
+catalog/*.md             Generated category pages and path guide
 catalog/review-queue.json Candidates held for evidence/review
 recipes/                 Original decision guides and system patterns
 benchmarks/              Evaluation methodology and report template
@@ -85,7 +87,7 @@ updates/                 Dated curation/change reports
 .claude/skills/           Project-local discovery and maintenance workflow
 scripts/build_catalog.py Validate records; regenerate browsable views
 examples/                 Small, tested baselines for system-building exercises
- tests/                  Offline tests for policy, data, and generated pages
+tests/                    Offline tests for policy, data, paths, and generated pages
 ```
 
 ## Inclusion and trust policy
@@ -101,10 +103,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the editorial and review bar, and [AG
 ## Refresh and validate
 
 ```bash
-python3 scripts/build_catalog.py          # validate records and generated pages
-python3 scripts/build_catalog.py --write  # regenerate README index and category pages
+python3 scripts/build_catalog.py --write
 python3 -m unittest discover -s tests -v
+python3 -m unittest discover -s tests -p 'test_paths.py' -v
 python3 -m unittest discover -s examples -p 'test_*.py' -v
+python3 scripts/build_catalog.py
 ```
 
 For weekly discovery, use the project-local [trend curator skill](.claude/skills/practical-ai-systems-trend-curator/SKILL.md). A scan produces a dated evidence report; only eligible candidates enter `catalog/projects.json`.

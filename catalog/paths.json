@@ -1,0 +1,40 @@
+[
+  {
+    "id": "document-search-baseline",
+    "title": "Build a document-search baseline",
+    "summary": "Parse documents, retrieve candidate evidence, then evaluate before adding answer generation.",
+    "audience": "Builders starting a document-grounded application.",
+    "steps": [
+      {"title": "Define representative questions", "detail": "Include answerable, ambiguous, and unanswerable examples with source evidence.", "links": ["recipes/document-search/README.md", "benchmarks/README.md"], "project_ids": []},
+      {"title": "Parse with source provenance", "detail": "Keep document version, page/section, and access-control metadata attached.", "links": ["catalog/extraction.md"], "project_ids": ["docling-project/docling", "apache/tika"]},
+      {"title": "Run a simple lexical baseline", "detail": "Inspect which source passages a deterministic token-overlap baseline retrieves.", "links": ["examples/lexical_retrieval_baseline/README.md"], "project_ids": []},
+      {"title": "Compare retrieval approaches on the same labels", "detail": "Measure recall and failure slices before adding generation.", "links": ["catalog/retrieval.md", "benchmarks/README.md"], "project_ids": ["run-llama/llama_index", "deepset-ai/haystack", "qdrant/qdrant"]},
+      {"title": "Add answers with citations last", "detail": "Require support from retrieved evidence and allow abstention when it is missing.", "links": ["recipes/document-search/README.md", "catalog/evaluation.md"], "project_ids": ["open-telemetry/opentelemetry-collector"]}
+    ]
+  },
+  {
+    "id": "evaluate-an-ai-feature",
+    "title": "Evaluate an AI feature before scaling it",
+    "summary": "Translate a user task into a reproducible test set, compare against a baseline, and inspect failure costs.",
+    "audience": "Teams deciding whether an AI feature is reliable enough to expand.",
+    "steps": [
+      {"title": "Define success and failure cost", "detail": "Specify the user-visible outcome and the costly mistakes, not just response fluency.", "links": ["benchmarks/README.md"], "project_ids": []},
+      {"title": "Build a representative labeled set", "detail": "Include normal, edge, ambiguous, and unanswerable cases; record data provenance.", "links": ["benchmarks/README.md", "recipes/structured-extraction/README.md"], "project_ids": []},
+      {"title": "Run a simple baseline", "detail": "Compare the smallest design to the proposed system under the same conditions.", "links": ["examples/lexical_retrieval_baseline/README.md"], "project_ids": []},
+      {"title": "Track quality and runtime signals", "detail": "Inspect errors, slices, latency, cost, and traces; do not collapse everything into one score.", "links": ["catalog/evaluation.md", "catalog/operations.md"], "project_ids": ["open-telemetry/opentelemetry-collector"]},
+      {"title": "Publish a reproducible decision record", "detail": "Capture versions, conditions, limitations, and what decision the result supports.", "links": ["benchmarks/README.md"], "project_ids": []}
+    ]
+  },
+  {
+    "id": "operate-a-tool-using-agent",
+    "title": "Operate a bounded tool-using agent",
+    "summary": "Begin with a deterministic workflow, permit only justified model decisions, and put authorization outside the model.",
+    "audience": "Builders adding tools or actions to an AI application.",
+    "steps": [
+      {"title": "Write the deterministic workflow first", "detail": "Mark only decision points that genuinely depend on uncertain context.", "links": ["recipes/tool-using-workflow/README.md"], "project_ids": []},
+      {"title": "Define tool authority and side effects", "detail": "Use least privilege, typed arguments, explicit approvals, retries, and idempotency.", "links": ["recipes/tool-using-workflow/README.md"], "project_ids": ["microsoft/semantic-kernel", "langchain-ai/langgraph"]},
+      {"title": "Exercise failure and refusal paths", "detail": "Test malformed tool results, timeouts, replay, untrusted input, and unauthorized actions.", "links": ["catalog/evaluation.md", "benchmarks/README.md"], "project_ids": ["open-telemetry/opentelemetry-collector"]},
+      {"title": "Deploy only the minimum runtime", "detail": "Choose serving and orchestration infrastructure based on measured scale needs.", "links": ["catalog/operations.md"], "project_ids": ["bentoml/BentoML", "docker/compose", "kubernetes/kubernetes"]}
+    ]
+  }
+]

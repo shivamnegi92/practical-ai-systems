@@ -8,4 +8,4 @@
 - Do not bulk-copy upstream catalog entries, code, or prose. Add original decision guides, caveats, evidence, reproducible methodology, and canonical links.
 - Don't claim testing, trending status, production readiness, safety, or rankings unless the method/source supports it.
 - Check `git status` before editing; preserve unrelated work. Do not publish, commit, push, or open a PR unless the user explicitly requests it.
-- After catalog or example changes run `python3 scripts/build_catalog.py --write`, `python3 -m unittest discover -s tests -v`, `python3 -m unittest discover -s examples -p 'test_*.py' -v`, `python3 scripts/build_catalog.py`, and `git diff --check`.
+- After catalog or example changes run `python3 scripts/build_catalog.py --write`, `python3 -m unittest discover -s tests -v`, `python3 -m unittest discover -s tests -p 'test_paths.py' -v`, `python3 -m unittest discover -s examples -p 'test_*.py' -v`, `python3 scripts/build_catalog.py`, and `git diff --check`.

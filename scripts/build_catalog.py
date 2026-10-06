@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from urllib.parse import urlparse
@@ -24,10 +25,12 @@ CAPABILITIES = {
 }
 DELIVERY_MODES = {"framework", "library", "sdk", "database", "service", "tool", "platform", "engine"}
 EVIDENCE_LEVELS = {"metadata-reviewed", "docs-reviewed", "smoke-tested", "independently-tested"}
-REQUIRED_FIELDS = {
+REQUIRED_RECORD_FIELDS = {
     "id", "name", "url", "category", "capabilities", "delivery_modes", "summary",
     "best_for", "tradeoffs", "license", "origin", "maintenance", "evidence_level",
 }
+REQUIRED_PATH_FIELDS = {"id", "title", "summary", "audience", "steps"}
+REQUIRED_STEP_FIELDS = {"title", "detail", "links", "project_ids"}
 
 
 def validate_records(records: object) -> list[str]:
@@ -42,7 +45,7 @@ def validate_records(records: object) -> list[str]:
         if not isinstance(record, dict):
             errors.append(f"{prefix} must be an object")
             continue
-        missing = REQUIRED_FIELDS - record.keys()
+        missing = REQUIRED_RECORD_FIELDS - record.keys()
         if missing:
             errors.append(f"{prefix} missing fields: {', '.join(sorted(missing))}")
             continue
@@ -144,20 +147,117 @@ def render_category(category: str, records: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def render_readme(readme: str, records: list[dict]) -> str:
+def render_readme(readme: str, records: list[dict], paths: list[dict]) -> str:
     """Replace only the generated category index bounded by stable markers."""
     start_marker = "<!-- CATALOG:START -->"
     end_marker = "<!-- CATALOG:END -->"
+    path_start_marker = "<!-- PATHS:START -->"
+    path_end_marker = "<!-- PATHS:END -->"
+    markers = (start_marker, end_marker, path_start_marker, path_end_marker)
+    if any(readme.count(marker) != 1 for marker in markers):
+        raise ValueError("README must contain exactly one of each CATALOG and PATHS marker")
     start = readme.find(start_marker)
     end = readme.find(end_marker)
-    if start < 0 or end < 0 or end < start:
+    path_start = readme.find(path_start_marker)
+    path_end = readme.find(path_end_marker)
+    if start < 0 or end < start:
         raise ValueError("README must contain ordered CATALOG markers")
+    if path_start < 0 or path_end < path_start:
+        raise ValueError("README must contain ordered PATHS markers")
+    catalog_region = (start, end + len(end_marker))
+    paths_region = (path_start, path_end + len(path_end_marker))
+    if max(catalog_region[0], paths_region[0]) < min(catalog_region[1], paths_region[1]):
+        raise ValueError("README CATALOG and PATHS generated regions must not overlap")
     lines = ["", "", "| Need | Browse |", "|---|---|"]
     for category, (title, desc) in CATEGORIES.items():
         lines.append(f"| {desc} | [{title}](catalog/{category}.md) |")
     lines.extend(["", f"**{len(records)} curated projects** across {len(CATEGORIES)} system areas. Each record links to its canonical project and shows the review status.", ""])
     begin = start + len(start_marker)
-    return readme[:begin] + "\n" + "\n".join(lines) + readme[end:]
+    readme = readme[:begin] + "\n" + "\n".join(lines) + readme[end:]
+
+    path_begin = path_start + len(path_start_marker)
+    path_links = ["", "Browse curated workflows generated from the same catalog records—no project is duplicated across path docs.", ""]
+    for path in paths:
+        anchor = re.sub(r"[^a-z0-9 -]", "", path["title"].lower()).replace(" ", "-")
+        path_links.append(f"- [{path['title']}](catalog/paths.md#{anchor})")
+    return readme[:path_begin] + "\n" + "\n".join(path_links) + "\n" + readme[path_end:]
+
+
+def render_paths(paths: list[dict], records: list[dict]) -> str:
+    """Render ordered decision paths from catalog IDs and local guides."""
+    by_id = {record["id"]: record for record in records}
+    lines = ["# Build paths", "", "> Short, evidence-aware routes through the catalog. These are starting points, not universal architectures.", ""]
+    for path in paths:
+        lines.extend([f"## {path['title']}", "", path["summary"], "", f"**For:** {path['audience']}", ""])
+        for index, step in enumerate(path["steps"], start=1):
+            lines.extend([f"### {index}. {step['title']}", "", step["detail"], ""])
+            linked_projects = [f"[{by_id[project_id]['name']}]({by_id[project_id]['url']})" for project_id in step["project_ids"]]
+            links = [
+                f"[{link}](../{link})" if not link.startswith(("http://", "https://")) else f"[{link}]({link})"
+                for link in step["links"]
+            ]
+            resources = linked_projects + links
+            if resources:
+                lines.extend(["**Explore:** " + " · ".join(resources), ""])
+        lines.append("---")
+        lines.append("")
+    return "\n".join(lines)
+
+
+def validate_paths(paths: object, records: list[dict], root: Path = ROOT) -> list[str]:
+    """Check path metadata, project references, and local links."""
+    errors: list[str] = []
+    if not isinstance(paths, list):
+        return ["paths must be a list"]
+    record_ids = {record["id"] for record in records}
+    seen_ids: set[str] = set()
+    for index, path in enumerate(paths):
+        prefix = f"paths[{index}]"
+        if not isinstance(path, dict):
+            errors.append(f"{prefix} must be an object")
+            continue
+        for field in ("id", "title", "summary", "audience"):
+            if not isinstance(path.get(field), str) or not path[field].strip():
+                errors.append(f"{prefix}.{field} must be a non-empty string")
+        path_id = path.get("id")
+        if not isinstance(path_id, str) or not path_id.strip():
+            errors.append(f"{prefix}.id must be a non-empty string")
+            path_id = f"invalid-{index}"
+        if path_id in seen_ids:
+            errors.append(f"{prefix} duplicate path id: {path_id}")
+        seen_ids.add(path_id)
+        steps = path.get("steps")
+        if not isinstance(steps, list) or not steps:
+            errors.append(f"{prefix}.steps must be a non-empty list")
+            continue
+        for step_index, step in enumerate(steps):
+            step_prefix = f"{prefix}.steps[{step_index}]"
+            if not isinstance(step, dict):
+                errors.append(f"{step_prefix} must be an object")
+                continue
+            for field in ("title", "detail"):
+                if not isinstance(step.get(field), str) or not step[field].strip():
+                    errors.append(f"{step_prefix}.{field} must be a non-empty string")
+            project_ids = step.get("project_ids")
+            if not isinstance(project_ids, list) or any(not isinstance(item, str) for item in project_ids):
+                errors.append(f"{step_prefix}.project_ids must be a list of strings")
+            else:
+                for project_id in project_ids:
+                    if project_id not in record_ids:
+                        errors.append(f"{step_prefix} unknown project ID: {project_id}")
+            links = step.get("links")
+            if not isinstance(links, list) or any(not isinstance(item, str) for item in links):
+                errors.append(f"{step_prefix}.links must be a list of strings")
+            else:
+                for link in links:
+                    if link.startswith(("https://", "http://")):
+                        continue
+                    target = (root / link).resolve()
+                    if root.resolve() not in target.parents and target != root.resolve():
+                        errors.append(f"{step_prefix} path escapes repository: {link}")
+                    elif not target.exists():
+                        errors.append(f"{step_prefix} missing local path: {link}")
+    return errors
 
 
 def check_generated(root: Path = ROOT) -> list[str]:
@@ -166,9 +266,15 @@ def check_generated(root: Path = ROOT) -> list[str]:
     errors = validate_records(records)
     if errors:
         return errors
+    paths = json.loads((root / "catalog" / "paths.json").read_text(encoding="utf-8"))
+    path_errors = validate_paths(paths, records, root)
+    errors.extend(path_errors)
     readme = (root / "README.md").read_text(encoding="utf-8")
-    if render_readme(readme, records) != readme:
-        errors.append("README.md catalog index is stale; run scripts/build_catalog.py --write")
+    if render_readme(readme, records, paths) != readme:
+        errors.append("README.md catalog/path index is stale; run scripts/build_catalog.py --write")
+    paths_file = root / "catalog" / "paths.md"
+    if not path_errors and (not paths_file.exists() or paths_file.read_text(encoding="utf-8") != render_paths(paths, records)):
+        errors.append("catalog/paths.md is stale; run scripts/build_catalog.py --write")
     for category in CATEGORIES:
         path = root / "catalog" / f"{category}.md"
         expected = render_category(category, records)
@@ -193,12 +299,23 @@ def main() -> int:
         print("Catalog validation failed:", file=sys.stderr)
         print("\n".join(f"- {error}" for error in errors), file=sys.stderr)
         return 1
+    try:
+        paths = json.loads((args.root / "catalog" / "paths.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"Cannot read decision paths: {exc}", file=sys.stderr)
+        return 2
+    path_errors = validate_paths(paths, records, args.root)
+    if path_errors:
+        print("Decision path validation failed:", file=sys.stderr)
+        print("\n".join(f"- {error}" for error in path_errors), file=sys.stderr)
+        return 1
     if args.write:
         readme_path = args.root / "README.md"
-        readme_path.write_text(render_readme(readme_path.read_text(encoding="utf-8"), records), encoding="utf-8")
+        readme_path.write_text(render_readme(readme_path.read_text(encoding="utf-8"), records, paths), encoding="utf-8")
         for category in CATEGORIES:
             (args.root / "catalog" / f"{category}.md").write_text(render_category(category, records), encoding="utf-8")
-        print(f"Rendered {len(records)} projects into README index and {len(CATEGORIES)} category pages.")
+        (args.root / "catalog" / "paths.md").write_text(render_paths(paths, records), encoding="utf-8")
+        print(f"Rendered {len(records)} projects, {len(paths)} decision paths, and {len(CATEGORIES)} category pages.")
         return 0
     errors = check_generated(args.root)
     if errors:

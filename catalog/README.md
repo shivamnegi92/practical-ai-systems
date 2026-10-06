@@ -1,6 +1,9 @@
 # Catalog data model
 
-`projects.json` is the single source of truth for active projects. Category pages and the README's browse index are rendered with `scripts/build_catalog.py`; do not hand-edit generated views.
+- `projects.json`: canonical active project records.
+- `paths.json`: declarative user workflows composed from record IDs and local guides.
+- `paths.md`: generated guided routes for common jobs (do not edit by hand).
+- `*.md`: generated category views; do not hand-edit generated pages.
 
 ## Dimensions
 
@@ -10,19 +13,24 @@ Each project is classified along three orthogonal dimensions:
 - **Capability (`capabilities`)** — what it can do.
 - **Delivery mode (`delivery_modes`)** — how a team consumes or operates it.
 
-This lets us generate task-oriented views without duplicating project facts.
-
 ## Review fields
 
 - `license`: verified SPDX identifier plus direct upstream `LICENSE` file URL; API metadata alone is insufficient.
 - `origin`: `screened` status, official evidence URL, and a concise basis explaining what the cited sources establish.
-- `maintenance`: status and last review date.
+- `maintenance`: active status and last review date.
 - `evidence_level`: what the catalog actually reviewed or tested.
 
-## Adding an entry
+## Adding or reviewing records
 
-1. Add one canonical record to `projects.json` using controlled values listed in `../scripts/build_catalog.py`.
-2. Use a direct upstream `LICENSE` link; a GitHub API SPDX result alone is not enough. A screened origin must cite primary evidence and explain the basis. If license, origin, or maintenance is unclear, put the candidate in `review-queue.json` instead of active records.
-5. The validator requires both values but does not prove the claim. Review the cited source yourself; validation passing is a structure check, not an origin verdict.
+1. Add a canonical record to `projects.json` using controlled values from `../scripts/build_catalog.py`.
+2. Verify the upstream license file and source-backed origin. If either is unclear, keep the candidate in `review-queue.json`, not active records.
+3. Add or update workflows in `paths.json` by referencing known project IDs and existing local guides; avoid duplicated descriptions.
+4. Regenerate and test:
 
-Popularity is never used as a proxy for quality or inclusion.
+   ```bash
+   python3 scripts/build_catalog.py --write
+   python3 -m unittest discover -s tests -v
+   python3 scripts/build_catalog.py
+   ```
+
+The validator checks structure and references; it cannot establish whether cited claims are true. Review primary sources yourself. Popularity is never a proxy for quality or inclusion.
