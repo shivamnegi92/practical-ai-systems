@@ -1,164 +1,74 @@
-# Plan: make Practical AI Systems a top-tier AI repository
+# Practical AI Systems — product plan
 
-_Last updated: 2026-10-05. Evidence: live GitHub API snapshot in `findings.md`._
+_Last updated: 2026-10-07_
 
-## 1. The honest diagnosis
+## Product idea
 
-Today the repo is a well-engineered **catalog of other people's projects**: 20 links, 3 recipes, 1 runnable example, 0 stars, and no description, topics, or homepage on GitHub.
+**Practical AI Systems is an original collection of runnable AI systems, each paired with an evaluation, failure cases, and implementation trade-offs.** The distinctive promise is that builders can run a system, inspect how it behaves, and see what the evaluation does and does not establish.
 
-Every top repo we studied wins on **original artifacts people can run or fork**, not on curation quality. Validation pipelines are great hygiene, but nobody stars a schema. The catalog stays—as a supporting layer, not the product.
+This repository is not a ranking, endorsement, or mirror of other collections. The curated catalog is a secondary toolbox; the original systems and their learning value are the product.
 
-## 2. Patterns behind the winners (from the data)
+## Current inventory
 
-| # | Pattern | Evidence | What it means for us |
-|---|---|---|---|
-| 1 | **A countable promise in one line** | "100+ AI Agents…", "21 Lessons", "42+ runnable notebooks", "50+ tutorials" | Headline must name a number of runnable things, and keep it true |
-| 2 | **Original runnable units, not links** | awesome-llm-apps: 100+ app folders; Nir: notebook + script + tests per technique | Each unit = self-contained folder that runs in about 3 commands |
-| 3 | **One strict template per unit** | Nir's tutorial contract; Microsoft's numbered lesson folders | Same README sections, layout, and eval format for every system |
-| 4 | **Visible progression** | `starter_` / `advanced_` prefixes; lessons `00-`…`21-`; roadmap.sh paths | Levels + numbered paths (we already have paths, extend them) |
-| 5 | **Ride each wave fast** | awesome-llm-apps added `mcp_ai_agents`, `agent_skills`, `voice_ai_agents`, `generative_ui_agents` as the topics peaked | Wave folders; ship within 1–2 weeks of a trend, using vetted tools only |
-| 6 | **Author distribution flywheel** | llm-course: 83k stars, 3 contributors, README-only, backed by X/HF/blog/book; Shubham and Nir both run newsletters | Every new system gets a LinkedIn/X post + short write-up; distribution is half the work |
-| 7 | **Low friction to first success** | devcontainers, `.env.example`, Colab badges in Microsoft/Nir repos | Local-first with Llama/Gemma/Mistral/Phi via Ollama; no paid key required to try |
-| 8 | **Discoverability metadata** | Nir: 18–19 topics each; most winners have homepage + social preview; `llms.txt`, `CITATION.cff` | Fix GitHub metadata on day 1; add `llms.txt`, `CITATION.cff` |
-| 9 | **Contribution mechanics** | 27–157 contributors; issue forms, contributor guides; Microsoft auto-translations drive forks | Issue forms, good-first-issues, contributor credit, system-request queue |
-| 10 | **Sustained cadence** | All top repos pushed within the last few weeks; agents-towards-production reached ~21.5k stars in ~16 months | Weekly shipping beats one big drop |
+- 10 offline-first runnable system prototypes under `systems/`.
+- Each system includes a quickstart, code, small synthetic evaluation fixtures, a recorded result, and stated limitations.
+- Shared provider, text, and metric helpers live in `common/`.
+- The README has entry points for first-timers, students, instructors, and professional teams, with Beginner / Intermediate / Advanced project levels.
+- The structured toolbox contains 20 reviewed external projects in six topic areas. These are clearly identified as external projects.
 
-## 3. Positioning: the wedge
+Current quality boundary: the examples are learning prototypes, not production services. Small synthetic-fixture scores are regression checks, not general performance claims. No system requires a model download or paid API to run its baseline.
 
-Cloning awesome-llm-apps at 140k stars is a losing game. The gap none of them fill well: **every example is evaluated.**
+## Product principles
 
-> **Practical AI Systems — 50 production-shaped AI systems you can run on a laptop. Each one ships with an eval suite, failure modes, and cost/latency numbers.**
+1. **Run before reading a wall of theory.** Every system should have a short, working quickstart.
+2. **Measure the task, not the demo.** Show the evaluation cases, metric, sample count, method, and limitations.
+3. **Make failures visible.** Include adversarial, unanswerable, invalid, or unsafe cases where relevant.
+4. **Progress by prerequisite.** Beginner, Intermediate, and Advanced describe the skills needed to learn from a project—not its quality.
+5. **One system, one coherent job.** Avoid shallow wrappers and examples that exist only to increase the count.
+6. **Keep first-run friction low.** Offline baselines and tests must not need secrets, paid services, or network access.
+7. **Attribute external material.** Original code and writing must be distinguishable from linked projects and third-party material.
+8. **Protect user trust.** No unsupported safety, production-readiness, ranking, or performance claims.
 
-Why this wedge:
-- It matches Shivam's real strengths (voice-agent evaluation, entity/multimodal extraction, evaluation discipline).
-- Defaults run on widely used open-weight models through a local provider, so anyone can try every system for free.
-- It produces genuine, measurable open-source adoption (forks, citations, contributors).
-- Hard to copy cheaply: anyone can wrap an LLM call; few ship reproducible evals.
+## Roadmap
 
-## 4. The unit of content: a "system"
+### Phase 1 — First 10 systems (prototype set in place; quality polish remains)
+- [x] Build first-pass examples spanning retrieval, extraction, agents, evaluation, and operations.
+- [x] Give each example its own code, synthetic cases, result packet, and focused tests.
+- [x] Add shared offline evaluation and CI checks.
+- [ ] Review each README for one-command-first usability, prerequisites, and a clear “when not to use this.”
+- [ ] Expand thin evaluation sets with more edge cases and independently reviewed labels.
+- [ ] Add a fresh-clone smoke-test job to CI.
 
-```text
-systems/<area>/<level>-<slug>/
-  README.md        problem -> architecture diagram -> run in 3 commands -> eval results -> failure modes -> cost/latency -> extend it
-  app/             minimal code (CLI or small UI)
-  eval/            small labeled dataset (synthetic or properly licensed) + eval script + results.json
-  tests/           offline tests using a stub model (CI never needs keys)
-  demo.gif         10-20 second visual
-  requirements.txt / pyproject.toml
-```
+### Phase 2 — Flagship tutorials and runnable depth
+- [ ] Turn the strongest systems into full tutorials: problem, architecture, baseline, setup, experiment, result interpretation, failure analysis, and extension exercise.
+- [ ] Prioritize original work in document AI, structured/entity extraction, and voice-system evaluation.
+- [ ] Record real latency/cost only when actually measured under documented conditions; otherwise say “not measured.”
+- [ ] Add optional model-backed variants only where they teach something the deterministic baseline cannot.
 
-Levels: `starter`, `intermediate`, `advanced`. Areas reuse the existing six categories (agents, retrieval, extraction, multimodal, evaluation, operations) plus wave folders (`mcp`, `agent-skills`, `voice`).
+### Phase 3 — Learning and contribution loop
+- [ ] Add course-style paths with prerequisites and numbered checkpoints where appropriate.
+- [ ] Add reproducible project templates, issue forms, good-first-contribution tasks, and contributor credit.
+- [ ] Publish a changelog and releases only when the release checklist is met.
+- [ ] Schedule a read-only freshness report for external links and dependency changes.
 
-Generated index: extend `scripts/build_catalog.py` so that each system's front-matter generates README tables and paths. One source of truth, the same DRY approach as the catalog today.
+### Phase 4 — Scale by demonstrated usefulness
+- [ ] Grow toward 30 then 50 systems only if each addition meets the same run/eval/failure-mode bar.
+- [ ] Add a generated docs site only if learners need navigation that GitHub Markdown cannot provide.
+- [ ] Add cross-system comparisons only when methods, versions, datasets, and conditions are genuinely comparable.
+- [ ] Use reader issues, pull requests, and usage signals to choose the next systems; do not optimize for vanity counts.
 
-## 4. First 10 systems (in progress)
+## Acceptance bar for a new system
 
-The content sprint is under way, but these ten are NOT launch-ready yet. Every system must have: a standard template, runnable code, a focused offline test suite, synthetic or licensed eval cases, reproducible `eval/results.json`, known failure modes, and one clear example of when not to use it.
+- Fresh-clone quickstart is short and succeeds as documented.
+- Offline unit tests pass; default path needs no credentials or external service.
+- Evaluation input, method, case count, metrics, and result packet are reproducible.
+- At least one meaningful failure/negative case is included where applicable.
+- README states prerequisites, scope, limitations, and when not to use the example.
+- Code/data provenance and licensing are clear; no confidential or sensitive data.
 
-1. Document Q&A with citations and abstention — `systems/doc_qa/`
-2. Invoice field extraction with consistency checks — `systems/invoice_extract/`
-3. Entity extraction + error analysis — `systems/entity_extraction/`
-4. Voice-agent transcript evaluator — `systems/voice_eval/`
-5. Multimodal document pipeline with an explicit OCR boundary — `systems/multimodal_ocr/`
-6. Approval-gated tool-using workflow — `systems/bounded_agent/`
-7. Local knowledge-base MCP server — `systems/mcp_kb/`
-8. Judge-agreement audit with human-rater comparison — `systems/judge_audit/`
-9. Exact-response cache with TTL/LRU/model isolation — `systems/semantic_cache/`
-10. Repository hygiene toy scanner with loud limitations — `systems/repo_guard/`
+## Immediate next actions
 
-The common test/evaluation infrastructure exists under `common/` and CI now runs it, but README templates, quality review, richer diagnostics, and smoke tests remain to do. Current evals are small, synthetic, and best treated as regression fixtures—not evidence of production performance.
-
-## 5. Phased plan after the first 10
-
-### Phase 0 — Packaging and foundation (week 1)
-
-## 5. Phased plan
-
-### Phase 0 — Packaging and foundation (week 1)
-- [ ] GitHub description, ~15 topics, social preview image, homepage (set later when a docs site exists).
-- [ ] README rewrite: countable promise, demo GIF, "Start here in 5 minutes", systems table by area/level.
-- [ ] `systems/_template/` + system contract in `CONTRIBUTING.md`.
-- [ ] Shared `common/llm.py`: one provider interface (Ollama local default, optional hosted APIs) + a stub provider for tests.
-- [ ] CI: build index, run every system's offline tests, link check.
-- [ ] `llms.txt`, `CITATION.cff`, `.env.example`, devcontainer.
-- [ ] Move `catalog/` under a "Toolbox" section—supporting, not the headline.
-
-## 4. First 10 systems (in progress)
-
-The content sprint is under way, but these ten are NOT launch-ready yet. Every system must have: a standard template, runnable code, a focused offline test suite, synthetic or licensed eval cases, reproducible `eval/results.json`, known failure modes, and one clear example of when not to use it.
-
-1. Document Q&A with citations and abstention — `systems/doc_qa/`
-2. Invoice field extraction with consistency checks — `systems/invoice_extract/`
-3. Entity extraction + error analysis — `systems/entity_extraction/`
-4. Voice-agent transcript evaluator — `systems/voice_eval/`
-5. Multimodal document pipeline with an explicit OCR boundary — `systems/multimodal_ocr/`
-6. Approval-gated tool-using workflow — `systems/bounded_agent/`
-7. Local knowledge-base MCP server — `systems/mcp_kb/`
-8. Judge-agreement audit with human-rater comparison — `systems/judge_audit/`
-9. Exact-response cache with TTL/LRU/model isolation — `systems/semantic_cache/`
-10. Repository hygiene toy scanner with loud limitations — `systems/repo_guard/`
-
-The common test/evaluation infrastructure exists under `common/` and CI now runs it, but README templates, quality review, richer diagnostics, and smoke tests remain to do. Current evals are small, synthetic, and best treated as regression fixtures—not evidence of production performance.
-
-## 5. Phased plan after the first 10
-
-### Launch (after all 10 pass the quality bar)
-- [ ] Launch only with 10 or more working systems; an empty repo wastes the one first impression.
-- [ ] Coordinated posts: LinkedIn (long-form), X thread, Show HN, r/LocalLLaMA, relevant Discords.
-- [ ] Each post leads with one striking eval finding (e.g., "the judge disagreed with humans 31% of the time"), not with "I made a repo."
-- [ ] Submit to awesome lists where genuinely relevant.
-
-### Cadence and waves (months 2–3): 30 systems
-- [ ] Ship 2 systems/week; "New this week" section generated in the README.
-- [ ] Wave watch: run the trend-curator skill weekly; when a topic peaks, ship a system within 1–2 weeks (only vetted, policy-compliant tools).
-- [ ] One write-up per system (LinkedIn/blog), linking back to the folder.
-
-### Community engine (month 3+)
-- [ ] Issue forms: system request, new system proposal, bug, stale entry.
-- [ ] Label 10 good-first-issues at all times (e.g., add an eval case, port to another local model).
-- [ ] Contributor credit in each system README + an all-contributors table.
-- [ ] Review SLA: first response within 72 hours.
-
-### Scale and authority (months 4–6): 50+ systems
-- [ ] Docs site (MkDocs or Astro) generated from the same metadata; only now, once content justifies it.
-- [ ] Cross-system results page: comparable eval numbers across local models (reproducible, with exact versions, no "best" claims).
-- [ ] Optional: notebook/Colab variants for the most popular systems, translations driven by demand.
-- [ ] Talks/meetups and a short e-book or course built from the repo.
-
-### Folded-in maintenance (from the earlier backlog)
-- Evidence packets → now inherent: each system's `eval/results.json` is the evidence.
-- Freshness workflow → monthly read-only audit of catalog links and system dependencies; reports, never silently edits.
-- Release loop → monthly tagged release + CHANGELOG ("v0.3: 6 new systems").
-
-## 6. Metrics (leading indicators first)
-
-| Metric | 30 days | 90 days | 6 months |
-|---|---|---|---|
-| Runnable systems with evals | 10 | 30 | 50+ |
-| Median time-to-first-run (fresh clone) | < 10 min | < 5 min | < 5 min |
-| External PRs merged | 0–2 | 10 | 40 |
-| Distinct contributors | 1–3 | 10 | 25+ |
-| Posts/write-ups published | 4 | 20 | 40 |
-
-Stars and forks are outcomes, not plans; track them monthly (GitHub traffic API: views, clones, referrers) and use referrers to double down on channels that work. Keep a monthly adoption snapshot.
-
-## 7. What we will not do
-- Buy stars, run star-for-star swaps, or post spammy self-promotion.
-- Copy or lightly reskin other repos' tutorials.
-- Ship 100 shallow API wrappers to inflate the headline number.
-- Add models, vendors, or frameworks that fail the maintainer provenance review (unclear means hold).
-- Launch before 10 solid systems exist.
-- Build a docs site before the content exists to fill it.
-
-## 8. Risks and constraints
-- **Independence:** personal project. No employer-internal code, data, names, or branding, and nothing implying any employer's endorsement.
-- **Time capacity:** 2 systems/week is ambitious beside a day job; quality over count—drop to 1/week before lowering the bar.
-- **Cost:** local-first by default keeps it free for us and for users.
-- **Data licensing:** eval datasets must be synthetic or clearly licensed; no PII.
-- **Maintenance debt:** pin dependencies; monthly freshness audit; archive systems that rot rather than leaving them broken.
-
-## 9. Immediate next actions
-1. Set GitHub description + topics (5 minutes, highest ROI).
-2. Build `systems/_template/`, `common/llm.py` with stub provider, and index generation (test-first).
-3. Ship system #1 (document Q&A with retrieval eval) end-to-end as the reference implementation.
-4. Rewrite README around the new promise once system #1 exists.
+1. Polish the first-run path and Beginner / Intermediate / Advanced sections in `/Users/s0n0611/Documents/GitHub/practical-ai-systems/README.md`.
+2. Review each of the ten system READMEs against the acceptance bar.
+3. Strengthen the smallest synthetic evaluations, beginning with voice safety and judge-agreement cases.
+4. Add fresh-clone validation before expanding the project count.

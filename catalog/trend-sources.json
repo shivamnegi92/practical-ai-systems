@@ -4,38 +4,14 @@
     {
       "name": "GitHub Trending",
       "url": "https://github.com/trending?since=weekly",
-      "method": "Inspect current public trending page; it is a discovery interface, not a stable rank API.",
-      "signal": "A directly observed weekly appearance may be reported with date and rank; not a quality score."
+      "method": "Inspect the current public trending page; it is a discovery interface, not a stable rank API.",
+      "signal": "A directly observed appearance may be reported with date and rank; it is not a quality score."
     },
     {
       "name": "GitHub repository search",
       "url": "https://github.com/search?q=agent+RAG+evaluation&type=repositories",
-      "method": "Use current public repository search for category coverage and emerging projects.",
-      "signal": "Search results are candidate discovery only; verify canonical repo metadata directly."
-    },
-    {
-      "name": "Shubham Saboo awesome-llm-apps",
-      "url": "https://github.com/Shubhamsaboo/awesome-llm-apps",
-      "method": "Review recent runnable application examples and category taxonomy.",
-      "signal": "Use-case gaps and application patterns."
-    },
-    {
-      "name": "Nir Diamant agents-towards-production",
-      "url": "https://github.com/NirDiamant/agents-towards-production",
-      "method": "Review production lifecycle topics and contribution standards.",
-      "signal": "Engineering practices and lifecycle topics."
-    },
-    {
-      "name": "Nir Diamant GenAI_Agents",
-      "url": "https://github.com/NirDiamant/GenAI_Agents",
-      "method": "Review tutorial examples and validation/test structure.",
-      "signal": "Agent techniques and educational patterns."
-    },
-    {
-      "name": "Nir Diamant RAG_Techniques",
-      "url": "https://github.com/NirDiamant/RAG_Techniques",
-      "method": "Review retrieval techniques, runnable scripts, evaluation, and tests.",
-      "signal": "Retrieval patterns and evaluation gaps."
+      "method": "Search public repositories for candidate discovery and category coverage.",
+      "signal": "Search results are leads only; verify each candidate at its canonical source."
     }
   ],
   "policy": "Discovery only; every candidate needs independent license, origin, status, relevance, and tradeoff review before active catalog inclusion."
