@@ -28,9 +28,13 @@ class SystemEvaluationTests(unittest.TestCase):
         readme = (ROOT / "README.md").read_text()
         rendered = render_readme(readme)
         self.assertEqual(render_readme(rendered), rendered)
-        self.assertIn("## Run one now", rendered)
+        self.assertIn("## Pick your starting point", rendered)
+        self.assertIn("### Beginner", rendered)
+        self.assertIn("### Intermediate", rendered)
+        self.assertIn("### Advanced", rendered)
         self.assertIn("#### [Voice-agent transcript evaluator]", rendered)
-        self.assertLess(rendered.index("## Featured builds"), rendered.index("## Choose a learning path"))
+        self.assertLess(rendered.index("### Beginner"), rendered.index("## Learning paths"))
+        self.assertIn("## Run your first project", rendered)
         self.assertNotIn("<!-- SYSTEMS:START -->\n<!-- SYSTEMS:END -->", rendered)
 
     def test_duplicate_markers_are_rejected(self):

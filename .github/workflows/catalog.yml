@@ -31,6 +31,7 @@ jobs:
         run: python scripts/evaluate_systems.py --check && python scripts/evaluate_systems.py --write && git diff --exit-code -- systems/*/eval/results.json
       - name: Validate system README index
         run: python scripts/render_systems.py
+      - name: Run example tests
         run: python -m unittest discover -s examples -p 'test_*.py' -v
       - name: Check whitespace errors
         run: git diff --check
