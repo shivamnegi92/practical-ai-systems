@@ -22,7 +22,11 @@ def validate_row(schema: dict, row: dict) -> list[str]:
             if required:
                 errors.append(f"missing:{field}")
             continue
-        if not isinstance(value, expected_type):
+        # bool subclasses int in Python; the JSON number/boolean distinction
+        # must agree with the web port's typeof checks.
+        if not isinstance(value, expected_type) or (
+            spec.get("type") == "number" and isinstance(value, bool)
+        ):
             errors.append(f"type:{field}")
     return errors
 
