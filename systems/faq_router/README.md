@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json) for current routing accuracy on 6 synthetic messages, including a tied-keyword case and an off-topic fallback case.
+See [`eval/results.json`](eval/results.json) for current routing accuracy on 8 synthetic messages, including charged-twice/log-in cases, a tied-keyword case and an off-topic fallback case.
 
 ## Known limitations
+
+- Queries and keywords share a simple suffix/silent-e normalization heuristic; this is not a general morphological analyzer. Multi-word keywords such as `log in` match consecutive tokens in order, including stopwords. Normalized duplicate keywords count once; phrase and single-word matches can still overlap.
 
 - Intents are a fixed, hand-picked keyword list; anything phrased without those words routes to "unknown" even when a human would understand it immediately.
 - Ties between intents resolve to whichever intent is checked first, which is an arbitrary order, not a confidence ranking.
