@@ -16,20 +16,25 @@ NEGATIVE = {
     "bad", "terrible", "hate", "hated", "hates", "slow", "broken",
     "awful", "horrible", "worst", "confusing", "frustrating",
 }
-_WORD = re.compile(r"[a-z]+")
+_WORD = re.compile(r"[a-z]*n't|[a-z]+")
+NEGATORS = {"not", "never", "no", "n't"}
 
 
 def _words(text: str) -> list[str]:
-    return _WORD.findall(text.lower())
+    return _WORD.findall(text.lower().replace("\u2019", "'"))
 
 
 def classify(text: str) -> str:
     words = _words(text)
-    positive = sum(w in POSITIVE for w in words)
-    negative = sum(w in NEGATIVE for w in words)
-    if positive > negative:
+    score = 0
+    for index, word in enumerate(words):
+        polarity = int(word in POSITIVE) - int(word in NEGATIVE)
+        negated = any(token in NEGATORS or token.endswith("n't")
+                      for token in words[max(0, index - 3):index])
+        score += -polarity if negated else polarity
+    if score > 0:
         return "positive"
-    if negative > positive:
+    if score < 0:
         return "negative"
     return "neutral"
 
