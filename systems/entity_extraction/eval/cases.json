@@ -1,4 +1,8 @@
 [
+ {"text":"Meeting in New York with Dr. Ana Li.","gold":[{"text":"New York","type":"LOCATION"},{"text":"Ana Li","type":"PERSON"}]},
+ {"text":"Our office is in San Francisco.","gold":[{"text":"San Francisco","type":"LOCATION"}]},
+ {"text":"Travel to Los Angeles.","gold":[{"text":"Los Angeles","type":"LOCATION"}]},
+ {"text":"Visit Buenos Aires.","gold":[{"text":"Buenos Aires","type":"LOCATION"}],"note":"Known miss: outside the small gazetteer; keep the correct gold label."},
  {"text":"On March 4, 2026, Maya Chen approved a $2,500.00 credit.","gold":[{"text":"March 4, 2026","type":"DATE"},{"text":"Maya Chen","type":"PERSON"},{"text":"$2,500.00","type":"MONEY"}]},
  {"text":"Eli Turner signed the $80 agreement on 2025-01-12.","gold":[{"text":"Eli Turner","type":"PERSON"},{"text":"$80","type":"MONEY"},{"text":"2025-01-12","type":"DATE"}]},
  {"text":"River North paid $1,200.50 to Acme Labs on May 9.","gold":[{"text":"River North","type":"PERSON"},{"text":"$1,200.50","type":"MONEY"},{"text":"May 9","type":"DATE"}]},

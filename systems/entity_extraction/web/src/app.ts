@@ -2,7 +2,7 @@
 
 export interface Entity {
   text: string;
-  type: "PERSON" | "DATE" | "MONEY";
+  type: "PERSON" | "LOCATION" | "DATE" | "MONEY";
   start: number;
   end: number;
 }
@@ -15,6 +15,7 @@ const PATTERNS: Array<[Entity["type"], RegExp]> = [
   ],
   ["MONEY", /\$\s?\d[\d,]*(?:\.\d{2})?/g],
 ];
+const PLACES = new Set(["new york", "san francisco", "los angeles", "new delhi"]);
 
 export function extract(text: string): Entity[] {
   const entities: Entity[] = [];
@@ -22,7 +23,8 @@ export function extract(text: string): Entity[] {
     const re = new RegExp(pattern.source, pattern.flags);
     let match: RegExpExecArray | null;
     while ((match = re.exec(text)) !== null) {
-      entities.push({ text: match[0], type, start: match.index, end: match.index + match[0].length });
+      const kind = type === "PERSON" && PLACES.has(match[0].toLowerCase().split(/\s+/).join(" ")) ? "LOCATION" : type;
+      entities.push({ text: match[0], type: kind, start: match.index, end: match.index + match[0].length });
     }
   }
   return entities.sort((a, b) => a.start - b.start || a.end - b.end || a.type.localeCompare(b.type));
@@ -48,6 +50,14 @@ export interface EvalCase {
 }
 
 export const EVAL_CASES: EvalCase[] = [
+  {
+    text: "Meeting in New York with Dr. Ana Li.",
+    gold: [{ text: "New York", type: "LOCATION", start: 11, end: 19 }, { text: "Ana Li", type: "PERSON", start: 29, end: 35 }],
+  },
+  { text: "Our office is in San Francisco.", gold: [{ text: "San Francisco", type: "LOCATION", start: 17, end: 30 }] },
+  { text: "Travel to Los Angeles.", gold: [{ text: "Los Angeles", type: "LOCATION", start: 10, end: 21 }] },
+  // Known miss: outside the small gazetteer; keep the correct gold label.
+  { text: "Visit Buenos Aires.", gold: [{ text: "Buenos Aires", type: "LOCATION", start: 6, end: 18 }] },
   {
     text: "Jane Doe signed the contract on January 5, 2026 for $1,200.",
     gold: [
