@@ -4,6 +4,12 @@ from systems.readability_scorer.app import band, grade_level
 
 
 class ReadabilityTests(unittest.TestCase):
+    def test_short_text_does_not_have_a_negative_grade(self):
+        self.assertEqual(grade_level("Hi"), 0.0)
+
+    def test_punctuation_only_text_has_zero_grade(self):
+        self.assertEqual(grade_level("..."), 0.0)
+
     def test_short_plain_sentences_are_simple(self):
         text = "The cat sat on the mat. It was a hot day."
         self.assertEqual(band(grade_level(text)), "simple")

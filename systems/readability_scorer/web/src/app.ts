@@ -17,7 +17,7 @@ export function gradeLevel(text: string): number {
   if (words.length === 0) return 0;
   const totalSyllables = words.reduce((sum, w) => sum + syllables(w), 0);
   const score = 0.39 * (words.length / sents.length) + 11.8 * (totalSyllables / words.length) - 15.59;
-  return Math.round(score * 100) / 100;
+  return Math.max(0, Math.round(score * 100) / 100);
 }
 
 export function band(grade: number): "simple" | "standard" | "complex" {

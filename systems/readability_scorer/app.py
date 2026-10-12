@@ -33,7 +33,7 @@ def grade_level(text: str) -> float:
         return 0.0
     syllables = sum(_syllables(w) for w in words)
     score = 0.39 * (len(words) / len(sents)) + 11.8 * (syllables / len(words)) - 15.59
-    return round(score, 2)
+    return round(max(0.0, score), 2)
 
 
 def band(grade: float) -> str:

@@ -2,6 +2,14 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { band, evaluateAll, gradeLevel } from "./app.js";
 
+test("short text does not have a negative grade", () => {
+  assert.equal(gradeLevel("Hi"), 0);
+});
+
+test("punctuation-only text has zero grade", () => {
+  assert.equal(gradeLevel("..."), 0);
+});
+
 test("short plain sentences are simple", () => {
   assert.equal(band(gradeLevel("The cat sat on the mat. It was a hot day.")), "simple");
 });
