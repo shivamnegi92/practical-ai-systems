@@ -2,6 +2,20 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { evaluateAll, SemanticCache } from "./app.js";
 
+test("apostrophes and punctuation normalize without merging words", () => {
+  const cache = new SemanticCache();
+  cache.put("What's the price?", "answer");
+  for (const query of ["whats the price", "What’s the price!", "whats, the price."]) {
+    assert.equal(cache.get(query), "answer");
+  }
+  assert.equal(cache.get("whatstheprice"), null);
+  assert.equal(cache.get("whats the prize"), null);
+  assert.equal(cache.get("whats the price", "default", "2"), null);
+  cache.put("price,USD", "amount");
+  assert.equal(cache.get("price USD"), "amount");
+  assert.equal(cache.get("priceUSD"), null);
+});
+
 test("normalized queries hit the same entry", () => {
   const cache = new SemanticCache();
   cache.put("What is the price?", "answer");
@@ -34,4 +48,6 @@ test("evaluation demonstrates both eviction and expiry", () => {
   const result = evaluateAll();
   assert.equal(result.lru_eviction_works, true);
   assert.equal(result.ttl_expiry_works, true);
+  assert.equal(result.punctuation_hit_works, true);
+  assert.equal(result.spelling_miss_works, true);
 });
