@@ -32,7 +32,7 @@ jobs:
           done
       - name: Assemble gallery
         run: python scripts/build_site.py --out site
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site
 
