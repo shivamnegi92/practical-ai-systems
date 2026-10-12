@@ -1,5 +1,10 @@
 [
   {
+    "text": "Dr. Smith arrived at 3 p.m. today. He left. The end.",
+    "key_sentence": "Dr. Smith arrived at 3 p.m. today.",
+    "n": 1
+  },
+  {
     "text": "Database indexing speeds up queries. Indexing indexing indexing is crucial for performance. The weather was nice yesterday.",
     "key_sentence": "Indexing indexing indexing",
     "n": 1
