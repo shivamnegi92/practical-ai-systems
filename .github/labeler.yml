@@ -20,3 +20,15 @@
           - "templates/**"
           - ".github/workflows/**"
           - "Makefile"
+"readme-visuals":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "README.md"
+          - "docs/gallery/**"
+          - "scripts/render_systems.py"
+"contributor-experience":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "CONTRIBUTING.md"
+          - ".github/ISSUE_TEMPLATE/**"
+          - ".github/PULL_REQUEST_TEMPLATE.md"

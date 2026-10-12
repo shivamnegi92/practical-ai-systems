@@ -16,10 +16,18 @@ SYSTEMS = load_manifests()
 START = "<!-- SYSTEMS:START -->"
 END = "<!-- SYSTEMS:END -->"
 LEVEL_SUMMARIES = {
-    "Beginner": "Start here if this is your first AI project. No model account or paid API key is needed.",
-    "Intermediate": "For people comfortable with basic Python who want to work with data and evaluation metrics.",
-    "Advanced": "For builders ready to reason about agent boundaries, protocols, and evaluation quality.",
+    "Beginner": "Start with offline examples and the core building blocks of AI systems.",
+    "Intermediate": "Combine components and measure trade-offs across common AI workflows.",
+    "Advanced": "Explore authorization, orchestration, evaluation quality, and operations.",
 }
+
+
+def _compact(text: str, limit: int = 72) -> str:
+    """Keep descriptions scannable; the full hook remains in the system guide."""
+    text = text.strip().rstrip(".")
+    if len(text) > limit:
+        text = text[:limit - 1].rsplit(" ", 1)[0].rstrip(" ,;:") + "…"
+    return text
 
 
 def _packet(root: Path, name: str) -> tuple[int, dict]:
@@ -45,36 +53,35 @@ def render_readme(readme: str, root: Path = ROOT) -> str:
     if end < start:
         raise ValueError("README systems markers are out of order")
 
-    counts = {level: sum(entry["level"] == level for entry in SYSTEMS.values()) for level in LEVEL_SUMMARIES}
     lines = [
         "",
-        "Choose a level that feels right. You can skip ahead if you already know the basics.",
+        "Browse all 30 projects by increasing scope. You can skip ahead if you already know the basics.",
         "",
-        f"- **[Beginner](#beginner)** — {counts['Beginner']} first projects; no model setup.",
-        f"- **[Intermediate](#intermediate)** — {counts['Intermediate']} projects; Python and basic metrics help.",
-        f"- **[Advanced](#advanced)** — {counts['Advanced']} projects; system boundaries and evaluation.",
+        "- **[Beginner](#beginner)** — no model setup; build core concepts.",
+        "- **[Intermediate](#intermediate)** — combine components and measure trade-offs.",
+        "- **[Advanced](#advanced)** — work through system boundaries and operations.",
         "",
     ]
 
     for level, summary in LEVEL_SUMMARIES.items():
-        lines.extend([f"### {level}", "", summary, ""])
+        lines.extend([
+            f"### {level}",
+            "",
+            "A compact directory of projects by level. Read a system guide for its focus and prerequisites.",
+            "",
+            "| System | Eval cases |",
+            "|:--|--:|",
+        ])
         for name, info in SYSTEMS.items():
             if info["level"] != level:
                 continue
-            count, metrics = _packet(root, name)
+            count, _metrics = _packet(root, name)
             readme_path = f"systems/{name}/README.md"
             result_path = f"systems/{name}/eval/results.json"
-            lines.extend([
-                f"#### [{info['title']}]({readme_path})",
-                "",
-                info["hook"],
-                "",
-                f"**Before you start:** {info['prerequisites']}",
-                "",
-                f"**Try this:** run the project README quickstart, then its test and evaluator.",
-                f"[Evaluation results and cases]({result_path}) · {count} small synthetic cases. Scores are learning fixtures, not production benchmarks.",
-                "",
-            ])
+            lines.append(
+                f"| [{info['title']}]({readme_path}) | [{count}]({result_path}) |"
+            )
+        lines.append("")
 
     new_readme = readme[:start] + START + "\n" + "\n".join(lines) + END + readme[end + len(END):]
     return new_readme

@@ -177,10 +177,10 @@ def render_readme(readme: str, records: list[dict], paths: list[dict]) -> str:
     regions = (catalog_region, paths_region, systems_region)
     if any(max(a[0], b[0]) < min(a[1], b[1]) for i, a in enumerate(regions) for b in regions[i + 1:]):
         raise ValueError("README generated regions must not overlap")
-    lines = ["", "", "| Need | Browse |", "|---|---|"]
+    lines = ["", "| Need | Browse |", "|:--|:--|"]
     for category, (title, desc) in CATEGORIES.items():
         lines.append(f"| {desc} | [{title}](catalog/{category}.md) |")
-    lines.extend(["", f"**{len(records)} curated projects** across {len(CATEGORIES)} system areas. Each record links to its canonical project and shows the review status.", ""])
+    lines.extend(["", f"{len(records)} curated projects across {len(CATEGORIES)} areas; every entry links to its canonical source and includes its review status.", ""])
     begin = start + len(start_marker)
     readme = readme[:begin] + "\n" + "\n".join(lines) + readme[end:]
 
