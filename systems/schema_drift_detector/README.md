@@ -23,10 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json) for current exact-report match on 2 synthetic batches: one with a new field, a missing required field, and a type mismatch, and one clean batch.
+The canonical matrix now contains 10 synthetic batches, preserving the original two and adding a web-style batch, zero/false/optional-field controls, and JSON container cases. Both ports score **8/10** exact reports on the same matrix, but fail different cases. See [`eval/results.json`](eval/results.json); the existing web demonstration remains available alongside the matrix score.
 
 ## Known limitations
 
 - This only compares field presence and Python-inferred type; it has no notion of value ranges, formats, enumerations, or semantic meaning changes.
-- `bool` is a subtype of `int` in Python, so a declared "number" field will silently accept `true`/`false`.
+- Boolean values are explicitly classified before numbers; the new `bool_is_not_number` control confirms that a declared number rejects `true`.
+- The container gold labels use JSON semantic types, a desired expectation beyond the primitive baseline: an array is not an object. Python calls containers `list`/`dict`, incorrectly flagging valid declared `array`/`object` values. TypeScript calls arrays `object`, incorrectly flagging declared arrays and missing an array passed to an object field. These limitations are kept in the evaluation; inference is unchanged.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

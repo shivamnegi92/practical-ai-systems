@@ -256,7 +256,7 @@ Diff a batch of records against a declared schema: new fields, missing fields, a
 **Before you start:** Python dictionaries and basic data typing.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/schema_drift_detector/eval/results.json) · 2 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/schema_drift_detector/eval/results.json) · 10 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 ### Advanced
 
