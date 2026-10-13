@@ -8,6 +8,7 @@
   button { padding: 0.5rem 1.25rem; margin-top: 0.75rem; margin-right: 0.5rem; cursor: pointer; border: 1px solid #333; background: #1a1a1a; color: white; border-radius: 4px; }
   pre { background: #f4f4f4; padding: 1rem; overflow-x: auto; white-space: pre-wrap; border-radius: 4px; min-height: 1.5rem; }
   .limits { font-size: 0.9rem; color: #555; border-top: 1px solid #ddd; margin-top: 2rem; padding-top: 1rem; }
+  button:focus-visible { outline: 3px solid #005fcc; outline-offset: 3px; }
 </style>
 </head>
 <body>
@@ -15,7 +16,7 @@
   <p>Summarize a request log into p50/p95 latency, total cost, cost per 1k tokens, and a budget breach check. Runs entirely in your browser.</p>
   <p>Bundled sample request log (edit in <code>src/app.ts</code> and rebuild to try your own):</p>
   <button id="run">Summarize &amp; check budget</button>
-  <pre id="output"></pre>
+  <pre id="output" role="status" aria-live="polite" aria-atomic="true" aria-label="Result"></pre>
   <div class="limits"><strong>Known limitations:</strong> linear-interpolation percentiles on a tiny sample; budget
   thresholds are illustrative constants. See the project <a href="../README.md">README</a> for the full write-up and the Python CLI version.</div>
   <script type="module" src="./dist/main.js"></script>
