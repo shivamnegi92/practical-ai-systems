@@ -45,7 +45,7 @@ def extract(text: str) -> Invoice:
             invoice.errors.append("invalid:invoice_date")
     if invoice.subtotal and invoice.tax and invoice.total:
         try:
-            if Decimal(invoice.subtotal) + Decimal(invoice.tax) != Decimal(invoice.total):
+            if Decimal(invoice.subtotal.replace(',', '')) + Decimal(invoice.tax.replace(',', '')) != Decimal(invoice.total.replace(',', '')):
                 invoice.errors.append("mismatch:total")
         except InvalidOperation:
             invoice.errors.append("invalid:amount")

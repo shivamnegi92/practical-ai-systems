@@ -90,7 +90,7 @@ Extract invoice fields, then validate dates and arithmetic.
 **Before you start:** Basic Python and key/value data.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/invoice_extract/eval/results.json) · 4 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/invoice_extract/eval/results.json) · 5 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Repository hygiene checks](systems/repo_guard/README.md)
 

@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-On four synthetic cases (two balanced invoices, one total mismatch, one invalid date), exact schema-field accuracy is **1.00** and validity precision/recall are **1.00/1.00**. This tiny fixture is only a smoke/regression check; it does not establish robustness to OCR, locale/currency differences, or real invoice layouts. See [`eval/results.json`](eval/results.json).
+On five synthetic cases (three balanced invoices including US thousands separators, one total mismatch, one invalid date), exact schema-field accuracy is **1.00** and validity precision/recall are **1.00/1.00**. This tiny fixture is only a smoke/regression check; it does not establish robustness to OCR, locale/currency differences, or real invoice layouts. See [`eval/results.json`](eval/results.json).
 
 ## Known limitations
+
+- Amount arithmetic accepts US-style thousands separators (`1,000.00`) and preserves the extracted strings. European forms such as `1.000,00` are unsupported; the small extraction regex can partially match them. Use a locale-aware parser for those inputs rather than relying on this example's validity flag. Grouping correctness is not validated.
 
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
