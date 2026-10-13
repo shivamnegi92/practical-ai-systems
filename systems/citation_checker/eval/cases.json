@@ -4,5 +4,11 @@
     "sync.md#1": "Notes sync automatically every 60 seconds while online."
   },
   "answer": "The Pro plan costs 8 dollars per month [billing.md#1]. Notes sync every 5 minutes automatically [sync.md#1]. Refunds are available within 90 days [billing.md#1]. Exports support CSV format [sharing.md#5].",
-  "gold_statuses": ["supported", "supported", "unsupported", "unknown_chunk"]
+  "gold_statuses": ["supported", "unsupported", "unsupported", "unknown_chunk"],
+  "scenarios": [
+    {"chunks":{"b":"The Pro plan costs $8 per user per month."},"answer":"The Pro plan costs $80 per user per month [b].","gold_statuses":["unsupported"]},
+    {"chunks":{"date#99":"The deadline is 2026-01-01."},"answer":"The deadline is 2026-01-02 [date#99].","gold_statuses":["unsupported"]},
+    {"chunks":{"rate":"The discount rate is 2%."},"answer":"The discount rate is 20% [rate].","gold_statuses":["unsupported"]},
+    {"chunks":{"date#99":"The deadline is 2026-01-01."},"answer":"The deadline is 2026-01-01 [date#99].","gold_statuses":["supported"]}
+  ]
 }

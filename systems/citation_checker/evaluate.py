@@ -11,13 +11,15 @@ EVAL_DIR = Path(__file__).parent / "eval"
 
 def evaluate():
     case = json.loads((EVAL_DIR / "cases.json").read_text())
-    report = check_citations(case["answer"], case["chunks"])
-    statuses = [r["status"] for r in report["results"]]
-    correct = [got == gold for got, gold in zip(statuses, case["gold_statuses"])]
+    correct = []
+    for scenario in [case, *case.get('scenarios', [])]:
+        report = check_citations(scenario["answer"], scenario["chunks"])
+        statuses = [r["status"] for r in report["results"]]
+        correct.extend(got == gold for got, gold in zip(statuses, scenario["gold_statuses"]))
     return {
-        "cases": len(case["gold_statuses"]),
+        "cases": len(correct),
         "citation_status_accuracy": round(mean(correct), 4),
-        "scope": "lexical overlap over one synthetic answer with four inline citations",
+        "scope": "lexical overlap plus literal numeric-token presence across eight synthetic citations; not semantic entailment",
     }
 
 

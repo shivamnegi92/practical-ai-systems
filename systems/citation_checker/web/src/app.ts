@@ -1,6 +1,5 @@
 // Check whether inline [chunk_id] citations are lexically supported by the cited chunk.
-// Flags fabricated or mismatched citations using token overlap. Cannot verify
-// numeric facts or anything a cited chunk merely implies.
+// Uses lexical overlap plus literal numeric-token presence, not semantic entailment.
 
 const STOPWORDS = new Set(
   (
@@ -26,12 +25,18 @@ export function sentences(text: string): string[] {
 }
 
 const CITATION = /\[([^\]]+)\]/g;
+const NUMBER = /(?<!\w)[$€£]?[+-]?\d+(?:[.,:/-]\d+)*(?:\s*%)?/g;
+
+function numberTokens(text: string): Set<string> {
+  return new Set([...text.matchAll(NUMBER)].map((match)=>match[0].replace(/\s+/g,"")));
+}
 
 export interface CitationResult {
   chunk_id: string;
   sentence: string;
   overlap: number;
   status: "supported" | "unsupported" | "unknown_chunk";
+  reason?: "number_mismatch";
 }
 
 export function checkCitations(answer: string, chunks: Record<string, string>, minOverlap = 0.3) {
@@ -51,7 +56,11 @@ export function checkCitations(answer: string, chunks: Record<string, string>, m
         ? [...claimTokens].filter((t) => chunkTokens.has(t)).length / claimTokens.size
         : 0;
       const status = overlap >= minOverlap ? "supported" : "unsupported";
-      results.push({ chunk_id: chunkId, sentence: sent, overlap: Math.round(overlap * 10000) / 10000, status });
+      const sourceNumbers=numberTokens(chunks[chunkId]);
+      const mismatch=[...numberTokens(sent.replace(CITATION,""))].some((token)=>!sourceNumbers.has(token));
+      const row: CitationResult = { chunk_id: chunkId, sentence: sent, overlap: Math.round(overlap * 10000) / 10000, status: mismatch ? "unsupported" : status };
+      if (mismatch) row.reason="number_mismatch";
+      results.push(row);
     }
   }
   return {
@@ -63,6 +72,8 @@ export function checkCitations(answer: string, chunks: Record<string, string>, m
 }
 
 export const SAMPLE_CHUNKS: Record<string, string> = {
+  "schedule.md#1": "The deadline is 2026-01-01.",
+  "rates.md#1": "The discount rate is 2%.",
   "billing.md#1": "The Pro plan costs $8 per user per month and removes notebook limits.",
   "sync.md#1": "Notes sync automatically every 60 seconds while you are online.",
 };
@@ -73,6 +84,10 @@ export interface EvalCase {
 }
 
 export const EVAL_CASES: EvalCase[] = [
+  { answer: "The Pro plan costs $80 per user per month [billing.md#1].", expectAllSupported: false },
+  { answer: "The deadline is 2026-01-02 [schedule.md#1].", expectAllSupported: false },
+  { answer: "The discount rate is 20% [rates.md#1].", expectAllSupported: false },
+  { answer: "The deadline is 2026-01-01 [schedule.md#1].", expectAllSupported: true },
   { answer: "The Pro plan costs $8 per month [billing.md#1].", expectAllSupported: true },
   { answer: "Notes sync every 60 seconds [sync.md#1].", expectAllSupported: true },
   { answer: "The Pro plan includes unlimited video calls [billing.md#1].", expectAllSupported: false },

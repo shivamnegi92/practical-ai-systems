@@ -247,7 +247,7 @@ Verify that inline citations in a generated answer are lexically supported by th
 **Before you start:** Basic Python and lexical overlap concepts.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/citation_checker/eval/results.json) · 4 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/citation_checker/eval/results.json) · 8 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Schema drift detector](systems/schema_drift_detector/README.md)
 
