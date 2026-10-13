@@ -11,6 +11,7 @@
   button.secondary { background: white; color: #1a1a1a; }
   pre { background: #f4f4f4; padding: 1rem; overflow-x: auto; white-space: pre-wrap; border-radius: 4px; min-height: 1.5rem; }
   .limits { font-size: 0.9rem; color: #555; border-top: 1px solid #ddd; margin-top: 2rem; padding-top: 1rem; }
+  button:focus-visible { outline: 3px solid #005fcc; outline-offset: 3px; }
 </style>
 </head>
 <body>
@@ -19,9 +20,9 @@
   <label for="question">Question</label>
   <input id="question" value="How much does the Pro plan cost and how often do notes sync?" />
   <button id="run">Ask</button>
-  <pre id="output"></pre>
+  <pre id="output" role="status" aria-live="polite" aria-atomic="true" aria-label="Result"></pre>
   <button id="run-eval" class="secondary">Run evaluation (3 synthetic questions)</button>
-  <pre id="eval-output"></pre>
+  <pre id="eval-output" role="status" aria-live="polite" aria-atomic="true" aria-label="Evaluation result"></pre>
   <div class="limits"><strong>Known limitations:</strong> heuristic sentence/connector splitting, tiny bundled corpus;
   not real multi-hop reasoning. See the project <a href="../README.md">README</a> for the full write-up and the Python CLI version.</div>
   <script type="module" src="./dist/main.js"></script>
