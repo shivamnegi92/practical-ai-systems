@@ -229,7 +229,7 @@ Cluster OCR line bounding boxes into rows and columns to rebuild a simple table 
 **Before you start:** Basic Python and coordinate geometry intuition.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/table_extractor/eval/results.json) · 2 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/table_extractor/eval/results.json) · 10 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Image caption QC](systems/caption_qc/README.md)
 

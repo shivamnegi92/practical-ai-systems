@@ -12,9 +12,11 @@ EVAL_DIR = Path(__file__).parent / "eval"
 def evaluate():
     cases = json.loads((EVAL_DIR / "cases.json").read_text())
     cell_hits = []
+    grid_hits = []
     for case in cases:
         grid = extract_table(case["lines"])
         gold = case["gold_grid"]
+        grid_hits.append(grid == gold)
         flat_got = [cell for row in grid for cell in row]
         flat_gold = [cell for row in gold for cell in row]
         if len(flat_got) == len(flat_gold):
@@ -23,6 +25,7 @@ def evaluate():
             cell_hits.append(False)
     return {
         "documents": len(cases),
+        "exact_grid_match": round(mean(grid_hits), 4),
         "cell_exact_match": round(mean(cell_hits), 4),
         "scope": "synthetic OCR line+bbox records; row/column gaps are fixed thresholds, not learned",
     }
