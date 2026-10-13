@@ -126,7 +126,7 @@ Find and mask obvious email, phone, SSN, and credit-card-shaped strings in free 
 **Before you start:** Basic Python and regular expressions.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/pii_redactor/eval/results.json) · 5 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/pii_redactor/eval/results.json) · 7 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Lexicon-based sentiment classifier](systems/sentiment_lexicon/README.md)
 

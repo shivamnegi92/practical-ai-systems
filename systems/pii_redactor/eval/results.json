@@ -1,13 +1,13 @@
 {
   "dataset": {
-    "cases": 5,
+    "cases": 7,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "f1": 1.0,
+    "f1": 0.8,
     "precision": 1.0,
-    "recall": 1.0
+    "recall": 0.6667
   },
   "notes": "toy regex patterns for email/phone/ssn/credit-card shapes only; not a compliance tool",
   "system": "pii_redactor"

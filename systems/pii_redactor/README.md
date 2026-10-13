@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json) for current precision/recall on 5 synthetic fixtures covering one example of each pattern plus a clean-text case.
+Seven synthetic fixtures retain the original five and add two correctly labelled known phone misses: `+44 20 7946 0958` and `5551234567`. With detection unchanged, precision is **1.0**, recall **0.6667**, and F1 **0.8** (4 true-positive types, 0 false-positive types, 2 false-negative types). See [`eval/results.json`](eval/results.json). The web evaluation uses the same seven inputs and labels.
 
 ## Known limitations
+
+- The current phone pattern covers formatted North American-style numbers, not these international spaced or ten-bare-digit inputs. Both survive redaction unchanged, so a clean result does not establish absence of phone data. The evaluation counts detected types per case, not individual spans or completeness of redaction; the two misses are separate cases to avoid one detected phone hiding another missed phone.
 
 - This is regex pattern matching, not a trained PII/NER model and not a compliance or security tool. It will miss anything that does not match these four shapes (addresses, names, international formats, etc.).
 - Patterns can false-positive on lookalike numbers. Review every match before using this for real redaction.
