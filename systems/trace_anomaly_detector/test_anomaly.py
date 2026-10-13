@@ -6,6 +6,16 @@ BASELINE = [95, 100, 105, 98, 102, 97, 103, 99, 101, 100]
 
 
 class TraceAnomalyDetectorTests(unittest.TestCase):
+    def test_flat_baseline_flags_spike_beyond_strict_relative_tolerance(self):
+        durations = [10000, 100, 150, 151, 50, 49]
+        result = detect_anomalies([100, 100, 100], [{'name':str(d), 'duration_ms':d} for d in durations])
+        self.assertEqual([row['anomalous'] for row in result], [True, False, False, True, False, True])
+
+    def test_zero_mean_and_missing_baseline_are_distinct(self):
+        traces = [{'name':'same','duration_ms':0}, {'name':'spike','duration_ms':1}]
+        self.assertEqual([r['anomalous'] for r in detect_anomalies([0,0], traces)], [False, True])
+        self.assertEqual([r['anomalous'] for r in detect_anomalies([], traces)], [False, False])
+        self.assertTrue(detect_anomalies([], [{'name':'error','duration_ms':0,'error':True}])[0]['anomalous'])
     def test_duration_near_baseline_is_not_anomalous(self):
         results = detect_anomalies(BASELINE, [{"name": "normal", "duration_ms": 101}])
         self.assertFalse(results[0]["anomalous"])

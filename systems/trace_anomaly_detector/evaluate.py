@@ -13,17 +13,20 @@ EVAL_DIR = Path(__file__).parent / "eval"
 
 def evaluate():
     case = json.loads((EVAL_DIR / "cases.json").read_text())
-    results = detect_anomalies(case["baseline"], case["traces"])
     tp = fp = fn = 0
-    for result, gold in zip(results, case["gold_anomalous"]):
-        tp += result["anomalous"] and gold
-        fp += result["anomalous"] and not gold
-        fn += (not result["anomalous"]) and gold
+    count = 0
+    for scenario in [case, *case.get('scenarios', [])]:
+        results = detect_anomalies(scenario["baseline"], scenario["traces"])
+        count += len(results)
+        for result, gold in zip(results, scenario["gold_anomalous"]):
+            tp += result["anomalous"] and gold
+            fp += result["anomalous"] and not gold
+            fn += (not result["anomalous"]) and gold
     metrics = prf(tp, fp, fn)
     return {
-        "cases": len(case["traces"]),
+        "cases": count,
         **{k: round(v, 4) for k, v in metrics.items()},
-        "scope": "z-score heuristic against a 10-point synthetic baseline; not a trained anomaly model",
+        "scope": "synthetic variable, constant and zero-mean baselines; z-score with a strict 50% constant-baseline tolerance; not a trained anomaly model",
     }
 
 

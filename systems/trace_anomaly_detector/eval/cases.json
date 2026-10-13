@@ -6,5 +6,9 @@
     {"name": "error_but_fast", "duration_ms": 100, "error": true},
     {"name": "slightly_high", "duration_ms": 106, "error": false}
   ],
-  "gold_anomalous": [false, true, true, false]
+  "gold_anomalous": [false, true, true, false],
+  "scenarios": [
+    {"baseline":[100,100,100],"traces":[{"name":"spike","duration_ms":10000},{"name":"same","duration_ms":100},{"name":"boundary","duration_ms":150},{"name":"over","duration_ms":151}],"gold_anomalous":[true,false,false,true]},
+    {"baseline":[0,0],"traces":[{"name":"zero","duration_ms":0},{"name":"deviation","duration_ms":1}],"gold_anomalous":[false,true]}
+  ]
 }

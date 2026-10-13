@@ -1,6 +1,7 @@
 // Flag anomalous trace durations using z-scores against a historical baseline.
 // A trace is flagged when it carries an explicit error flag, or when its
 // duration is more than `zThreshold` standard deviations from the baseline mean.
+// A nonempty constant baseline uses a strict 50% mean-relative deviation tolerance.
 
 function mean(values: number[]): number {
   return values.length ? values.reduce((a, b) => a + b, 0) / values.length : 0;
@@ -24,7 +25,8 @@ export function detectAnomalies(baseline: number[], traces: Trace[], zThreshold 
   const baselineSd = stdev(baseline);
   return traces.map((trace) => {
     const z = baselineSd ? (trace.duration_ms - baselineMean) / baselineSd : 0;
-    const anomalous = Boolean(trace.error) || Math.abs(z) > zThreshold;
+    const latencyAnomaly = baselineSd ? Math.abs(z) > zThreshold : baseline.length > 0 && Math.abs(trace.duration_ms - baselineMean) > 0.5 * Math.abs(baselineMean);
+    const anomalous = Boolean(trace.error) || latencyAnomaly;
     return { name: trace.name, z_score: Math.round(z * 100) / 100, anomalous };
   });
 }
@@ -39,16 +41,25 @@ export const TRACES: Trace[] = [
 const GOLD_ANOMALOUS = [false, false, true, true];
 
 export function evaluateAll() {
-  const results = detectAnomalies(BASELINE, TRACES);
+  const scenarios = [
+    { baseline: BASELINE, traces: TRACES, gold: GOLD_ANOMALOUS },
+    { baseline: [100,100,100], traces: [10000,100,150,151].map((duration_ms)=>({name:String(duration_ms),duration_ms})), gold: [true,false,false,true] },
+    { baseline: [0,0], traces: [0,1].map((duration_ms)=>({name:String(duration_ms),duration_ms})), gold: [false,true] },
+  ];
+  let cases = 0;
   let tp = 0, fp = 0, fn = 0, tn = 0;
-  results.forEach((r, i) => {
-    if (r.anomalous && GOLD_ANOMALOUS[i]) tp++;
-    else if (r.anomalous && !GOLD_ANOMALOUS[i]) fp++;
-    else if (!r.anomalous && GOLD_ANOMALOUS[i]) fn++;
-    else tn++;
-  });
+  for (const scenario of scenarios) {
+    const results = detectAnomalies(scenario.baseline, scenario.traces);
+    cases += results.length;
+    results.forEach((r, i) => {
+      if (r.anomalous && scenario.gold[i]) tp++;
+      else if (r.anomalous && !scenario.gold[i]) fp++;
+      else if (!r.anomalous && scenario.gold[i]) fn++;
+      else tn++;
+    });
+  }
   const precision = tp + fp ? tp / (tp + fp) : 0;
   const recall = tp + fn ? tp / (tp + fn) : 0;
   const f1 = precision + recall ? (2 * precision * recall) / (precision + recall) : 0;
-  return { cases: TRACES.length, precision, recall, f1 };
+  return { cases, precision, recall, f1 };
 }

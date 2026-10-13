@@ -341,7 +341,7 @@ Flag anomalous execution-trace durations with a z-score against a historical bas
 **Before you start:** Basic statistics (mean, standard deviation, z-scores).
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/trace_anomaly_detector/eval/results.json) · 4 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/trace_anomaly_detector/eval/results.json) · 10 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Multi-hop reasoning router](systems/multi_hop_router/README.md)
 

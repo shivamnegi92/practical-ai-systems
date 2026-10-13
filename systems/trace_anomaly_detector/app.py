@@ -2,7 +2,8 @@
 
 A trace is flagged when it carries an explicit error flag, or when its
 duration is more than `z_threshold` standard deviations from the baseline
-mean. This is a simple statistical heuristic, not a trained anomaly model.
+mean. A nonempty constant baseline instead uses a strict 50% mean-relative
+deviation tolerance. This is a simple heuristic, not a trained anomaly model.
 """
 from __future__ import annotations
 
@@ -29,7 +30,8 @@ def detect_anomalies(baseline: list[float], traces: list[dict], z_threshold: flo
     for trace in traces:
         duration = trace["duration_ms"]
         z = (duration - baseline_mean) / baseline_sd if baseline_sd else 0.0
-        anomalous = bool(trace.get("error", False)) or abs(z) > z_threshold
+        latency_anomaly = abs(z) > z_threshold if baseline_sd else bool(baseline) and abs(duration - baseline_mean) > 0.5 * abs(baseline_mean)
+        anomalous = bool(trace.get("error", False)) or latency_anomaly
         results.append({"name": trace["name"], "z_score": round(z, 2), "anomalous": anomalous})
     return results
 
