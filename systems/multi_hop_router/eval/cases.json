@@ -10,5 +10,33 @@
   {
     "question": "How often do notes sync? How do I reset my password?",
     "gold_abstained": false
+  },
+  {
+    "question": "How much does the Pro plan cost and does it integrate with Salesforce CRM?",
+    "gold_abstained": true
+  },
+  {
+    "question": "How much does the Pro plan cost?",
+    "gold_abstained": false
+  },
+  {
+    "question": "How often do notes sync?",
+    "gold_abstained": false
+  },
+  {
+    "question": "How do I reset my password?",
+    "gold_abstained": false
+  },
+  {
+    "question": "How much storage does the Free plan include and how often do notes sync?",
+    "gold_abstained": false
+  },
+  {
+    "question": "How much does the Enterprise plan cost and how often do notes sync?",
+    "gold_abstained": true
+  },
+  {
+    "question": "How much does the Pro plan cost in euros and how often do notes sync?",
+    "gold_abstained": true
   }
 ]

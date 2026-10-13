@@ -350,7 +350,7 @@ Split a multi-part question into sub-questions and abstain unless every part is 
 **Before you start:** Retrieval-augmented QA and question decomposition.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/multi_hop_router/eval/results.json) · 3 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/multi_hop_router/eval/results.json) · 10 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 <!-- SYSTEMS:END -->
 
 ## Learning paths

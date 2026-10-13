@@ -121,9 +121,46 @@ export function answerMultiHop(question: string, qa: DocQA = new DocQA(CHUNKS)) 
 
 export interface EvalCase { question: string; goldAbstained: boolean }
 export const EVAL_CASES: EvalCase[] = [
-  { question: "How much does the Pro plan cost and how often do notes sync?", goldAbstained: false },
-  { question: "How much does the Pro plan cost and does it integrate with Salesforce CRM?", goldAbstained: true },
-  { question: "How often do notes sync? How do I reset my password?", goldAbstained: false },
+  {
+    "question": "How much does the Pro plan cost and how often do notes sync?",
+    "goldAbstained": false
+  },
+  {
+    "question": "How much does the Pro plan cost and does Lumen Notes integrate with Salesforce CRM?",
+    "goldAbstained": true
+  },
+  {
+    "question": "How often do notes sync? How do I reset my password?",
+    "goldAbstained": false
+  },
+  {
+    "question": "How much does the Pro plan cost and does it integrate with Salesforce CRM?",
+    "goldAbstained": true
+  },
+  {
+    "question": "How much does the Pro plan cost?",
+    "goldAbstained": false
+  },
+  {
+    "question": "How often do notes sync?",
+    "goldAbstained": false
+  },
+  {
+    "question": "How do I reset my password?",
+    "goldAbstained": false
+  },
+  {
+    "question": "How much storage does the Free plan include and how often do notes sync?",
+    "goldAbstained": false
+  },
+  {
+    "question": "How much does the Enterprise plan cost and how often do notes sync?",
+    "goldAbstained": true
+  },
+  {
+    "question": "How much does the Pro plan cost in euros and how often do notes sync?",
+    "goldAbstained": true
+  }
 ];
 
 export function evaluateAll() {

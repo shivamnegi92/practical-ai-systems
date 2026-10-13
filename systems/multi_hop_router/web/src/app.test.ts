@@ -20,6 +20,7 @@ test("handles two separately punctuated questions", () => {
   const result = answerMultiHop("How often do notes sync? How do I reset my password?");
   assert.equal(result.abstained, false);
 });
-test("evaluation is perfect on the bundled fixtures", () => {
-  assert.equal(evaluateAll().abstention_accuracy, 1);
+test("expanded abstention matrix exposes unsupported qualifiers", () => {
+  assert.equal(evaluateAll().cases, 10);
+  assert.equal(evaluateAll().abstention_accuracy, 0.9);
 });
