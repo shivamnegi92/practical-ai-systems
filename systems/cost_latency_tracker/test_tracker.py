@@ -29,3 +29,11 @@ class CostLatencyTrackerTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EvaluationCoverage(unittest.TestCase):
+    def test_expanded_budget_matrix(self):
+        from systems.cost_latency_tracker.evaluate import evaluate
+        result = evaluate()
+        self.assertEqual(result["cases"], 10)
+        self.assertEqual(result["breach_decision_accuracy"], 0.8)

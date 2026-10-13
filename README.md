@@ -220,7 +220,7 @@ Summarize a request log into p50/p95 latency and cost, then flag budget breaches
 **Before you start:** Basic statistics (percentiles) and Python.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/cost_latency_tracker/eval/results.json) · 3 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/cost_latency_tracker/eval/results.json) · 10 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Post-OCR table reconstruction](systems/table_extractor/README.md)
 
