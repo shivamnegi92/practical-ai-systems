@@ -175,7 +175,7 @@ Normalize OCR line order from bounding boxes, then extract fields. OCR itself is
 **Before you start:** Basic Python and JSON/list/dictionary data.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/multimodal_ocr/eval/results.json) · 3 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/multimodal_ocr/eval/results.json) · 9 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Entity spans and error analysis](systems/entity_extraction/README.md)
 

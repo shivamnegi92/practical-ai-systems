@@ -8,3 +8,11 @@ class OCRTests(unittest.TestCase):
  def test_extract_fields(self):
   fields=extract_fields([{'text':'Invoice # X-2','bbox':[0,0,50,10]},{'text':'Total: $4.00','bbox':[0,10,50,20]}])
   self.assertEqual(fields['invoice_number'],'X-2'); self.assertEqual(fields['total'],'4.00')
+
+
+class EvaluationCoverage(unittest.TestCase):
+    def test_expanded_field_matrix(self):
+        from systems.multimodal_ocr.evaluate import evaluate
+        result = evaluate()
+        self.assertEqual(result["documents"], 9)
+        self.assertAlmostEqual(result["field_exact_match"], 25 / 27)

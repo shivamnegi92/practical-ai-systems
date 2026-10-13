@@ -24,6 +24,7 @@ test("extracts invoice fields across lines", () => {
   assert.equal(fields.total, "108.00");
 });
 
-test("evaluation is perfect on the bundled fixture", () => {
-  assert.equal(evaluateAll().field_exact_match, 1);
+test("expanded evaluation exposes two single-field failures", () => {
+  assert.equal(evaluateAll().documents, 9);
+  assert.ok(Math.abs(evaluateAll().field_exact_match - 25 / 27) < 1e-12);
 });

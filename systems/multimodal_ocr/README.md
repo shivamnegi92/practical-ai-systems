@@ -23,7 +23,9 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-On three synthetic OCR-line records with supplied bounding boxes, field exact-match is **1.00**. The OCR engine and image understanding are not run or evaluated here—the input is already OCR text plus boxes. This is a post-OCR parsing fixture only. See [`eval/results.json`](eval/results.json).
+Nine synthetic OCR-line records share one fixture matrix across Python and TypeScript, preserving the three original Python documents and the split-line web fixture. Empty input, invalid geometry, and whitespace/reordered lines provide controls. Two correctly labelled cases expose existing failures: the total regex matches an earlier Subtotal, and the invoice-number regex misreads the Invoice Number label.
+
+Field exact-match is **25/27 (about 0.926)**: each document has three labelled fields, including nulls, and the score averages each document's matching-field fraction. Both failures miss one field; this is not a complete-document accuracy score. See [`eval/results.json`](eval/results.json). Extraction remains unchanged. Input is already text plus boxes; images and OCR engine accuracy are not evaluated.
 
 ## Known limitations
 
