@@ -1,12 +1,12 @@
 {
   "dataset": {
-    "cases": 3,
+    "cases": 10,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
     "policy_accuracy": 1.0,
-    "policy_cases_passed": 3
+    "policy_cases_passed": 10
   },
   "notes": "",
   "system": "bounded_agent"

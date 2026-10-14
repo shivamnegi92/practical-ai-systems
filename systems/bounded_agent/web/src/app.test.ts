@@ -25,3 +25,10 @@ test("evaluation demonstrates the full policy", () => {
   const result = evaluateAll();
   assert.ok(Object.values(result).every(Boolean));
 });
+
+test("expanded matrix counts refusal and approval controls", () => {
+  const result = evaluateAll();
+  assert.equal(result.cases, 10);
+  assert.equal(result.policy_cases_passed, 10);
+  assert.equal(result.policy_accuracy, 1);
+});

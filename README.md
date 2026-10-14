@@ -287,7 +287,7 @@ Constrain tools with an allow-list and require approval before sensitive actions
 **Before you start:** Python functions, tools/APIs, and authorization concepts.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/bounded_agent/eval/results.json) · 3 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/bounded_agent/eval/results.json) · 10 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Local knowledge-base MCP server](systems/mcp_kb/README.md)
 
