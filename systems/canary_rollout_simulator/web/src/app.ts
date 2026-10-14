@@ -27,11 +27,152 @@ export function decide(
   };
 }
 
-export interface EvalCase { baseline: Metrics; canary: Metrics; expected: "promote" | "rollback" }
+export interface EvalCase { name?: string | null; baseline: Metrics; canary: Metrics; expected: "promote" | "rollback" | "hold" }
 export const EVAL_CASES: EvalCase[] = [
-  { baseline: { error_rate: 0.01, p95_latency_ms: 200 }, canary: { error_rate: 0.011, p95_latency_ms: 210 }, expected: "promote" },
-  { baseline: { error_rate: 0.01, p95_latency_ms: 200 }, canary: { error_rate: 0.05, p95_latency_ms: 210 }, expected: "rollback" },
-  { baseline: { error_rate: 0.01, p95_latency_ms: 200 }, canary: { error_rate: 0.011, p95_latency_ms: 500 }, expected: "rollback" },
+  {
+    "name": null,
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.015,
+      "p95_latency_ms": 210
+    },
+    "expected": "promote"
+  },
+  {
+    "name": null,
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.05,
+      "p95_latency_ms": 205
+    },
+    "expected": "rollback"
+  },
+  {
+    "name": null,
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.012,
+      "p95_latency_ms": 400
+    },
+    "expected": "rollback"
+  },
+  {
+    "name": "original web promote",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.011,
+      "p95_latency_ms": 210
+    },
+    "expected": "promote"
+  },
+  {
+    "name": "original web error regression",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.05,
+      "p95_latency_ms": 210
+    },
+    "expected": "rollback"
+  },
+  {
+    "name": "original web latency regression",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.011,
+      "p95_latency_ms": 500
+    },
+    "expected": "rollback"
+  },
+  {
+    "name": "exact error threshold",
+    "baseline": {
+      "error_rate": 0,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.02,
+      "p95_latency_ms": 200
+    },
+    "expected": "promote"
+  },
+  {
+    "name": "exact latency threshold",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 240
+    },
+    "expected": "promote"
+  },
+  {
+    "name": "both regressions",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.05,
+      "p95_latency_ms": 400
+    },
+    "expected": "rollback"
+  },
+  {
+    "name": "improved metrics",
+    "baseline": {
+      "error_rate": 0.02,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 150
+    },
+    "expected": "promote"
+  },
+  {
+    "name": "invalid negative baseline rate",
+    "baseline": {
+      "error_rate": -0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0,
+      "p95_latency_ms": 200
+    },
+    "expected": "hold"
+  },
+  {
+    "name": "invalid canary rate above one",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 1.1,
+      "p95_latency_ms": 200
+    },
+    "expected": "hold"
+  }
 ];
 
 export function evaluateAll() {

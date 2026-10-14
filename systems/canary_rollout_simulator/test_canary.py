@@ -25,3 +25,11 @@ class CanaryRolloutSimulatorTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EvaluationCoverage(unittest.TestCase):
+    def test_invalid_rate_labels_remain_visible(self):
+        from systems.canary_rollout_simulator.evaluate import evaluate
+        result = evaluate()
+        self.assertEqual(result["cases"], 12)
+        self.assertEqual(result["decision_accuracy"], 0.8333)

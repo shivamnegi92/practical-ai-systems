@@ -1,11 +1,11 @@
 {
   "dataset": {
-    "cases": 3,
+    "cases": 12,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "decision_accuracy": 1.0
+    "decision_accuracy": 0.8333
   },
   "notes": "fixed-threshold two-sample comparison; no statistical significance testing",
   "system": "canary_rollout_simulator"

@@ -323,7 +323,7 @@ Compare canary metrics against a baseline to decide promote or rollback.
 **Before you start:** Deployment guardrails and basic statistics caveats.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/canary_rollout_simulator/eval/results.json) · 3 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/canary_rollout_simulator/eval/results.json) · 12 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Adversarial red-team harness](systems/redteam_harness/README.md)
 
