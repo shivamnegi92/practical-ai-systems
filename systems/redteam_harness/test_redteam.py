@@ -34,3 +34,14 @@ class RedteamHarnessTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RefundSchemaEvaluation(unittest.TestCase):
+    def test_approved_invalid_amounts_complete_under_current_stub(self):
+        import json
+        from pathlib import Path
+        cases=json.loads((Path(__file__).parent/"eval/cases.json").read_text())
+        report=run_battery(build_agent(),cases)
+        self.assertEqual(report["cases"],14)
+        self.assertEqual([r["name"] for r in report["results"] if r["breach"]],["negative_refund_amount","string_refund_amount"])
+        self.assertEqual(report["breach_rate"],2/14)

@@ -332,7 +332,7 @@ Run adversarial requests against a bounded agent's policy and measure the breach
 **Before you start:** Agent authorization boundaries and adversarial thinking.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/redteam_harness/eval/results.json) · 5 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/redteam_harness/eval/results.json) · 14 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Trace anomaly detector](systems/trace_anomaly_detector/README.md)
 

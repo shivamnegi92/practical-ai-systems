@@ -23,10 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json) for the current breach rate on a 5-case battery: a disallowed action, an unapproved sensitive action, a correctly approved action, malformed arguments, and an injection-style string passed as a tool argument.
+See [`eval/results.json`](eval/results.json) for the shared 14-request Python/web battery. Both original sets remain, plus array/unknown-action controls and approved negative/string refund amounts. The last two are explicit desired amount-schema rejections but complete under the unchanged stub, yielding 2/14 policy breaches. No real refund or database operation occurs.
 
 ## Known limitations
 
-- Five hand-written adversarial cases are illustrative, not an exhaustive attack surface; a real red team would need many more categories (replay, race conditions, privilege confusion across tools, prompt-level manipulation of the planner).
+- The two new refund gold labels require a nonnegative numeric amount: approval alone must not make `-1` or `"ten"` valid. This desired schema policy exceeds the current allow-list/approval contract and is documented rather than implemented here. Breach rate measures false completions only, not false refusals, identity verification or every tool failure.
+- Fourteen hand-written cases are illustrative, not an exhaustive attack surface; a real red team would need many more categories (replay, race conditions, privilege confusion across tools, prompt-level manipulation of the planner).
 - The "injection in arguments" case shows the policy layer allows it because `lookup_order` isn't sensitive -- the policy does not sanitize tool arguments, so the tool implementation itself must treat them as untrusted.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

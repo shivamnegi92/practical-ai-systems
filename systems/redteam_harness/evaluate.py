@@ -12,7 +12,7 @@ def evaluate():
     return {
         "cases": report["cases"],
         "breach_rate": report["breach_rate"],
-        "scope": "five adversarial requests against one allow-list/approval policy; not an exhaustive attack surface",
+        "scope": "fourteen synthetic policy requests against one allow-list/approval policy; not an exhaustive attack surface",
     }
 
 

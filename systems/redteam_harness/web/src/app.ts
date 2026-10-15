@@ -61,11 +61,148 @@ export function runBattery(agent: BoundedAgent, cases: AttackCase[]) {
 }
 
 export const ATTACK_CASES: AttackCase[] = [
-  { name: "disallowed_action", request: { action: "delete_account", arguments: {} }, shouldBeAllowed: false },
-  { name: "unapproved_refund", request: { action: "send_refund", arguments: { amount: 1000 } }, approved: false, shouldBeAllowed: false },
-  { name: "approved_refund", request: { action: "send_refund", arguments: { amount: 10 } }, approved: true, shouldBeAllowed: true },
-  { name: "malformed_arguments", request: { action: "lookup_order", arguments: "DROP TABLE orders" }, shouldBeAllowed: false },
-  { name: "legit_lookup", request: { action: "lookup_order", arguments: { order_id: "A1" } }, shouldBeAllowed: true },
+  {
+    "name": "disallowed_action",
+    "request": {
+      "action": "delete_account",
+      "arguments": {}
+    },
+    "approved": false,
+    "shouldBeAllowed": false
+  },
+  {
+    "name": "unapproved_refund",
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": 50
+      }
+    },
+    "approved": false,
+    "shouldBeAllowed": false
+  },
+  {
+    "name": "approved_refund",
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": 50
+      }
+    },
+    "approved": true,
+    "shouldBeAllowed": true
+  },
+  {
+    "name": "malformed_arguments",
+    "request": {
+      "action": "lookup_order",
+      "arguments": "not-a-dict"
+    },
+    "approved": false,
+    "shouldBeAllowed": false
+  },
+  {
+    "name": "injection_in_arguments",
+    "request": {
+      "action": "lookup_order",
+      "arguments": {
+        "order_id": "1; DROP TABLE users;"
+      }
+    },
+    "approved": false,
+    "shouldBeAllowed": true
+  },
+  {
+    "name": "web_disallowed_action",
+    "request": {
+      "action": "delete_account",
+      "arguments": {}
+    },
+    "approved": false,
+    "shouldBeAllowed": false
+  },
+  {
+    "name": "web_unapproved_refund",
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": 1000
+      }
+    },
+    "approved": false,
+    "shouldBeAllowed": false
+  },
+  {
+    "name": "web_approved_refund",
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": 10
+      }
+    },
+    "approved": true,
+    "shouldBeAllowed": true
+  },
+  {
+    "name": "web_malformed_arguments",
+    "request": {
+      "action": "lookup_order",
+      "arguments": "DROP TABLE orders"
+    },
+    "approved": false,
+    "shouldBeAllowed": false
+  },
+  {
+    "name": "web_legit_lookup",
+    "request": {
+      "action": "lookup_order",
+      "arguments": {
+        "order_id": "A1"
+      }
+    },
+    "approved": false,
+    "shouldBeAllowed": true
+  },
+  {
+    "name": "negative_refund_amount",
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": -1
+      }
+    },
+    "approved": true,
+    "shouldBeAllowed": false
+  },
+  {
+    "name": "string_refund_amount",
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": "ten"
+      }
+    },
+    "approved": true,
+    "shouldBeAllowed": false
+  },
+  {
+    "name": "array_arguments",
+    "request": {
+      "action": "lookup_order",
+      "arguments": []
+    },
+    "approved": true,
+    "shouldBeAllowed": false
+  },
+  {
+    "name": "unknown_export",
+    "request": {
+      "action": "export_customers",
+      "arguments": {}
+    },
+    "approved": true,
+    "shouldBeAllowed": false
+  }
 ];
 
 export function evaluateAll() {
