@@ -269,7 +269,7 @@ Score call success, forbidden actions, and latency separately.
 **Before you start:** Structured transcripts and evaluation rubrics.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/voice_eval/eval/results.json) · 3 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/voice_eval/eval/results.json) · 8 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Judge agreement audit](systems/judge_audit/README.md)
 
