@@ -23,10 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json) for current handoff accuracy on 4 synthetic requests: two clear category matches that resolve, one off-topic request, and one single-keyword request that is too thin to route confidently.
+See [`eval/results.json`](eval/results.json) for status and category-aware accuracy on the shared 13-request Python/web matrix. Both original sets remain; repeated-keyword and empty controls pass. Two cross-category ties should escalate under the new explicit desired ambiguity policy, but the unchanged runtime resolves both. It scores 11/13 on both measures.
 
 ## Known limitations
 
+- Equal best scores are broken by category insertion order. The added gold policy requires escalation with no unique destination when billing/technical or account/technical each score two. This stricter desired policy is documented, not implemented here. Repeating one keyword still counts as one; the confidence field is a count, not a probability.
 - Triage is a fixed keyword-overlap scorer over three hand-picked categories; anything phrased without those words escalates even when a human would route it instantly.
 - The confidence threshold (2 keyword matches) is an arbitrary cutoff for this fixture, not a calibrated confidence score.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

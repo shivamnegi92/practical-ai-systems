@@ -15,6 +15,7 @@ def evaluate():
     return {
         "cases": len(cases),
         "handoff_accuracy": round(mean(correct), 4),
+        "routing_accuracy": round(mean(handle({"text": c["text"]})["status"] == c["gold_status"] and handle({"text": c["text"]})["category"] == c["gold_category"] for c in cases), 4),
         "scope": "fixed keyword-overlap triage over three categories; escalation threshold is a hand-picked constant",
     }
 

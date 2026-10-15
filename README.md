@@ -305,7 +305,7 @@ Route a request through a triage step to the right specialist, escalating when c
 **Before you start:** Agent orchestration and escalation design.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/multi_agent_handoff/eval/results.json) · 4 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/multi_agent_handoff/eval/results.json) · 13 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Retrieval evaluation harness](systems/retrieval_eval_harness/README.md)
 

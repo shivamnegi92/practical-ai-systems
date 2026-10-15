@@ -20,6 +20,12 @@ test("single keyword match still escalates below threshold", () => {
   const result = handle({ text: "There's a bug somewhere" });
   assert.equal(result.status, "escalated");
 });
-test("evaluation is perfect on the bundled fixtures", () => {
-  assert.equal(evaluateAll().routing_accuracy, 1);
+test("evaluation exposes equal-score routing ambiguity", () => {
+  assert.equal(evaluateAll().cases, 13);
+  assert.equal(evaluateAll().routing_accuracy, 11/13);
+});
+
+test("equal category scores resolve while repeated single matches escalate", () => {
+  for (const text of ["refund payment error crash", "password username error crash"]) assert.equal(handle({text}).status,"resolved");
+  assert.equal(handle({text:"error error error"}).status,"escalated");
 });
