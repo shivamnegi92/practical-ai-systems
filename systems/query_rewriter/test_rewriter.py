@@ -27,3 +27,13 @@ class QueryRewriterTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class MorphologyEvaluation(unittest.TestCase):
+    def test_stemming_prevents_two_dictionary_expansions(self):
+        for query in ["pricing information", "erasing my files"]:
+            self.assertEqual(expand_query(query),query)
+        self.assertIn("delete",expand_query("remove my files"))
+        from systems.query_rewriter.evaluate import evaluate
+        self.assertEqual(evaluate()["cases"],10)
+        self.assertLess(evaluate()["recall_at_1_expanded"],1)

@@ -202,7 +202,7 @@ Expand a query with a small synonym list before BM25 retrieval, and measure the 
 **Before you start:** Python functions and basic lexical retrieval.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/query_rewriter/eval/results.json) · 4 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/query_rewriter/eval/results.json) · 10 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Prompt-injection pattern scanner](systems/prompt_injection_detector/README.md)
 

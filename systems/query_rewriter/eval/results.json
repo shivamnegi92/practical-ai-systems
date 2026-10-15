@@ -1,12 +1,12 @@
 {
   "dataset": {
-    "cases": 4,
+    "cases": 10,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "recall_at_1_baseline": 0.25,
-    "recall_at_1_expanded": 1.0
+    "recall_at_1_baseline": 0.1,
+    "recall_at_1_expanded": 0.8
   },
   "notes": "tiny four-document synthetic corpus; hand-picked synonym list",
   "system": "query_rewriter"

@@ -23,10 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json). On a 4-document synthetic corpus, baseline recall@1 is low because 3 of 4 queries use a word absent from the target document; expansion recovers all 4 by injecting the matching synonym.
+See [`eval/results.json`](eval/results.json). The shared ten-query matrix preserves both original Python/web query sets and adds morphology failures plus a `remove` control. The original four-document corpora remain unchanged: Python d2 is weather and d4 is generic deletion, while web d2 is shipping and d4 describes account deletion. Metrics must therefore be read separately; corpus differences and tokenization can affect top-one rankings.
 
 ## Known limitations
 
+- Stemming changes `pricing` to `pric` and `erasing` to `eras` before the dictionary lookup, so neither gains the intended synonym. The new gold targets retain price/deletion intent; `remove` still expands to `delete` as a control. Runtime, synonym dictionary and corpus are unchanged; this PR measures the misses instead of tuning to the cases.
 - The synonym list is hand-picked for this fixture and is not a general thesaurus; it will not expand any term outside the six entries defined in `app.py`.
 - Expansion can also hurt precision by pulling in documents that match only on the injected synonym; this baseline does not re-rank or validate expanded hits.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
