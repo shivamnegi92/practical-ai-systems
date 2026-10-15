@@ -296,7 +296,7 @@ Expose local search and source reads as JSON-RPC-style tools.
 **Before you start:** Python, JSON-RPC, and client/server concepts.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/mcp_kb/eval/results.json) · 4 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/mcp_kb/eval/results.json) · 10 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Multi-agent triage handoff](systems/multi_agent_handoff/README.md)
 

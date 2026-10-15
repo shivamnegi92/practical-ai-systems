@@ -110,14 +110,52 @@ export function dispatch(message: { method?: string; params?: Record<string, unk
   return { jsonrpc: "2.0", id, result };
 }
 
+export const EVAL_CASES = [
+  {
+    "query": "password reset",
+    "gold": "accounts.md#1"
+  },
+  {
+    "query": "Pro monthly cost",
+    "gold": "billing.md#1"
+  },
+  {
+    "query": "offline conflict copy",
+    "gold": "sync.md#3"
+  },
+  {
+    "query": "public sharing revoke",
+    "gold": "sharing.md#1"
+  },
+  {
+    "query": "How do I reset my password?",
+    "gold": "accounts.md#1"
+  },
+  {
+    "query": "How much does the Pro plan cost?",
+    "gold": "billing.md#1"
+  },
+  {
+    "query": "How do I share a notebook?",
+    "gold": "sharing.md#1"
+  },
+  {
+    "query": "How often do notes sync?",
+    "gold": "sync.md#1"
+  },
+  {
+    "query": "forgotten credentials",
+    "gold": "accounts.md#1"
+  },
+  {
+    "query": "paid tier price",
+    "gold": "billing.md#1"
+  }
+];
+
 export function evaluateAll() {
   const tools = new KnowledgeTools();
-  const queries = [
-    { query: "How do I reset my password?", gold: "accounts.md#1" },
-    { query: "How much does the Pro plan cost?", gold: "billing.md#1" },
-    { query: "How do I share a notebook?", gold: "sharing.md#1" },
-    { query: "How often do notes sync?", gold: "sync.md#1" },
-  ];
+  const queries = EVAL_CASES;
   const hits = queries.map((q) => tools.search(q.query, 3).results.some((r) => r.id === q.gold));
   const recall = hits.filter(Boolean).length / hits.length;
   return { cases: queries.length, recall_at_3: recall };

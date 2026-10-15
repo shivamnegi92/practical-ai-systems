@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-The included evaluator finds the expected chunk within top 3 for **4/4** synthetic queries. The server implements a small JSON-RPC/MCP-shaped subset over stdio; it has no third-party MCP SDK and has not been validated against MCP client conformance suites. See [`eval/results.json`](eval/results.json).
+The shared ten-query matrix preserves all four original Python and four browser queries and adds two synonym-based misses. The Python evaluator uses all bundled document chunks; the browser retains its four shortened embedded chunks. Results therefore measure different corpus conditions, not identical retrieval systems. See [`eval/results.json`](eval/results.json). This JSON-RPC/MCP-shaped subset has no third-party SDK and has not run MCP client conformance suites.
 
 ## Known limitations
+
+- `forgotten credentials` and `paid tier price` have no lexical matches despite corresponding to password reset and Pro pricing. Gold labels retain those desired document IDs without query-expansion tuning. The browser also cannot retrieve `sync.md#3` because that chunk is absent from its embedded corpus; do not hide this miss by changing its gold label. These are retrieval checks, not protocol or authorization coverage.
 
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.

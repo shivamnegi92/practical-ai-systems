@@ -1,6 +1,42 @@
 [
-  {"query": "password reset", "gold": "accounts.md#1"},
-  {"query": "Pro monthly cost", "gold": "billing.md#1"},
-  {"query": "offline conflict copy", "gold": "sync.md#3"},
-  {"query": "public sharing revoke", "gold": "sharing.md#1"}
+  {
+    "query": "password reset",
+    "gold": "accounts.md#1"
+  },
+  {
+    "query": "Pro monthly cost",
+    "gold": "billing.md#1"
+  },
+  {
+    "query": "offline conflict copy",
+    "gold": "sync.md#3"
+  },
+  {
+    "query": "public sharing revoke",
+    "gold": "sharing.md#1"
+  },
+  {
+    "query": "How do I reset my password?",
+    "gold": "accounts.md#1"
+  },
+  {
+    "query": "How much does the Pro plan cost?",
+    "gold": "billing.md#1"
+  },
+  {
+    "query": "How do I share a notebook?",
+    "gold": "sharing.md#1"
+  },
+  {
+    "query": "How often do notes sync?",
+    "gold": "sync.md#1"
+  },
+  {
+    "query": "forgotten credentials",
+    "gold": "accounts.md#1"
+  },
+  {
+    "query": "paid tier price",
+    "gold": "billing.md#1"
+  }
 ]
