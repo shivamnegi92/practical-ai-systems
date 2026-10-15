@@ -81,7 +81,7 @@ Find a source paragraph, answer from its evidence, cite it, or abstain.
 **Before you start:** Terminal basics; Python is optional to run it.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/doc_qa/eval/results.json) · 22 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/doc_qa/eval/results.json) · 26 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Invoice field extraction](systems/invoice_extract/README.md)
 

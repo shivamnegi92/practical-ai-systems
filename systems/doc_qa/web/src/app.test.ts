@@ -22,3 +22,12 @@ test("evaluation metrics are in a reasonable range", () => {
   assert.ok(metrics.recall_at_3 >= 0.6);
   assert.ok(metrics.correct_abstention_rate >= 0.5);
 });
+
+test("shared qualifier cases expose the web future-price miss", () => {
+  const qa = new DocQA(CHUNKS);
+  assert.equal(qa.answer("What is the price of the Pro plan in 2035?").abstained, false);
+  assert.equal(qa.answer("How much does the Pro plan cost in Japanese yen?").abstained, true);
+  for (const question of ["How many days is version history kept on the Enterprise plan?", "How long are reset links valid after five failed sign-in attempts?"]) assert.equal(qa.answer(question).abstained, true);
+  assert.equal(evaluateAll().cases, 26);
+  assert.equal(evaluateAll().correct_abstention_rate, 0.875);
+});
