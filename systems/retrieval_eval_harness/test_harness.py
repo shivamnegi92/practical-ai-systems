@@ -21,3 +21,18 @@ class RetrievalEvalHarnessTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class MultiRelevantEvaluation(unittest.TestCase):
+    def test_two_relevant_documents_and_unmatched_synonyms(self):
+        import json
+        from pathlib import Path
+        from systems.retrieval_eval_harness.app import compare_strategies
+        from systems.retrieval_eval_harness.evaluate import evaluate
+        data=json.loads((Path(__file__).parent/"eval/cases.json").read_text())
+        both=compare_strategies(data["corpus"],[{"text":"business day","relevance":{"d3":1,"d4":1}}])
+        self.assertEqual(both["expanded"]["recall_at_k"],1)
+        for text,gold in [("membership tariff","d1"),("end subscription","d3")]:
+            report=compare_strategies(data["corpus"],[{"text":text,"relevance":{gold:1}}])
+            self.assertEqual(report["expanded"]["recall_at_k"],0)
+        self.assertEqual(evaluate()["cases"],11)

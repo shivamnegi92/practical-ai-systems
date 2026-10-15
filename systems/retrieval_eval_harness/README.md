@@ -23,10 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json). This reuses the four-query, four-document fixture from `systems/query_rewriter` and reports recall@k/MRR/nDCG@k for both the plain BM25 baseline and the synonym-expanded run from that system.
+See [`eval/results.json`](eval/results.json). The shared eleven-query matrix preserves both original sets and adds two multi-relevant judgments plus two unmatched synonym intents. It reports recall@3, MRR and nDCG@3 on the original separate corpora: Python has weather/generic deletion, web has shipping/account deletion. These are different corpus conditions, not an identical strategy comparison across ports.
 
 ## Known limitations
 
-- Four queries over four documents with binary relevance is enough to illustrate the metrics, not enough to generalize a strategy comparison.
+- `business day` has both cancellation/deletion targets: Python retrieves both, but the web deletion chunk lacks the phrase, yielding 0.5 recall. `membership tariff` and `end subscription` fail even after expansion in both ports. Original runtime, corpora, synonym dictionary and binary relevance metrics remain unchanged.
+- Eleven queries over four documents with binary relevance is enough to illustrate the metrics, not enough to generalize a strategy comparison.
 - nDCG here uses binary or small integer relevance grades supplied by hand; it is only as trustworthy as those judgments.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

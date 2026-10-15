@@ -314,7 +314,7 @@ Score retrieval with recall@k, MRR, and nDCG@k, and compare two strategies side 
 **Before you start:** IR evaluation metrics (recall, MRR, nDCG).
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/retrieval_eval_harness/eval/results.json) · 4 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/retrieval_eval_harness/eval/results.json) · 11 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Canary rollout simulator](systems/canary_rollout_simulator/README.md)
 
