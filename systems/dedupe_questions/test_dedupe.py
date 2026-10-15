@@ -22,3 +22,12 @@ class DedupeTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EvaluationLimits(unittest.TestCase):
+    def test_negation_false_positive_and_paraphrase_false_negative(self):
+        self.assertGreaterEqual(similarity("How do I enable email alerts?", "How do I not enable email alerts?"), 0.6)
+        self.assertLess(similarity("How do I activate notifications?", "How do I enable alerts?"), 0.6)
+        from systems.dedupe_questions.evaluate import evaluate
+        self.assertEqual(evaluate()["cases"], 13)
+        self.assertLess(evaluate()["f1"], 1)

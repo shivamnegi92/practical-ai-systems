@@ -117,7 +117,7 @@ Flag probable duplicate support questions with token Jaccard similarity.
 **Before you start:** Basic Python and string comparison.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/dedupe_questions/eval/results.json) · 5 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/dedupe_questions/eval/results.json) · 13 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [PII pattern redactor](systems/pii_redactor/README.md)
 
