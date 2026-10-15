@@ -278,7 +278,7 @@ Compare a heuristic with human ratings and inspect rater disagreement.
 **Before you start:** Classification metrics and labeled data.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/judge_audit/eval/results.json) · 6 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/judge_audit/eval/results.json) · 14 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Approval-gated tool workflow](systems/bounded_agent/README.md)
 

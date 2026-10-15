@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-On 6 synthetic claims, the lexical heuristic agrees with rater A **0.50** of the time; human inter-rater kappa is **0.67**, while heuristic-vs-rater-A kappa is **0.00**. This small example demonstrates why judge agreement must be measured against people; it does not evaluate an LLM judge. See [`eval/results.json`](eval/results.json).
+The shared 14-row Python/web matrix preserves both original fixture sets, including their two deliberate rater disagreements. It adds numeric and negation contradictions plus an exact-match control. `human_a`/`human_b` are synthetic labels, not newly collected human ratings. See [`eval/results.json`](eval/results.json) for measured agreement and kappa; these are agreement mechanics, not an LLM-judge assessment.
 
 ## Known limitations
+
+- Lexical overlap can endorse $80 against $8, can/cannot reversals and explicit SMS negation. Both ports keep these three contradictions as misses against the agreed unsupported labels; no threshold, judge algorithm or rater labels were tuned to hide them. Exact text overlap remains a positive control.
 
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.

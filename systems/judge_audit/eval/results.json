@@ -1,13 +1,13 @@
 {
   "dataset": {
-    "cases": 6,
+    "cases": 14,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "human_interrater_kappa": 0.6666666666666667,
+    "human_interrater_kappa": 0.7199999999999999,
     "judge_human_a_agreement": 0.5,
-    "judge_vs_human_kappa": 0.0
+    "judge_vs_human_kappa": 0.039215686274509845
   },
   "notes": "Synthetic labels; a lexical heuristic, not an LLM judge or quality claim.",
   "system": "judge_audit"
