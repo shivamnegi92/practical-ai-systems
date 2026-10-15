@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-The toy regex rules match all **4/4** synthetic fixtures (precision/recall 1.00). Fixtures contain only obvious private-key markers, an example access-key-shaped string, a risky pipe-to-shell line, and clean text. Real secret scanning needs maintained scanners and review; this is neither comprehensive nor a security certification. See [`eval/results.json`](eval/results.json).
+The eight-file Python/web matrix is measured through the public scanner, not a separate whole-text regex approximation. Each Python fixture is written in an isolated temporary repository, preserving its extension and line boundaries. File-level precision is 1.0 and recall is 4/6: split-line chmod and wget-to-shell remain two known misses. The text-file shell snippet correctly produces no finding. The two-finding file counts as one positive file; finding counts are not the metric. See [val/results.json](eval/results.json).
 
 ## Known limitations
+
+- The scanner remains line-scoped and recognizes only a few shell patterns. This evaluator fix does not expand detection. All examples are synthetic; passing this matrix is not security certification.
 
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.

@@ -99,7 +99,7 @@ Run simple local checks and see why toy patterns miss real risks.
 **Before you start:** Basic file and folder navigation.
 
 **Try this:** run the project README quickstart, then its test and evaluator.
-[Evaluation results and cases](systems/repo_guard/eval/results.json) · 4 small synthetic cases. Scores are learning fixtures, not production benchmarks.
+[Evaluation results and cases](systems/repo_guard/eval/results.json) · 8 small synthetic cases. Scores are learning fixtures, not production benchmarks.
 
 #### [Extractive text summarizer](systems/text_summarizer/README.md)
 
