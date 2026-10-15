@@ -1,6 +1,7 @@
 """A bounded TTL LRU cache with normalized keys and hit/miss accounting."""
 from __future__ import annotations
 import hashlib
+import math
 import time
 from collections import OrderedDict
 from dataclasses import dataclass
@@ -13,7 +14,10 @@ class Entry:
 class SemanticCache:
  """Exact normalized-query cache (no embeddings, API calls, or false semantic match)."""
  def __init__(self,max_entries:int=100,ttl_seconds:float=300,clock=time.monotonic):
-  if max_entries<1 or ttl_seconds<=0: raise ValueError('max_entries and ttl_seconds must be positive')
+  if not isinstance(max_entries,int) or isinstance(max_entries,bool) or max_entries<1:
+   raise ValueError('max_entries must be a positive integer')
+  if not math.isfinite(ttl_seconds) or ttl_seconds<=0:
+   raise ValueError('ttl_seconds must be finite and positive')
   self.max_entries=max_entries; self.ttl_seconds=ttl_seconds; self.clock=clock; self.data=OrderedDict(); self.hits=0; self.misses=0
  @staticmethod
  def key(query:str,model:str='default',version:str='1') -> str:

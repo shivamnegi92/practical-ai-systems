@@ -21,6 +21,12 @@ python3 -m unittest systems.semantic_cache.test_cache
 
 The evaluation uses the small synthetic dataset shipped in this folder. Results describe this implementation on those fixtures only; they are not general performance claims.
 
+## Configuration
+
+`max_entries` (Python) / `maxEntries` (TypeScript) must be a positive integer. TTL must be finite and greater than zero: `ttl_seconds` uses seconds, `ttlMs` uses milliseconds. Positive fractional TTLs are valid. Constructors reject NaN, infinite TTLs/capacities and fractional capacities, which previously bypassed bounds or produced silently rounded effective capacity. Python also rejects boolean capacity values.
+
+The existing inclusive expiry boundary is unchanged: an entry is expired when its deadline equals the clock. Defaults, normalization, model/version isolation and LRU behavior are unchanged. No wall-clock sleep is needed in tests; both ports use an injected clock.
+
 ## Results snapshot
 
 Exact replay is **4/4** across a four-query fixture. The illustrative two-pass workload would avoid 50% duplicate calls only because it intentionally repeats every exact query once; this is not an observed production savings claim. Paraphrases miss by design to avoid false semantic matches. See [`eval/results.json`](eval/results.json).

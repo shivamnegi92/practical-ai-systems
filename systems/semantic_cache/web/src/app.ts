@@ -14,7 +14,8 @@ export class SemanticCache {
   misses = 0;
 
   constructor(private maxEntries = 100, private ttlMs = 300_000, private clock: () => number = Date.now) {
-    if (maxEntries < 1 || ttlMs <= 0) throw new Error("maxEntries and ttlMs must be positive");
+    if (!Number.isInteger(maxEntries) || maxEntries < 1) throw new Error("maxEntries must be a positive integer");
+    if (!Number.isFinite(ttlMs) || ttlMs <= 0) throw new Error("ttlMs must be finite and positive");
   }
 
   static key(query: string, model = "default", version = "1"): string {
