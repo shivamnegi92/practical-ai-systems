@@ -23,10 +23,12 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json) for current QC accuracy on 5 synthetic captions covering a clean pass, a banned placeholder phrase, a too-short caption, a too-long caption, and a generic failure message.
+See [`eval/results.json`](eval/results.json) for QC accuracy on a shared 16-caption Python/web matrix. Both original fixture sets remain, with exact 3/25-word boundaries and four explicit desired-policy misses. Current text rules score 12/16 (0.75); the runtime is unchanged.
 
 ## Known limitations
 
 - This never looks at the image; a fluent, well-formed caption that is simply wrong about the image's content will still pass.
+- Required keywords currently use substring matching: `car` incorrectly matches `carpet`, and `art` matches `cart`. The new gold labels require whole-word presence for these two examples, documenting a desired stricter policy beyond the current implementation.
+- Banned phrases are matched as literal strings: repeated spaces or a tab between `image`/`picture` and `of` bypass the filter. The desired labels treat these whitespace variants as the same placeholder phrase. These are text-policy failures, not judgments about an unseen image.
 - The banned-phrase and length-bound lists are small and arbitrary; expand them for your own caption pipeline before relying on this.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

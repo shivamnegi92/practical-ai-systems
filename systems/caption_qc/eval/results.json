@@ -1,11 +1,11 @@
 {
   "dataset": {
-    "cases": 5,
+    "cases": 16,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "qc_accuracy": 1.0
+    "qc_accuracy": 0.75
   },
   "notes": "rule-based text checks only; does not inspect the underlying image",
   "system": "caption_qc"
