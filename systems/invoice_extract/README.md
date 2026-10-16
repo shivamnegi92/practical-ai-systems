@@ -30,3 +30,5 @@ On four synthetic cases (two balanced invoices, one total mismatch, one invalid 
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
+
+Field labels and values must share a line. Horizontal spaces/tabs and LF/CRLF are supported; blank values are reported missing rather than read from a following line.
