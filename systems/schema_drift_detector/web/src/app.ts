@@ -10,7 +10,14 @@ function inferType(value: unknown): string {
   if (typeof value === "number") return "number";
   if (typeof value === "string") return "string";
   if (value === null || value === undefined) return "null";
+  if (Array.isArray(value)) return "array";
   return typeof value;
+}
+
+function canonicalType(name: string): string {
+  if (name === "list") return "array";
+  if (name === "dict") return "object";
+  return name;
 }
 
 export function detectDrift(schema: Schema, records: Array<Record<string, unknown>>) {
@@ -25,7 +32,7 @@ export function detectDrift(schema: Schema, records: Array<Record<string, unknow
     const present = new Set(Object.entries(record).filter(([, v]) => v !== null && v !== "" && v !== undefined).map(([k]) => k));
     for (const field of required) if (!present.has(field)) missingRequired.add(field);
     for (const [field, value] of Object.entries(record)) {
-      if (schema[field] && value !== null && value !== "" && value !== undefined && inferType(value) !== schema[field].type) {
+      if (schema[field] && value !== null && value !== "" && value !== undefined && canonicalType(inferType(value)) !== canonicalType(schema[field].type)) {
         typeMismatches.add(field);
       }
     }

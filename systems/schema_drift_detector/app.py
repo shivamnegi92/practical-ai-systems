@@ -22,6 +22,10 @@ def infer_type(value) -> str:
     return type(value).__name__
 
 
+def _canonical_type(name: str) -> str:
+    return {"list": "array", "dict": "object"}.get(name, name)
+
+
 def detect_drift(schema: dict, records: list[dict]) -> dict:
     known_fields = set(schema)
     required = {field for field, spec in schema.items() if spec.get("required")}
@@ -33,7 +37,7 @@ def detect_drift(schema: dict, records: list[dict]) -> dict:
         present = {k for k, v in record.items() if v not in (None, "")}
         missing_required |= required - present
         for field, value in record.items():
-            if field in schema and value not in (None, "") and infer_type(value) != schema[field]["type"]:
+            if field in schema and value not in (None, "") and _canonical_type(infer_type(value)) != _canonical_type(schema[field]["type"]):
                 type_mismatches.add(field)
     return {
         "new_fields": sorted(new_fields),
