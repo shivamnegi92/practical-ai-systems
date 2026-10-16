@@ -27,6 +27,8 @@ Exact replay is **4/4** across a four-query fixture. The illustrative two-pass w
 
 ## Known limitations
 
+- Writes discard expired entries before applying LRU capacity eviction, including entries expiring exactly at the write time. Cleanup does not count as a hit/miss; LRU order among live entries is preserved.
+
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
