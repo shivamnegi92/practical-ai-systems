@@ -1,4 +1,12 @@
 import { test } from "node:test";
+
+test("invoice amounts are not prefixes of longer numeric tokens", () => {
+ for (const field of ["Subtotal","Tax","Total"]) for (const amount of ["12.345","12.000","1.23.45","1.23,45"]) {
+  const invoice=extract(`${field}: $${amount}`);const key=field.toLowerCase() as "subtotal"|"tax"|"total";
+  assert.equal(invoice[key],null);assert.ok(invoice.errors.includes(`missing:${key}`));
+ }
+ for (const suffix of ["",".",", paid"]) assert.equal(extract("Total: $12.34"+suffix).total,"12.34");
+});
 import { strict as assert } from "node:assert";
 import { evaluateAll, extract } from "./app.js";
 

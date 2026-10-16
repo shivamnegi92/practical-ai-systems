@@ -5,7 +5,7 @@ import json
 from dataclasses import dataclass, asdict
 from decimal import Decimal, InvalidOperation
 
-MONEY = r"\$?\s*([0-9,]+\.\d{2})"
+MONEY = r"\$?\s*([0-9,]+\.\d{2})(?!\d|[.,]\d)"
 
 @dataclass
 class Invoice:
