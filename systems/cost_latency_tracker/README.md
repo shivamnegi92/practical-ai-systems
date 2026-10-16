@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for current breach-decision accurac
 
 ## Known limitations
 
+- Summaries and budget decisions reject nonnumeric, Boolean, negative and nonfinite measurements/limits with `ValueError` (Python) or `RangeError` (TypeScript). Token counts must be integral; omitted tokens default to zero. Zero and empty logs remain valid. Aggregation that produces a nonfinite result is also rejected, so invalid data cannot yield an apparently clean budget verdict.
+
 - This is a fixed two-threshold guardrail, not a statistical anomaly test; it does not account for sample size, noise, or seasonal traffic patterns.
 - Percentiles are computed with linear interpolation over the whole provided batch, not a streaming or windowed estimate.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

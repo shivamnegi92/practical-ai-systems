@@ -2,6 +2,24 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { checkBudget, evaluateAll, percentile, summarize } from "./app.js";
 
+test("rejects invalid measurements before summarizing or deciding a budget", () => {
+  for (const field of ["latency_ms", "cost_usd", "tokens"]) {
+    for (const value of [-1, NaN, Infinity, -Infinity, true, "10", null, ...(field === "tokens" ? [1.5] : [])]) {
+      assert.throws(() => summarize([{ latency_ms: 10, cost_usd: .01, tokens: 100, [field]: value } as any]), RangeError);
+    }
+  }
+  for (const field of ["p95_latency_ms", "total_cost_usd", "maxP95", "maxCost"]) {
+    for (const value of [-1, NaN, Infinity, true, "10", null]) {
+      const data: any = { p95_latency_ms: 10, total_cost_usd: .01, maxP95: 100, maxCost: 1, [field]: value };
+      assert.throws(() => checkBudget(data, data.maxP95, data.maxCost), RangeError);
+    }
+  }
+  assert.equal(summarize([{ latency_ms: 0, cost_usd: 0 }]).cost_per_1k_tokens_usd, 0);
+  assert.equal(checkBudget(summarize([]), 0, 0).breached, false);
+  assert.throws(() => summarize([{ latency_ms: 1, cost_usd: 1e308 }, { latency_ms: 1, cost_usd: 1e308 }]), RangeError);
+  assert.throws(() => summarize([{ latency_ms: 1, cost_usd: 1e308, tokens: 1 }]), RangeError);
+});
+
 test("percentile of empty list is zero", () => {
   assert.equal(percentile([], 50), 0);
 });
