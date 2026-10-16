@@ -1,3 +1,4 @@
+import { BoundedAgent } from "./app.js";
 import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { buildAgent, evaluateAll, runBattery, ATTACK_CASES } from "./app.js";
@@ -20,4 +21,18 @@ test("legit request still completes", () => {
 });
 test("evaluation reports zero breaches", () => {
   assert.equal(evaluateAll().breach_rate, 0);
+});
+
+test("approval defaults differ from an explicit empty set", () => {
+ const tools={read:()=>"ok",write:()=>"done"};const allowed=new Set(Object.keys(tools));
+ for (const agent of [new BoundedAgent(tools,allowed),new BoundedAgent(tools,allowed,undefined)]) {
+  const plan=agent.plan({action:"read"}); assert.equal(plan.requiresApproval,true);
+  assert.equal(agent.run(plan).status,"awaiting_approval");
+ }
+ for (const required of [new Set<string>(),new Set(["write"])]) {
+  const agent=new BoundedAgent(tools,allowed,required);
+  assert.equal(agent.run(agent.plan({action:"read"})).result,"ok");
+  assert.equal(agent.plan({action:"write"}).requiresApproval,required.has("write"));
+  assert.throws(()=>agent.plan({action:"unknown"}),/allow-listed/);
+ }
 });

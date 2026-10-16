@@ -10,7 +10,7 @@ class Plan:
 
 class BoundedAgent:
  def __init__(self, tools: dict[str,Callable], allowed: set[str], approval_required: set[str] | None = None):
-  self.tools=tools; self.allowed=allowed; self.approval_required=approval_required or set(allowed)
+  self.tools=tools; self.allowed=allowed; self.approval_required=set(allowed) if approval_required is None else approval_required
  def plan(self, request: dict) -> Plan:
   action=request.get('action','')
   if action not in self.allowed or action not in self.tools:
