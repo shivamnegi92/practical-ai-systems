@@ -5,7 +5,7 @@ export interface FieldSpec { type: FieldType; required?: boolean }
 export type Schema = Record<string, FieldSpec>;
 
 function matchesType(value: unknown, type: FieldType): boolean {
-  if (type === "number") return typeof value === "number";
+  if (type === "number") return typeof value === "number" && Number.isFinite(value);
   if (type === "boolean") return typeof value === "boolean";
   return typeof value === "string";
 }

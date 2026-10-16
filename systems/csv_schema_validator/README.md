@@ -1,5 +1,7 @@
 # CSV/record schema validator
 
+Number fields reject NaN and positive/negative infinity with the existing `type:<field>` error, including for optional fields when a value is supplied. Finite values (including zero) and strings such as `"NaN"` in string fields retain their existing behavior.
+
 Catch missing required fields and type mismatches in structured records before they reach an AI pipeline.
 
 **Level:** starter · **Runs locally:** yes · **Credentials:** none · **Dependencies:** Python standard library only
