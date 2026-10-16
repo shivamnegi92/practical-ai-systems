@@ -53,6 +53,7 @@ class BM25 {
     return total;
   }
   search(query: string, k = 5): Array<[string, number]> {
+    if (!Number.isInteger(k) || k < 0) throw new RangeError("k must be a nonnegative integer");
     const scored: Array<[string, number]> = Object.keys(this.tokens).map((id) => [id, this.score(query, id)]);
     return scored.filter(([, s]) => s > 0).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, k);
   }

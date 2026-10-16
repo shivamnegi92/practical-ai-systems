@@ -30,3 +30,5 @@ See [`eval/results.json`](eval/results.json). On a 4-document synthetic corpus, 
 - The synonym list is hand-picked for this fixture and is not a general thesaurus; it will not expand any term outside the six entries defined in `app.py`.
 - Expansion can also hurt precision by pulling in documents that match only on the injected synonym; this baseline does not re-rank or validate expanded hits.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
+
+The internal BM25 search count `k` must be a nonnegative integer. Zero returns no hits; negative, fractional and non-finite counts are rejected before searching, including empty indexes. Wrapper-specific default/clamping policies remain unchanged.
