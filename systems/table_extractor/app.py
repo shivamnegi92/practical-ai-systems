@@ -53,6 +53,6 @@ def extract_table(lines: list[dict], row_gap: float = 5.0, col_gap: float = 40.0
         cell_row = [""] * len(col_starts)
         for cell in row:
             col_index = max(i for i, start in enumerate(col_starts) if cell["bbox"][0] >= start - 1e-6)
-            cell_row[col_index] = cell["text"]
+            cell_row[col_index] = " ".join(filter(None, (cell_row[col_index], cell["text"])))
         grid.append(cell_row)
     return grid

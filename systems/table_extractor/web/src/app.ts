@@ -48,7 +48,7 @@ export function extractTable(
     for (const cell of row) {
       let colIndex = 0;
       for (let i = 0; i < colStarts.length; i++) if (cell.bbox[0] >= colStarts[i] - 1e-6) colIndex = i;
-      cellRow[colIndex] = cell.text;
+      cellRow[colIndex] = [cellRow[colIndex], cell.text].filter(Boolean).join(" ");
     }
     return cellRow;
   });
