@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-SECRET_PATTERNS=[('private key',re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----')),('AWS access key',re.compile(r'\bAKIA[0-9A-Z]{16}\b'))]
+SECRET_PATTERNS=[('private key',re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH |ENCRYPTED )?PRIVATE KEY-----')),('AWS access key',re.compile(r'\bAKIA[0-9A-Z]{16}\b'))]
 DANGEROUS_ACTIONS=re.compile(r'\b(?:chmod\s+777|curl\s+[^|]+\|\s*(?:sudo\s+)?sh|rm\s+-rf\s+/|eval\s+\$\()',re.I)
 
 def scan(root:Path,ignore:set[str]|None=None)->list[dict]:
