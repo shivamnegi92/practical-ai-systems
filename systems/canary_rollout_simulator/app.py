@@ -17,6 +17,14 @@ def decide(
     max_error_rate_delta: float = 0.02,
     max_latency_regression_pct: float = 0.20,
 ) -> dict:
+    invalid_rates = []
+    for label, metrics in (("baseline", baseline), ("canary", canary)):
+        rate = metrics.get("error_rate")
+        if not (isinstance(rate, (int, float)) and not isinstance(rate, bool) and 0 <= rate <= 1):
+            invalid_rates.append(f"invalid_{label}_error_rate")
+    if invalid_rates:
+        return {"decision": "hold", "reasons": invalid_rates,
+                "error_rate_delta": None, "latency_regression_pct": None}
     error_delta = canary["error_rate"] - baseline["error_rate"]
     base_latency = baseline["p95_latency_ms"]
     latency_regression = (canary["p95_latency_ms"] - base_latency) / base_latency if base_latency else 0.0

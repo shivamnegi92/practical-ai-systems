@@ -13,6 +13,14 @@ export function decide(
   maxErrorRateDelta = 0.02,
   maxLatencyRegressionPct = 0.2
 ) {
+  const invalidRates: string[] = [];
+  for (const [label, metrics] of [["baseline", baseline], ["canary", canary]] as const) {
+    const rate = metrics.error_rate;
+    if (!Number.isFinite(rate) || rate < 0 || rate > 1) invalidRates.push(`invalid_${label}_error_rate`);
+  }
+  if (invalidRates.length) {
+    return { decision: "hold", reasons: invalidRates, error_rate_delta: null, latency_regression_pct: null };
+  }
   const errorDelta = canary.error_rate - baseline.error_rate;
   const baseLatency = baseline.p95_latency_ms;
   const latencyRegression = baseLatency ? (canary.p95_latency_ms - baseLatency) / baseLatency : 0;
