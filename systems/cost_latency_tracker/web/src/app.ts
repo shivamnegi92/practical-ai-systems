@@ -7,6 +7,9 @@ export interface RequestLog {
 }
 
 export function percentile(values: number[], pct: number): number {
+  if (!Number.isFinite(pct) || pct < 0 || pct > 100) {
+    throw new RangeError("percentile must be finite and between 0 and 100");
+  }
   const ordered = [...values].sort((a, b) => a - b);
   if (!ordered.length) return 0;
   const pos = ((ordered.length - 1) * pct) / 100;
