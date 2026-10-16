@@ -1,5 +1,7 @@
 # Retrieval evaluation harness
 
+For nonnegative relevance grades, nDCG credits each document at its first ranked occurrence only. Repeats retain their rank slots but contribute zero extra gain; unjudged IDs have zero gain. This prevents duplicate results from inflating the normalized score above one. Existing unique-document rankings are unchanged.
+
 Score a retrieval strategy with recall@k, MRR, and nDCG@k, and compare a baseline against a synonym-expanded run side by side.
 
 **Level:** advanced · **Runs locally:** yes · **Credentials:** none · **Dependencies:** Python standard library only
