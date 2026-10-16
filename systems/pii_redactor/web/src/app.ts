@@ -28,8 +28,15 @@ export function detect(text: string): Finding[] {
 }
 
 export function redact(text: string): string {
-  const findings = [...detect(text)].sort((a, b) => b.start - a.start);
-  for (const f of findings) {
+  // Merge original spans before replacement shifts offsets. Earliest match
+  // labels the union; a shared start prefers the longest match.
+  const spans: Finding[] = [];
+  for (const f of detect(text).sort((a, b) => a.start - b.start || b.end - a.end)) {
+    const previous = spans[spans.length - 1];
+    if (previous && f.start < previous.end) previous.end = Math.max(previous.end, f.end);
+    else spans.push({ ...f });
+  }
+  for (const f of spans.reverse()) {
     text = text.slice(0, f.start) + `[REDACTED:${f.type.toUpperCase()}]` + text.slice(f.end);
   }
   return text;

@@ -1,5 +1,7 @@
 # PII pattern redactor
 
+Redaction merges overlapping detected spans before replacing text. The earliest-starting match supplies the tag (longest match wins a shared start), so an SSN-shaped substring inside an email does not corrupt the email replacement or surrounding text. `detect()` still reports each original finding. This does not expand the toy pattern coverage or establish compliance.
+
 Find and mask obvious email, phone, SSN, and credit-card-shaped strings in free text.
 
 **Level:** starter · **Runs locally:** yes · **Credentials:** none · **Dependencies:** Python standard library only

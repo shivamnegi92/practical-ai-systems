@@ -4,6 +4,15 @@ from systems.pii_redactor.app import detect, redact
 
 
 class PiiRedactorTests(unittest.TestCase):
+    def test_overlapping_email_and_ssn_use_original_offsets_once(self):
+        for email in ('123-45-6789@example.com','user.123-45-6789@example.com'):
+            text=f'Contact {email} today.'
+            self.assertEqual({f['type'] for f in detect(text)}, {'email','ssn'})
+            self.assertEqual(redact(text), 'Contact [REDACTED:EMAIL] today.')
+
+    def test_disjoint_matches_and_surrounding_text_survive(self):
+        text='📧 user.123-45-6789@example.com; SSN 987-65-4321. End.'
+        self.assertEqual(redact(text),'📧 [REDACTED:EMAIL]; SSN [REDACTED:SSN]. End.')
     def test_detects_email(self):
         findings = detect("Contact jane.doe@example.com for help.")
         self.assertEqual([f["type"] for f in findings], ["email"])
