@@ -13,3 +13,21 @@ class RepoGuardTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    (Path(d)/'readme.md').write_text('plain text')
    self.assertEqual(scan(Path(d)),[])
+ def test_explicit_empty_ignore_scans_default_exclusions(self):
+  with tempfile.TemporaryDirectory() as d:
+   root=Path(d); (root/'.venv').mkdir()
+   (root/'.venv'/'key.pem').write_text('-----BEGIN PRIVATE KEY-----')
+   self.assertEqual(scan(root),[])
+   self.assertEqual(scan(root,ignore=None),[])
+   findings=scan(root,ignore=set())
+   self.assertEqual(len(findings),1)
+   self.assertEqual(Path(findings[0]['file']),Path('.venv/key.pem'))
+ def test_custom_ignore_replaces_defaults(self):
+  with tempfile.TemporaryDirectory() as d:
+   root=Path(d)
+   for folder in ('.venv','custom'):
+    (root/folder).mkdir()
+    (root/folder/'key.pem').write_text('-----BEGIN PRIVATE KEY-----')
+   findings=scan(root,ignore={'custom'})
+   self.assertEqual(len(findings),1)
+   self.assertEqual(Path(findings[0]['file']),Path('.venv/key.pem'))
