@@ -59,7 +59,8 @@ const SYNONYMS: Record<string, string[]> = {
 };
 
 export function expandQuery(query: string): string {
-  const extra = tokenize(query).flatMap((t) => SYNONYMS[t] ?? []);
+  const normalized = new Map(Object.entries(SYNONYMS).flatMap(([word, aliases]) => tokenize(word).map(t => [t, aliases] as const)));
+  const extra = tokenize(query).flatMap((t) => normalized.get(t) ?? []);
   return [query, ...extra].join(" ");
 }
 

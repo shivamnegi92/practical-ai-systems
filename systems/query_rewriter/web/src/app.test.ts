@@ -1,3 +1,4 @@
+import { BM25 } from "./app.js";
 import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { CORPUS, evaluateAll, expandQuery, search } from "./app.js";
@@ -19,4 +20,14 @@ test("expansion recovers the match", () => {
 test("evaluation shows expansion helps", () => {
   const result = evaluateAll();
   assert.ok(result.recall_at_1_expanded >= result.recall_at_1_baseline);
+});
+
+test("declared pricing synonym survives the same stemming as a query", () => {
+ const query="What is the PRICING?";const expanded=expandQuery(query);
+ assert.ok(expanded.startsWith(query));assert.ok(expanded.split(/\s+/).includes("cost"));
+ assert.equal(new BM25({billing:"cost"}).search(expanded,1)[0][0],"billing");
+ assert.equal(expandQuery("unknown"),"unknown");
+ assert.ok(expandQuery("unsubscribe").split(" ").includes("cancel"));
+ assert.ok(expandQuery("remove").split(" ").includes("delete"));
+ assert.equal(expandQuery("price").split(" ").filter(t=>t==="cost").length,1);
 });
