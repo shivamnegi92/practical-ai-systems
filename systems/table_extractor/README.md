@@ -30,3 +30,5 @@ See [`eval/results.json`](eval/results.json) for current cell-level exact match 
 - Row and column boundaries are fixed-gap thresholds (`row_gap`, `col_gap`), not learned from the layout; dense real tables or merged cells will break this.
 - Multi-line cells, rotated text, and ragged column counts across rows are not handled.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
+
+Normalization skips missing/null text and boxes containing booleans or non-finite coordinates (NaN/infinity). Signed finite coordinates and the existing reading-order rules remain supported. This validates supplied OCR records; it does not perform OCR.

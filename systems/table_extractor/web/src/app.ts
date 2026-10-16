@@ -11,7 +11,7 @@ export function normalizeLines(lines: Array<{ text?: unknown; bbox?: unknown }>)
     const box = line.bbox;
     if (!text || !Array.isArray(box) || box.length !== 4) continue;
     const [x1, y1, x2, y2] = box;
-    if (!box.every((v) => typeof v === "number") || x2 < x1 || y2 < y1) continue;
+    if (!box.every((v) => typeof v === "number" && Number.isFinite(v)) || x2 < x1 || y2 < y1) continue;
     out.push({ text, bbox: [x1, y1, x2, y2] });
   }
   return out.sort((a, b) => Math.round(a.bbox[1] * 1000) - Math.round(b.bbox[1] * 1000) || a.bbox[0] - b.bbox[0]);
