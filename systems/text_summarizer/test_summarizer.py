@@ -4,6 +4,13 @@ from systems.text_summarizer.app import compression_ratio, summarize
 
 
 class SummarizerTests(unittest.TestCase):
+    def test_count_must_be_a_nonnegative_integer_even_for_short_input(self):
+        for text in ('', 'One sentence.', 'First sentence. Second sentence. Third sentence.'):
+            for n in (-1, 1.5, float('nan'), float('inf'), True):
+                with self.subTest(text=text,n=n), self.assertRaisesRegex(ValueError, 'nonnegative integer'):
+                    summarize(text,n)
+        self.assertEqual(summarize('First sentence. Second sentence.',0),[])
+        self.assertEqual(summarize('One sentence.',5),['One sentence.'])
     def test_short_text_returned_unchanged(self):
         self.assertEqual(summarize("One sentence only."), ["One sentence only."])
 

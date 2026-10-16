@@ -2,6 +2,15 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { compressionRatio, evaluateAll, summarize } from "./app.js";
 
+test("summary count is a nonnegative integer even for empty or short input", () => {
+ for (const text of ["","One sentence.","First sentence. Second sentence. Third sentence."]) {
+  for (const n of [-1,1.5,NaN,Infinity]) assert.throws(()=>summarize(text,n),/nonnegative integer/);
+ }
+ assert.throws(()=>summarize("One sentence.",JSON.parse("true")),/nonnegative integer/);
+ assert.deepEqual(summarize("First sentence. Second sentence.",0),[]);
+ assert.deepEqual(summarize("One sentence.",5),["One sentence."]);
+});
+
 test("short text returned unchanged", () => {
   assert.deepEqual(summarize("One sentence only."), ["One sentence only."]);
 });

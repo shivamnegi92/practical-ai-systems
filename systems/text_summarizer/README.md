@@ -1,5 +1,7 @@
 # Extractive text summarizer
 
+The sentence count `n` must be a nonnegative integer. Zero produces an empty summary; a count larger than the available sentences returns them all. Invalid counts raise an error even for empty or short input.
+
 Pick the most representative sentences from a short document using word-frequency scoring. No model, no API key.
 
 **Level:** starter · **Runs locally:** yes · **Credentials:** none · **Dependencies:** Python standard library only
