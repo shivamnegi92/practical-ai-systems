@@ -35,3 +35,5 @@ This measured BM25 retrieval coverage, extractive sentence coverage, citation ma
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
+
+The Python Markdown loader removes leading ATX heading lines, not the following body in the same paragraph. Heading-only blocks remain excluded; hashtags without heading whitespace and fenced code are retained. Files are read as UTF-8. This is a small paragraph loader, not a full Markdown parser; browser corpora remain static and unchanged.
