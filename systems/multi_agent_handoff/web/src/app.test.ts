@@ -1,4 +1,12 @@
 import { test } from "node:test";
+
+test("tied triage escalates without choosing a specialist", () => {
+  for (const [text, score] of [["invoice payment error login", 2], ["invoice payment error login username profile", 2], ["invoice error", 1], ["hello", 0]] as const) {
+    assert.deepEqual(handle({ text }), { status: "escalated", category: null, confidence: score });
+  }
+  assert.equal(handle({ text: "invoice payment refund error login" }).category, "billing");
+  assert.equal(handle({ text: "invoice payment error login crash" }).category, "technical");
+});
 import { strict as assert } from "node:assert";
 import { evaluateAll, handle, triage } from "./app.js";
 

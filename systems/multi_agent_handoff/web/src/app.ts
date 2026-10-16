@@ -37,14 +37,18 @@ export function triage(text: string): [string | null, number] {
   const tokens = new Set(tokenize(text));
   let bestCategory: string | null = null;
   let bestScore = -1;
+  let tied = false;
   for (const [category, keywords] of Object.entries(CATEGORIES)) {
     const score = [...tokens].filter((t) => keywords.has(t)).length;
     if (score > bestScore) {
       bestScore = score;
       bestCategory = category;
+      tied = false;
+    } else if (score === bestScore) {
+      tied = true;
     }
   }
-  return bestScore > 0 ? [bestCategory, bestScore] : [null, 0];
+  return bestScore > 0 ? [tied ? null : bestCategory, bestScore] : [null, 0];
 }
 
 export function handle(request: { text: string }) {
