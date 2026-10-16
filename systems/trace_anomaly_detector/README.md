@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for current precision/recall on 4 s
 
 ## Known limitations
 
+- Durations and the z-score threshold must be numeric, finite and nonnegative; invalid inputs raise an error before scoring instead of producing NaN or an apparent normal result. Zero and fractional values remain allowed. This does not add statistical confidence, validate record shape, or change missing/constant-baseline behavior.
+
 - A 10-point baseline is far too small to estimate a stable mean/standard deviation for any real service; this is illustrative, not production-grade statistics.
 - The z-score threshold (3.0) assumes a roughly normal distribution of durations, which real latency data rarely is (it's typically right-skewed).
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

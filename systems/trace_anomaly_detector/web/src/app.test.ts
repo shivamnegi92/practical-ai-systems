@@ -1,4 +1,21 @@
 import { test } from "node:test";
+
+test("trace inputs reject invalid durations and thresholds before scoring", () => {
+ for (const value of [-1,NaN,Infinity,-Infinity]) {
+  assert.throws(()=>detectAnomalies([10,value],[]),/baseline/);
+  assert.throws(()=>detectAnomalies([10,20],[{name:"bad",duration_ms:value}]),/duration/);
+  assert.throws(()=>detectAnomalies([],[],value),/threshold/);
+ }
+ for (const value of [true,null,"1"]) {
+  const bad=JSON.parse(JSON.stringify(value));
+  assert.throws(()=>detectAnomalies([10,bad],[]),/baseline/);
+  assert.throws(()=>detectAnomalies([10,20],[{name:"bad",duration_ms:bad}]),/duration/);
+  assert.throws(()=>detectAnomalies([],[],bad),/threshold/);
+ }
+ const result=detectAnomalies([10,20],[{name:"normal",duration_ms:15},{name:"flagged",duration_ms:15,error:true}],.5);
+ assert.equal(result[0].anomalous,false);assert.equal(result[1].anomalous,true);
+ assert.deepEqual(detectAnomalies([],[],0),[]);
+});
 import { strict as assert } from "node:assert";
 import { BASELINE, detectAnomalies, evaluateAll, TRACES } from "./app.js";
 
