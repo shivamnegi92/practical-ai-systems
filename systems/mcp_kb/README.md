@@ -27,6 +27,8 @@ The included evaluator finds the expected chunk within top 3 for **4/4** synthet
 
 ## Known limitations
 
+- Chunk reads require an own key in the bundled corpus. JavaScript prototype names such as `constructor` and `toString` are refused as unknown IDs, matching the Python dictionary lookup. This is a lookup-boundary guarantee, not MCP client conformance or an authorization claim.
+
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.

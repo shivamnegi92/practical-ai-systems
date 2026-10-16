@@ -25,3 +25,13 @@ test("unknown method returns a JSON-RPC error", () => {
 test("evaluation recall is perfect on the bundled fixtures", () => {
   assert.equal(evaluateAll().recall_at_3, 1);
 });
+
+test("prototype-like chunk ids are refused as unknown through read and dispatch", () => {
+  const tools=new KnowledgeTools();
+  for (const chunk_id of ["constructor","toString","__proto__","hasOwnProperty"]) {
+    assert.throws(()=>tools.read(chunk_id),/unknown chunk id/);
+    const result=dispatch({id:7,method:"tools/call",params:{name:"read_chunk",arguments:{chunk_id}}},tools);
+    assert.equal((result.result as {isError?:boolean}).isError,true);
+  }
+  assert.equal(tools.read("accounts.md#1").id,"accounts.md#1");
+});
