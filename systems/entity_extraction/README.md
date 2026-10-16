@@ -30,3 +30,5 @@ Four handcrafted synthetic sentences produce macro-averaged exact-span precision
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
+
+ISO-shaped dates (`YYYY-MM-DD`) are matched independently of month-name dates, so a following count is not consumed as part of the date. Matching is lexical; it does not validate calendar dates.
