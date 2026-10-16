@@ -1,6 +1,7 @@
 """A bounded TTL LRU cache with normalized keys and hit/miss accounting."""
 from __future__ import annotations
 import hashlib
+import json
 import time
 from collections import OrderedDict
 from dataclasses import dataclass
@@ -18,7 +19,8 @@ class SemanticCache:
  @staticmethod
  def key(query:str,model:str='default',version:str='1') -> str:
   normalized=' '.join(query.casefold().split())
-  return hashlib.sha256(f'{model}\0{version}\0{normalized}'.encode()).hexdigest()
+  payload=json.dumps([model,version,normalized],ensure_ascii=False,separators=(',',':'))
+  return hashlib.sha256(payload.encode('utf-8')).hexdigest()
  def get(self,query:str,model:str='default',version:str='1') -> str|None:
   key=self.key(query,model,version); entry=self.data.get(key)
   if entry is None or entry.expires_at<=self.clock():

@@ -27,6 +27,8 @@ Exact replay is **4/4** across a four-query fixture. The illustrative two-pass w
 
 ## Known limitations
 
+- Model, version and normalized query are serialized as a JSON tuple before keying, so embedded separator characters cannot alias distinct namespaces. Key encoding changes; caches are in-memory only, and exact Python/browser key bytes are not a shared persistence format. Query normalization and model/version isolation otherwise remain unchanged.
+
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.

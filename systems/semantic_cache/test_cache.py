@@ -2,6 +2,16 @@ import unittest
 from systems.semantic_cache.cache import SemanticCache
 
 class CacheTests(unittest.TestCase):
+ def test_embedded_delimiters_do_not_alias_namespace_fields(self):
+  triples=[('q','a','b\0c'),('q','a\0b','c'),('c\0q','a','b')]
+  c=SemanticCache()
+  self.assertEqual(len({c.key(*triple) for triple in triples}),3)
+  for i,(query,model,version) in enumerate(triples):c.put(query,str(i),model,version)
+  for i,(query,model,version) in enumerate(triples):self.assertEqual(c.get(query,model,version),str(i))
+ def test_normalization_with_quoted_namespace_values_is_preserved(self):
+  c=SemanticCache();c.put(' Hello  WORLD ','ok','model"\\name','version\n1')
+  self.assertEqual(c.get('hello world','model"\\name','version\n1'),'ok')
+  self.assertIsNone(c.get('hello world','model"\\name','other'))
  def test_normalized_exact_match_and_model_isolation(self):
   c=SemanticCache(); c.put(' Hello  world ','yes')
   self.assertEqual(c.get('hello world'),'yes')

@@ -19,7 +19,7 @@ export class SemanticCache {
 
   static key(query: string, model = "default", version = "1"): string {
     const normalized = query.toLowerCase().trim().split(/\s+/).join(" ");
-    return `${model}\0${version}\0${normalized}`;
+    return JSON.stringify([model, version, normalized]);
   }
 
   get(query: string, model = "default", version = "1"): string | null {

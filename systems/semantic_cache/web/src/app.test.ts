@@ -2,6 +2,16 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { evaluateAll, SemanticCache } from "./app.js";
 
+test("embedded delimiters cannot alias cache namespace fields", () => {
+ const triples:[string,string,string][]=[["q","a","b\0c"],["q","a\0b","c"],["c\0q","a","b"]];
+ const c=new SemanticCache();assert.equal(new Set(triples.map(t=>SemanticCache.key(...t))).size,3);
+ triples.forEach(([q,m,v],i)=>c.put(q,String(i),m,v));
+ triples.forEach(([q,m,v],i)=>assert.equal(c.get(q,m,v),String(i)));
+ c.put(" Hello  WORLD ","ok",'model"\\name',"version\n1");
+ assert.equal(c.get("hello world",'model"\\name',"version\n1"),"ok");
+ assert.equal(c.get("hello world",'model"\\name',"other"),null);
+});
+
 test("normalized queries hit the same entry", () => {
   const cache = new SemanticCache();
   cache.put("What is the price?", "answer");
