@@ -1,3 +1,4 @@
+import { BoundedAgent } from "./app.js";
 import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { buildSampleAgent, evaluateAll } from "./app.js";
@@ -24,4 +25,15 @@ test("disallowed action is rejected at plan time", () => {
 test("evaluation demonstrates the full policy", () => {
   const result = evaluateAll();
   assert.ok(Object.values(result).every(Boolean));
+});
+
+test("null requests and array plans are rejected before tool invocation", () => {
+  let calls = 0;
+  const agent = new BoundedAgent({ echo: () => { calls++; return "ok"; } }, new Set(["echo"]), new Set(["echo"]));
+  assert.throws(() => agent.plan({ action: "echo", arguments: null }), /arguments must be an object/);
+  assert.throws(() => agent.run({ action: "echo", arguments: [] as any, requiresApproval: true }, true), /arguments must be an object/);
+  assert.equal(calls, 0);
+  assert.equal(agent.run(agent.plan({ action: "echo" }), true).status, "completed");
+  assert.equal(agent.run(agent.plan({ action: "echo", arguments: {} }), true).status, "completed");
+  assert.equal(calls, 2);
 });
