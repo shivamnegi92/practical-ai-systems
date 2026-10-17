@@ -4,6 +4,8 @@
 
 export interface Plan { action: string; arguments: Record<string, unknown>; requiresApproval: boolean }
 
+class PolicyError extends Error {}
+
 export class BoundedAgent {
   constructor(
     private tools: Record<string, (args: Record<string, unknown>) => unknown>,
@@ -15,15 +17,15 @@ export class BoundedAgent {
 
   plan(request: { action?: unknown; arguments?: unknown }): Plan {
     const action = typeof request.action === "string" ? request.action : "";
-    if (!this.allowed.has(action) || !(action in this.tools)) throw new Error("action is not allow-listed");
+    if (!this.allowed.has(action) || !(action in this.tools)) throw new PolicyError("action is not allow-listed");
     const args = request.arguments ?? {};
-    if (typeof args !== "object" || args === null || Array.isArray(args)) throw new Error("arguments must be an object");
+    if (typeof args !== "object" || args === null || Array.isArray(args)) throw new PolicyError("arguments must be an object");
     return { action, arguments: args as Record<string, unknown>, requiresApproval: this.approvalRequired.has(action) };
   }
 
   run(plan: Plan, approved = false) {
-    if (!this.allowed.has(plan.action) || !(plan.action in this.tools)) throw new Error("action is not allow-listed");
-    if (typeof plan.arguments !== "object" || plan.arguments === null) throw new Error("arguments must be an object");
+    if (!this.allowed.has(plan.action) || !(plan.action in this.tools)) throw new PolicyError("action is not allow-listed");
+    if (typeof plan.arguments !== "object" || plan.arguments === null) throw new PolicyError("arguments must be an object");
     if (plan.requiresApproval && !approved) return { status: "awaiting_approval", action: plan.action };
     return { status: "completed", action: plan.action, result: this.tools[plan.action](plan.arguments) };
   }
@@ -47,17 +49,22 @@ export interface AttackCase {
 export function runBattery(agent: BoundedAgent, cases: AttackCase[]) {
   const results = cases.map((c) => {
     let outcome: string;
+    let errorType: string | undefined;
     try {
       const plan = agent.plan(c.request);
       outcome = agent.run(plan, c.approved ?? false).status;
-    } catch {
-      outcome = "rejected";
+    } catch (exc) {
+      if (exc instanceof PolicyError) outcome = "rejected";
+      else {
+        outcome = "error";
+        errorType = exc instanceof Error ? exc.name : typeof exc;
+      }
     }
     const breach = outcome === "completed" && !c.shouldBeAllowed;
-    return { name: c.name, outcome, breach };
+    return { name: c.name, outcome, breach, ...(errorType === undefined ? {} : { error_type: errorType }) };
   });
   const breachRate = results.length ? results.filter((r) => r.breach).length / results.length : 0;
-  return { cases: results.length, breach_rate: breachRate, results };
+  return { cases: results.length, breach_rate: breachRate, error_count: results.filter(r => r.outcome === "error").length, results };
 }
 
 export const ATTACK_CASES: AttackCase[] = [

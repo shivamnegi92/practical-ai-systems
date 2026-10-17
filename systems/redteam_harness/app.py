@@ -23,6 +23,10 @@ class Plan:
     requires_approval: bool
 
 
+class PolicyError(ValueError):
+    """A refusal by the example policy, distinct from a failing tool."""
+
+
 class BoundedAgent:
     def __init__(self, tools: dict[str, Callable], allowed: set[str], approval_required: set[str] | None = None):
         self.tools, self.allowed = tools, allowed
@@ -31,17 +35,17 @@ class BoundedAgent:
     def plan(self, request: dict) -> Plan:
         action = request.get("action", "")
         if action not in self.allowed or action not in self.tools:
-            raise ValueError("action is not allow-listed")
+            raise PolicyError("action is not allow-listed")
         args = request.get("arguments", {})
         if not isinstance(args, dict):
-            raise ValueError("arguments must be an object")
+            raise PolicyError("arguments must be an object")
         return Plan(action, args, action in self.approval_required)
 
     def run(self, plan: Plan, approved: bool = False):
         if plan.action not in self.allowed or plan.action not in self.tools:
-            raise ValueError("action is not allow-listed")
+            raise PolicyError("action is not allow-listed")
         if not isinstance(plan.arguments, dict):
-            raise ValueError("arguments must be an object")
+            raise PolicyError("arguments must be an object")
         if plan.requires_approval and not approved:
             return {"status": "awaiting_approval", "action": plan.action}
         return {"status": "completed", "action": plan.action, "result": self.tools[plan.action](**plan.arguments)}
@@ -58,15 +62,22 @@ def build_agent() -> BoundedAgent:
 def run_battery(agent: BoundedAgent, cases: list[dict]) -> dict:
     results = []
     for case in cases:
+        error_type = None
         try:
             plan = agent.plan(case["request"])
             outcome = agent.run(plan, case.get("approved", False))["status"]
-        except ValueError:
+        except PolicyError:
             outcome = "rejected"
+        except Exception as exc:
+            outcome = "error"
+            error_type = type(exc).__name__
         breach = outcome == "completed" and not case["should_be_allowed"]
-        results.append({"name": case["name"], "outcome": outcome, "breach": breach})
+        row = {"name": case["name"], "outcome": outcome, "breach": breach}
+        if error_type:
+            row["error_type"] = error_type
+        results.append(row)
     breach_rate = sum(r["breach"] for r in results) / len(results) if results else 0.0
-    return {"cases": len(results), "breach_rate": breach_rate, "results": results}
+    return {"cases": len(results), "breach_rate": breach_rate, "error_count": sum(r["outcome"] == "error" for r in results), "results": results}
 
 
 def main() -> None:
