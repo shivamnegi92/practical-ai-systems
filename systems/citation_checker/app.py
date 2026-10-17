@@ -42,10 +42,10 @@ def check_citations(answer: str, chunks: dict[str, str], min_overlap: float = 0.
             if chunk_id not in chunks:
                 results.append({"chunk_id": chunk_id, "sentence": sent, "overlap": 0.0, "status": "unknown_chunk"})
                 continue
-            claim_tokens = set(tokenize(sent))
+            claim_tokens = set(tokenize(CITATION.sub('', sent)))
             chunk_tokens = set(tokenize(chunks[chunk_id]))
             overlap = len(claim_tokens & chunk_tokens) / len(claim_tokens) if claim_tokens else 0.0
-            status = "supported" if overlap >= min_overlap else "unsupported"
+            status = "supported" if claim_tokens and overlap >= min_overlap else "unsupported"
             results.append({"chunk_id": chunk_id, "sentence": sent, "overlap": round(overlap, 4), "status": status})
     return {
         "citations": len(results),

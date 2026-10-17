@@ -27,6 +27,9 @@ See [`eval/results.json`](eval/results.json) for current citation-status accurac
 
 ## Known limitations
 
+- Citation marker text is removed before scoring claim vocabulary. Renaming a chunk ID cannot supply or dilute evidence, and a marker-only sentence is unsupported even at threshold zero. Original annotated sentences remain in reports.
+- Removing marker dilution exposes a remaining browser false positive: the unsupported video-call claim shares `pro` and `plan` with the source and meets the unchanged 0.3 threshold. Browser fixture accuracy is now **0.75**, with unchanged gold labels; this is an honest limitation, not a claim that the fabricated answer became valid.
+
 - Token overlap cannot catch numeric or factual fabrication when the surrounding vocabulary still matches (e.g., "every 5 minutes" vs. the source's "every 60 seconds" both pass as lexically supported here).
 - The 0.3 overlap threshold is an arbitrary cutoff picked for this fixture, not a calibrated groundedness score.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
