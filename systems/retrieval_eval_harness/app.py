@@ -73,7 +73,24 @@ def expand_query(query: str) -> str:
     return " ".join([query] + extra)
 
 
+def _cutoff(k) -> int:
+    if isinstance(k, bool) or not isinstance(k, (int, float)) or k < 0 or (isinstance(k, float) and (not math.isfinite(k) or not k.is_integer())):
+        raise ValueError("k must be a finite nonnegative integer")
+    return int(k)
+
+
+def _relevance(grades: dict[str, int]) -> None:
+    for grade in grades.values():
+        try:
+            valid = not isinstance(grade, bool) and isinstance(grade, (int, float)) and math.isfinite(grade) and grade >= 0
+        except OverflowError:
+            valid = False
+        if not valid:
+            raise ValueError("relevance grades must be finite nonnegative numbers")
+
+
 def recall_at_k(ranked_ids: list[str], relevant_ids: set[str], k: int) -> float:
+    k = _cutoff(k)
     if not relevant_ids:
         return 0.0
     return len(set(ranked_ids[:k]) & relevant_ids) / len(relevant_ids)
@@ -87,6 +104,8 @@ def reciprocal_rank(ranked_ids: list[str], relevant_ids: set[str]) -> float:
 
 
 def ndcg_at_k(ranked_ids: list[str], relevance: dict[str, int], k: int) -> float:
+    k = _cutoff(k)
+    _relevance(relevance)
     dcg = sum(relevance.get(doc_id, 0) / math.log2(i + 1) for i, doc_id in enumerate(ranked_ids[:k], start=1))
     ideal = sorted(relevance.values(), reverse=True)[:k]
     idcg = sum(rel / math.log2(i + 1) for i, rel in enumerate(ideal, start=1))
@@ -94,6 +113,8 @@ def ndcg_at_k(ranked_ids: list[str], relevance: dict[str, int], k: int) -> float
 
 
 def evaluate_ranking(ranked_ids: list[str], relevance: dict[str, int], k: int = 3) -> dict:
+    k = _cutoff(k)
+    _relevance(relevance)
     relevant_ids = {doc_id for doc_id, rel in relevance.items() if rel > 0}
     return {
         "recall_at_k": round(recall_at_k(ranked_ids, relevant_ids, k), 4),
@@ -104,6 +125,7 @@ def evaluate_ranking(ranked_ids: list[str], relevance: dict[str, int], k: int = 
 
 def compare_strategies(corpus: dict[str, str], queries: list[dict], k: int = 3) -> dict:
     """Score a baseline BM25 run against a synonym-expanded run on the same queries."""
+    k = _cutoff(k)
     index = BM25(corpus)
     baseline_scores, expanded_scores = [], []
     for query in queries:
