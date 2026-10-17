@@ -28,7 +28,7 @@ def extract(text: str) -> Invoice:
     invoice = Invoice(
         vendor=one(r"^Vendor:\s*(.+)$"),
         invoice_number=one(r"^Invoice(?:\s+(?:No\.?|Number))?:\s*([\w-]+)"),
-        invoice_date=one(r"^Date:\s*(\d{4}-\d{2}-\d{2})"),
+        invoice_date=one(r"^Date:[ \t]*(\d{4}-\d{2}-\d{2})[ \t]*\r?$"),
         subtotal=one(r"^Subtotal:\s*" + MONEY),
         tax=one(r"^Tax:\s*" + MONEY),
         total=one(r"^Total:\s*" + MONEY),

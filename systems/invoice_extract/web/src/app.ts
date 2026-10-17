@@ -18,6 +18,7 @@ function one(text: string, pattern: string): string | null {
 }
 
 function isValidIsoDate(value: string): boolean {
+  if (value.startsWith("0000-")) return false;
   const d = new Date(value + "T00:00:00Z");
   return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === value;
 }
@@ -26,7 +27,7 @@ export function extract(text: string): Invoice {
   const invoice: Invoice = {
     vendor: one(text, "^Vendor:\\s*(.+)$"),
     invoice_number: one(text, "^Invoice(?:\\s+(?:No\\.?|Number))?:\\s*([\\w-]+)"),
-    invoice_date: one(text, "^Date:\\s*(\\d{4}-\\d{2}-\\d{2})"),
+    invoice_date: one(text, "^Date:[ \\t]*(\\d{4}-\\d{2}-\\d{2})[ \\t]*\\r?$"),
     subtotal: one(text, "^Subtotal:\\s*" + MONEY),
     tax: one(text, "^Tax:\\s*" + MONEY),
     total: one(text, "^Total:\\s*" + MONEY),
