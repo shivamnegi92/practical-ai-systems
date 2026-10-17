@@ -7,10 +7,10 @@ export interface Match {
 }
 
 const PATTERNS: Array<[string, RegExp]> = [
-  ["override_instructions", /ignore\b.{0,30}\b(?:instructions|rules|prompt)/gi],
-  ["reveal_prompt", /(?:reveal|print|show|tell).{0,20}(?:system prompt|instructions)/gi],
-  ["role_override", /you are now\b|act as\b.{0,30}(?:unrestricted|jailbroken|dan)/gi],
-  ["disregard_safety", /disregard.{0,20}(?:safety|policy|guidelines)/gi],
+  ["override_instructions", /ignore\b.{0,30}\b(?:instructions|rules|prompt)/gis],
+  ["reveal_prompt", /(?:reveal|print|show|tell).{0,20}(?:system prompt|instructions)/gis],
+  ["role_override", /you are now\b|act as\b.{0,30}(?:unrestricted|jailbroken|dan)/gis],
+  ["disregard_safety", /disregard.{0,20}(?:safety|policy|guidelines)/gis],
   ["suspicious_encoding", /\b[A-Za-z0-9+/]{40,}={0,2}\b/g],
 ];
 

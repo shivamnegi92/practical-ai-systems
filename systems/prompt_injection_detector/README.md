@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for current precision/recall on 6 s
 
 ## Known limitations
 
+- Existing bounded phrase rules include LF/CRLF line breaks in their gap; wrapping `ignore` and `instructions` onto separate lines does not evade that rule. Original text is retained in matches and the existing 20/30-character limits still apply. This remains a small lexical heuristic, not a guarantee against injection.
+
 - Five regex heuristics cannot cover the long tail of real injection phrasing, obfuscation, or multi-language attacks; treat a "clean" result as unproven, not safe.
 - The base64-looking-blob rule will false-positive on any long opaque token (hashes, IDs) that is not actually an injection payload.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
