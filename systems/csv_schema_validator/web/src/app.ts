@@ -13,7 +13,7 @@ function matchesType(value: unknown, type: FieldType): boolean {
 export function validateRow(schema: Schema, row: Record<string, unknown>): string[] {
   const errors: string[] = [];
   for (const [field, spec] of Object.entries(schema)) {
-    const value = row[field];
+    const value = Object.prototype.hasOwnProperty.call(row, field) ? row[field] : undefined;
     if (value === undefined || value === null || value === "") {
       if (spec.required) errors.push(`missing:${field}`);
       continue;

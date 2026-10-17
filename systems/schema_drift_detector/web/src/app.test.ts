@@ -1,4 +1,12 @@
 import { test } from "node:test";
+
+test("inherited schema members do not declare a record field", () => {
+  const schema = Object.create({ name: { type: "string" } });
+  assert.deepEqual(detectDrift(schema, [{ name: "value", constructor: "value" }]), {
+    new_fields: ["constructor", "name"], missing_required_fields: [], type_mismatched_fields: [], drift_detected: true,
+  });
+  assert.equal(detectDrift({ name: { type: "string" } }, [{ name: 1 }]).type_mismatched_fields[0], "name");
+});
 import { strict as assert } from "node:assert";
 import { detectDrift, evaluateAll, type Schema } from "./app.js";
 
