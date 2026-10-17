@@ -69,10 +69,17 @@ class KnowledgeTools:
         self.index = BM25(self.chunks)
 
     def search(self, query: str, limit: int = 3) -> dict:
+        if not isinstance(query, str):
+            raise ValueError("query must be a string")
+        if isinstance(limit, bool) or not isinstance(limit, (int, float)) or (isinstance(limit, float) and (not math.isfinite(limit) or not limit.is_integer())):
+            raise ValueError("limit must be an integer")
+        limit = int(limit)
         hits = self.index.search(query, max(1, min(limit, 10)))
         return {"results": [{"id": chunk_id, "text": self.chunks[chunk_id], "score": round(score, 4)} for chunk_id, score in hits]}
 
     def read(self, chunk_id: str) -> dict:
+        if not isinstance(chunk_id, str):
+            raise ValueError("chunk_id must be a string")
         if chunk_id not in self.chunks:
             raise ValueError("unknown chunk id")
         return {"id": chunk_id, "text": self.chunks[chunk_id]}

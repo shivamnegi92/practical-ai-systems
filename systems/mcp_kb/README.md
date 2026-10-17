@@ -27,6 +27,8 @@ The included evaluator finds the expected chunk within top 3 for **4/4** synthet
 
 ## Known limitations
 
+- Tool query/chunk IDs must be strings and search limits must be finite integers (Boolean values are not limits). Invalid values return tool error content without stopping the Python stdio loop. Omitted limits still default to 3; integer limits are still clamped to 1–10. This is not full JSON Schema or MCP conformance validation.
+
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
