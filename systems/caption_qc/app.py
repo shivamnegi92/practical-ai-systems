@@ -15,7 +15,7 @@ def check_caption(caption: str, required_keywords: list[str] | None = None) -> d
     required_keywords = required_keywords or []
     lowered = caption.lower()
     reasons = []
-    word_count = len(caption.split())
+    word_count = len([w for w in caption.strip().split() if w])
     if word_count < MIN_WORDS:
         reasons.append("too_short")
     if word_count > MAX_WORDS:

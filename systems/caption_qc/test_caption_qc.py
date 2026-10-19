@@ -23,6 +23,11 @@ class CaptionQcTests(unittest.TestCase):
         result = check_caption("A sunny beach with waves.", ["dog"])
         self.assertTrue(any("missing_keywords" in r for r in result["reasons"]))
 
+    def test_whitespace_only_caption_fails_as_too_short(self):
+        result = check_caption("   \t  \n  ")
+        self.assertFalse(result["passed"])
+        self.assertIn("too_short", result["reasons"])
+
 
 if __name__ == "__main__":
     unittest.main()
