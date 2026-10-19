@@ -24,6 +24,8 @@ def _stdev(values: list[float]) -> float:
 
 
 def detect_anomalies(baseline: list[float], traces: list[dict], z_threshold: float = 3.0) -> list[dict]:
+    if not isinstance(z_threshold, (int, float)) or isinstance(z_threshold, bool) or not (z_threshold > 0):
+        raise ValueError(f"z_threshold must be a positive number, got {z_threshold!r}")
     baseline_mean, baseline_sd = mean(baseline), _stdev(baseline)
     results = []
     for trace in traces:

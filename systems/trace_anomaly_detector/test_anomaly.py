@@ -22,6 +22,12 @@ class TraceAnomalyDetectorTests(unittest.TestCase):
         results = detect_anomalies([100, 100, 100], [{"name": "flat", "duration_ms": 500}])
         self.assertEqual(results[0]["z_score"], 0.0)
 
+    def test_invalid_z_threshold_raises_value_error(self):
+        for invalid in [0, -1.5, "3.0", True, float("nan")]:
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValueError):
+                    detect_anomalies(BASELINE, [{"name": "sample", "duration_ms": 100}], z_threshold=invalid)
+
 
 if __name__ == "__main__":
     unittest.main()

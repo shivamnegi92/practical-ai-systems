@@ -20,6 +20,9 @@ export interface Trace {
 }
 
 export function detectAnomalies(baseline: number[], traces: Trace[], zThreshold = 3.0) {
+  if (typeof zThreshold !== "number" || Number.isNaN(zThreshold) || zThreshold <= 0) {
+    throw new RangeError(`zThreshold must be a positive number, got ${zThreshold}`);
+  }
   const baselineMean = mean(baseline);
   const baselineSd = stdev(baseline);
   return traces.map((trace) => {
