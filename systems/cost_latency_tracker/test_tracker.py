@@ -26,6 +26,13 @@ class CostLatencyTrackerTests(unittest.TestCase):
         summary = summarize([{"latency_ms": 10, "cost_usd": 0.0, "tokens": 0}])
         self.assertEqual(summary["cost_per_1k_tokens_usd"], 0.0)
 
+    def test_invalid_pct_raises_value_error(self):
+        from systems.cost_latency_tracker.app import percentile
+        for invalid in [-1, 101, "50", True, float("nan")]:
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValueError):
+                    percentile([10, 20, 30], invalid)
+
 
 if __name__ == "__main__":
     unittest.main()

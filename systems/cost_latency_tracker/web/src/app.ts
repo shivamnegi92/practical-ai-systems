@@ -7,6 +7,9 @@ export interface RequestLog {
 }
 
 export function percentile(values: number[], pct: number): number {
+  if (typeof pct !== "number" || Number.isNaN(pct) || pct < 0 || pct > 100) {
+    throw new RangeError(`pct must be between 0 and 100, got ${pct}`);
+  }
   const ordered = [...values].sort((a, b) => a - b);
   if (!ordered.length) return 0;
   const pos = ((ordered.length - 1) * pct) / 100;
