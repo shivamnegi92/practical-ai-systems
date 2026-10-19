@@ -26,6 +26,12 @@ class SummarizerTests(unittest.TestCase):
     def test_empty_text_has_zero_ratio(self):
         self.assertEqual(compression_ratio("", []), 0.0)
 
+    def test_invalid_n_raises_value_error(self):
+        for invalid in [0, -1, 1.5, "2", True]:
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValueError):
+                    summarize("Valid sentence here.", n=invalid)
+
 
 if __name__ == "__main__":
     unittest.main()

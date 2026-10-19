@@ -30,6 +30,8 @@ def sentences(text: str) -> list[str]:
 
 def summarize(text: str, n: int = 2) -> list[str]:
     """Pick the n highest-scoring sentences, kept in original order."""
+    if not isinstance(n, int) or isinstance(n, bool) or n < 1:
+        raise ValueError(f"n must be a positive integer, got {n!r}")
     sents = sentences(text)
     if len(sents) <= n:
         return sents
