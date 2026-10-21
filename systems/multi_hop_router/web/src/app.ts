@@ -100,15 +100,15 @@ class DocQA {
 export function decompose(question: string): string[] {
   return question
     .split(SPLIT_PATTERN)
-    .map((part) => part.trim())
+    .map((part) => part.replace(/[\s?]+$/, "").trim())
     .filter(Boolean)
-    .map((part) => part.replace(/\?+$/, "") + "?");
+    .map((part) => part + "?");
 }
 
 export function answerMultiHop(question: string, qa: DocQA = new DocQA(CHUNKS)) {
   const subQuestions = decompose(question);
   const subAnswers = subQuestions.map((q) => qa.answer(q));
-  if (subAnswers.some((a) => a.abstained)) {
+  if (subAnswers.length === 0 || subAnswers.some((a) => a.abstained)) {
     return { abstained: true, sub_questions: subQuestions, answer: null as string | null, citations: [] as string[] };
   }
   return {

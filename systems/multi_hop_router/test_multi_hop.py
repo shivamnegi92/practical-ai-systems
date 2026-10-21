@@ -24,6 +24,14 @@ class MultiHopRouterTests(unittest.TestCase):
         result = answer_multi_hop("How often do notes sync? How do I reset my password?")
         self.assertFalse(result["abstained"])
 
+    def test_abstains_on_empty_or_question_marks_only(self):
+        for blank in ["", "   ", "???", "  ? and ?  "]:
+            with self.subTest(blank=blank):
+                result = answer_multi_hop(blank)
+                self.assertTrue(result["abstained"])
+                self.assertIsNone(result["answer"])
+                self.assertEqual(result["citations"], [])
+
 
 if __name__ == "__main__":
     unittest.main()

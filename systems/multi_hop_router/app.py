@@ -124,14 +124,15 @@ class DocQA:
 
 
 def decompose(question: str) -> list[str]:
-    return [part.strip().rstrip("?") + "?" for part in SPLIT_PATTERN.split(question) if part.strip()]
+    cleaned = [re.sub(r"[\s?]+$", "", part.strip()) for part in SPLIT_PATTERN.split(question)]
+    return [part + "?" for part in cleaned if part]
 
 
 def answer_multi_hop(question: str, qa: DocQA | None = None) -> dict:
     qa = qa or DocQA(load_chunks())
     sub_questions = decompose(question)
     sub_answers = [qa.answer(q) for q in sub_questions]
-    if any(answer.abstained for answer in sub_answers):
+    if not sub_answers or any(answer.abstained for answer in sub_answers):
         return {"abstained": True, "sub_questions": sub_questions, "answer": None, "citations": []}
     citations = [c for answer in sub_answers for c in answer.citations]
     combined = " ".join(answer.text for answer in sub_answers)
