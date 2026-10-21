@@ -27,7 +27,8 @@ def tokenize(text: str) -> list[str]:
 def similarity(a: str, b: str) -> float:
     ta, tb = set(tokenize(a)), set(tokenize(b))
     if not ta and not tb:
-        return 1.0
+        # Stopword-only questions carry no content tokens; only exact word matches are duplicates.
+        return 1.0 if _TOKEN_RE.findall(a.lower()) == _TOKEN_RE.findall(b.lower()) else 0.0
     if not ta or not tb:
         return 0.0
     return len(ta & tb) / len(ta | tb)

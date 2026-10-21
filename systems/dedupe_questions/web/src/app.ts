@@ -24,7 +24,11 @@ export function tokenize(text: string): string[] {
 export function similarity(a: string, b: string): number {
   const ta = new Set(tokenize(a));
   const tb = new Set(tokenize(b));
-  if (ta.size === 0 && tb.size === 0) return 1;
+  if (ta.size === 0 && tb.size === 0) {
+    // Stopword-only questions carry no content tokens; only exact word matches are duplicates.
+    const words = (s: string) => (s.toLowerCase().match(/[a-z0-9]+/g) ?? []).join(" ");
+    return words(a) === words(b) ? 1 : 0;
+  }
   if (ta.size === 0 || tb.size === 0) return 0;
   const intersection = [...ta].filter((t) => tb.has(t)).length;
   const union = new Set([...ta, ...tb]).size;

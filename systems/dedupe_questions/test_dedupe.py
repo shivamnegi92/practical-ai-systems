@@ -15,6 +15,11 @@ class DedupeTests(unittest.TestCase):
     def test_empty_strings_are_identical(self):
         self.assertEqual(similarity("", ""), 1.0)
 
+    def test_different_stopword_only_questions_are_not_duplicates(self):
+        self.assertEqual(similarity("Who are you?", "What is it?"), 0.0)
+        self.assertEqual(similarity("What is it?", "what is it"), 1.0)
+        self.assertEqual(find_duplicates(["Who are you?", "What is it?"]), [])
+
     def test_find_duplicates_returns_index_pairs(self):
         pairs = find_duplicates(["Reset my password", "Please reset my password", "Where is my order?"])
         self.assertIn((0, 1), [(i, j) for i, j, _ in pairs])
