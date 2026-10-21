@@ -15,5 +15,5 @@ def scan(root:Path,ignore:set[str]|None=None)->list[dict]:
   for number,line in enumerate(text.splitlines(),1):
    for label,pattern in SECRET_PATTERNS:
     if pattern.search(line): findings.append({'file':str(path.relative_to(root)),'line':number,'kind':label})
-   if path.suffix in {'.sh','.yml','.yaml'} and DANGEROUS_ACTIONS.search(line): findings.append({'file':str(path.relative_to(root)),'line':number,'kind':'dangerous shell pattern'})
+   if path.suffix.lower() in {'.sh','.yml','.yaml'} and DANGEROUS_ACTIONS.search(line): findings.append({'file':str(path.relative_to(root)),'line':number,'kind':'dangerous shell pattern'})
  return findings
