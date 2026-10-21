@@ -20,6 +20,10 @@ export interface Trace {
 }
 
 export function detectAnomalies(baseline: number[], traces: Trace[], zThreshold = 3.0) {
+  const valid = (value: number) => Number.isFinite(value) && value >= 0;
+  if (!valid(zThreshold)) throw new RangeError("z threshold must be finite and nonnegative");
+  if (!baseline.every(valid)) throw new RangeError("baseline durations must be finite and nonnegative");
+  if (!traces.every(t => valid(t.duration_ms))) throw new RangeError("trace duration must be finite and nonnegative");
   const baselineMean = mean(baseline);
   const baselineSd = stdev(baseline);
   return traces.map((trace) => {

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 def mean(values) -> float:
@@ -23,7 +24,22 @@ def _stdev(values: list[float]) -> float:
     return variance**0.5
 
 
+def _valid_measurement(value) -> bool:
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return False
+    try:
+        return math.isfinite(value) and value >= 0
+    except OverflowError:
+        return False
+
+
 def detect_anomalies(baseline: list[float], traces: list[dict], z_threshold: float = 3.0) -> list[dict]:
+    if not _valid_measurement(z_threshold):
+        raise ValueError('z threshold must be finite and nonnegative')
+    if not all(_valid_measurement(value) for value in baseline):
+        raise ValueError('baseline durations must be finite and nonnegative')
+    if not all(_valid_measurement(trace['duration_ms']) for trace in traces):
+        raise ValueError('trace duration must be finite and nonnegative')
     baseline_mean, baseline_sd = mean(baseline), _stdev(baseline)
     results = []
     for trace in traces:
