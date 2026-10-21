@@ -10,7 +10,7 @@ export interface Invoice {
   errors: string[];
 }
 
-const MONEY = String.raw`\$?\s*([0-9,]+\.\d{2})`;
+const MONEY = String.raw`\$?\s*([0-9,]+\.\d{2})(?!\d|[.,]\d)`;
 
 function one(text: string, pattern: string): string | null {
   const match = new RegExp(pattern, "im").exec(text);

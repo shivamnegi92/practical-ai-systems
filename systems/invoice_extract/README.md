@@ -30,3 +30,5 @@ On four synthetic cases (two balanced invoices, one total mismatch, one invalid 
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
+
+Amount extraction does not truncate a longer numeric token to two decimal places: excess fractional digits or a following decimal/grouping segment make the field missing. Two decimal digits and ordinary trailing punctuation remain supported. Locale/currency parsing is still deliberately limited.
