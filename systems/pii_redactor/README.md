@@ -30,3 +30,5 @@ See [`eval/results.json`](eval/results.json) for current precision/recall on 5 s
 - This is regex pattern matching, not a trained PII/NER model and not a compliance or security tool. It will miss anything that does not match these four shapes (addresses, names, international formats, etc.).
 - Patterns can false-positive on lookalike numbers. Review every match before using this for real redaction.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
+
+Card matching recognizes grouped or compact sixteen-digit shapes. It does not validate card issuers or checksums and may redact unrelated sixteen-digit numbers; it is not comprehensive financial-data detection.

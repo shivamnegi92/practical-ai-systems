@@ -12,7 +12,7 @@ const PATTERNS: Array<[string, RegExp]> = [
   ["email", /\b[\w.+-]+@[\w-]+\.[\w.-]+\b/g],
   ["phone", /(?<!\w)(?:\+?1[-.\s]?)?(?:\(\d{3}\)\s?|\d{3}[-.\s])\d{3}[-.\s]\d{4}\b/g],
   ["ssn", /\b\d{3}-\d{2}-\d{4}\b/g],
-  ["credit_card", /\b(?:\d{4}[-\s]){3}\d{4}\b/g],
+  ["credit_card", /\b(?:(?:\d{4}[-\s]){3}\d{4}|\d{16})\b/g],
 ];
 
 export function detect(text: string): Finding[] {
