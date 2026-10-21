@@ -8,3 +8,8 @@ class VoiceEvalTests(unittest.TestCase):
  def test_missing_latency_is_unknown(self):
   result=score_turns([],[],[])
   self.assertIsNone(result['median_latency_ms'])
+ def test_terms_in_different_sentences_do_not_satisfy_requirement(self):
+  turns=[{'speaker':'agent','text':'Your appointment is still on Monday. Have a good Friday.'}]
+  result=score_turns(turns,['appointment moved to Friday'])
+  self.assertFalse(result['task_success'])
+  self.assertEqual(result['missing_requirements'],['appointment moved to Friday'])

@@ -17,8 +17,9 @@ export function scoreTurns(turns: Turn[], requiredActions: string[], forbiddenAc
   for (const requirement of requiredActions) {
     if (said.includes(requirement.toLowerCase())) continue;
     const terms = requirement.toLowerCase().split(/\s+/).filter((t) => t.length > 3);
-    const matching = terms.filter((t) => saidSentences.some((s) => s.includes(t)));
-    if (matching.length < Math.max(1, terms.length - 1)) missing.push(requirement);
+    const threshold = Math.max(1, terms.length - 1);
+    const satisfied = saidSentences.some((s) => terms.filter((t) => s.includes(t)).length >= threshold);
+    if (!satisfied) missing.push(requirement);
   }
   const actions = turns
     .filter((t) => t.speaker === "agent")
