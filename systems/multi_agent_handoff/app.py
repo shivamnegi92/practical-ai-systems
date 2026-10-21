@@ -41,6 +41,8 @@ SPECIALISTS = {
 
 
 def triage(text: str) -> tuple[str | None, int]:
+    if not isinstance(text, str):
+        raise TypeError(f"text must be a str, got {type(text).__name__}")
     tokens = set(tokenize(text))
     scores = {category: len(tokens & keywords) for category, keywords in CATEGORIES.items()}
     best_category = max(scores, key=scores.get)
@@ -50,7 +52,12 @@ def triage(text: str) -> tuple[str | None, int]:
 
 def handle(request: dict) -> dict:
     """Route a request to a specialist, or escalate when triage is unsure."""
-    category, confidence = triage(request.get("text", ""))
+    if not isinstance(request, dict):
+        raise TypeError(f"request must be a dict, got {type(request).__name__}")
+    text = request.get("text", "")
+    if not isinstance(text, str):
+        raise TypeError(f"request['text'] must be a str, got {type(text).__name__}")
+    category, confidence = triage(text)
     if category is None or confidence < CONFIDENCE_THRESHOLD:
         return {"status": "escalated", "category": category, "confidence": confidence}
     return {

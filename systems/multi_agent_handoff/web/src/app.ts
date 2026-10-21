@@ -34,6 +34,9 @@ const SPECIALISTS: Record<string, () => Record<string, string>> = {
 };
 
 export function triage(text: string): [string | null, number] {
+  if (typeof text !== "string") {
+    throw new TypeError(`text must be a string, got ${typeof text}`);
+  }
   const tokens = new Set(tokenize(text));
   let bestCategory: string | null = null;
   let bestScore = -1;
@@ -47,8 +50,15 @@ export function triage(text: string): [string | null, number] {
   return bestScore > 0 ? [bestCategory, bestScore] : [null, 0];
 }
 
-export function handle(request: { text: string }) {
-  const [category, confidence] = triage(request.text);
+export function handle(request: { text?: string }) {
+  if (!request || typeof request !== "object" || Array.isArray(request)) {
+    throw new TypeError("request must be a non-null object");
+  }
+  const text = Object.prototype.hasOwnProperty.call(request, "text") && request.text !== undefined ? request.text : "";
+  if (typeof text !== "string") {
+    throw new TypeError(`request.text must be a string, got ${typeof text}`);
+  }
+  const [category, confidence] = triage(text);
   if (category === null || confidence < CONFIDENCE_THRESHOLD) {
     return { status: "escalated", category, confidence };
   }

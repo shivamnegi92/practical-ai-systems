@@ -24,6 +24,17 @@ class MultiAgentHandoffTests(unittest.TestCase):
         self.assertEqual(result["status"], "escalated")
         self.assertEqual(result["category"], "technical")
 
+    def test_missing_text_key_escalates(self):
+        result = handle({})
+        self.assertEqual(result["status"], "escalated")
+        self.assertIsNone(result["category"])
+
+    def test_invalid_request_or_text_raises_type_error(self):
+        for bad_req in [None, "text", ["text"], {"text": None}, {"text": 123}]:
+            with self.subTest(bad_req=bad_req):
+                with self.assertRaises(TypeError):
+                    handle(bad_req)
+
 
 if __name__ == "__main__":
     unittest.main()
