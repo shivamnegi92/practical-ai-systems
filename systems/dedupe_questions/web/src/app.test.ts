@@ -1,4 +1,16 @@
 import { test } from "node:test";
+
+test("duplicate threshold must be a valid proportion even with no pairs", () => {
+ for (const questions of [[],["same question","same question"]]) {
+  for (const value of [-.1,1.1,NaN,Infinity]) {
+   assert.throws(()=>findDuplicates(questions,value),/threshold/);
+   assert.throws(()=>evaluateAll(value),/threshold/);
+  }
+  for (const value of [true,null,"0.5"]) assert.throws(()=>findDuplicates(questions,JSON.parse(JSON.stringify(value))),/threshold/);
+ }
+ assert.deepEqual(findDuplicates(["same question","same question"],1),[[0,1,1]]);
+ assert.equal(findDuplicates(["cats","dogs"],0).length,1);
+});
 import { strict as assert } from "node:assert";
 import { evaluateAll, findDuplicates, similarity } from "./app.js";
 

@@ -31,7 +31,12 @@ export function similarity(a: string, b: string): number {
   return intersection / union;
 }
 
+function validateThreshold(threshold: number): void {
+  if (!Number.isFinite(threshold) || threshold < 0 || threshold > 1) throw new RangeError("threshold must be a finite number between 0 and 1");
+}
+
 export function findDuplicates(questions: string[], threshold = 0.6): Array<[number, number, number]> {
+  validateThreshold(threshold);
   const pairs: Array<[number, number, number]> = [];
   for (let i = 0; i < questions.length; i++) {
     for (let j = i + 1; j < questions.length; j++) {
@@ -57,6 +62,7 @@ export const EVAL_CASES: EvalCase[] = [
 ];
 
 export function evaluateAll(threshold = 0.6) {
+  validateThreshold(threshold);
   let tp = 0;
   let fp = 0;
   let fn = 0;

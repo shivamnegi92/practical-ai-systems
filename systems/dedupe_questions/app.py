@@ -33,8 +33,14 @@ def similarity(a: str, b: str) -> float:
     return len(ta & tb) / len(ta | tb)
 
 
+def validate_threshold(threshold: float) -> None:
+    if not isinstance(threshold, (int, float)) or isinstance(threshold, bool) or not 0 <= threshold <= 1:
+        raise ValueError('threshold must be a finite number between 0 and 1')
+
+
 def find_duplicates(questions: list[str], threshold: float = 0.6) -> list[tuple[int, int, float]]:
     """Return (i, j, score) for every pair at or above the similarity threshold."""
+    validate_threshold(threshold)
     pairs = []
     for i, j in combinations(range(len(questions)), 2):
         score = similarity(questions[i], questions[j])
@@ -49,6 +55,10 @@ def main() -> None:
     parser.add_argument("question_b")
     parser.add_argument("--threshold", type=float, default=0.6)
     args = parser.parse_args()
+    try:
+        validate_threshold(args.threshold)
+    except ValueError as exc:
+        parser.error(str(exc))
     score = similarity(args.question_a, args.question_b)
     print(f"similarity: {score:.2f}")
     print("duplicate" if score >= args.threshold else "not duplicate")
