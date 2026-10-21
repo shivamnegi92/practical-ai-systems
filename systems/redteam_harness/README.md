@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for the current breach rate on a 5-
 
 ## Known limitations
 
+- Browser tool arguments must be non-null objects in both planning and execution; arrays are rejected even in a supplied plan. Only omitted arguments default to `{}`. Python dictionaries already enforce this shape.
+
 - Five hand-written adversarial cases are illustrative, not an exhaustive attack surface; a real red team would need many more categories (replay, race conditions, privilege confusion across tools, prompt-level manipulation of the planner).
 - The "injection in arguments" case shows the policy layer allows it because `lookup_order` isn't sensitive -- the policy does not sanitize tool arguments, so the tool implementation itself must treat them as untrusted.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

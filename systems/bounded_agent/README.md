@@ -27,6 +27,8 @@ All **3** policy fixtures pass: an allowed lookup, an unapproved refund that mus
 
 ## Known limitations
 
+- Browser tool arguments must be non-null objects in both planning and execution; arrays are rejected even in a supplied plan. Only omitted arguments default to `{}`. Python dictionaries already enforce this shape.
+
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.

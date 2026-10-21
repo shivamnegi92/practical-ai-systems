@@ -16,14 +16,14 @@ export class BoundedAgent {
   plan(request: { action?: unknown; arguments?: unknown }): Plan {
     const action = typeof request.action === "string" ? request.action : "";
     if (!this.allowed.has(action) || !(action in this.tools)) throw new Error("action is not allow-listed");
-    const args = request.arguments ?? {};
+    const args = request.arguments === undefined ? {} : request.arguments;
     if (typeof args !== "object" || args === null || Array.isArray(args)) throw new Error("arguments must be an object");
     return { action, arguments: args as Record<string, unknown>, requiresApproval: this.approvalRequired.has(action) };
   }
 
   run(plan: Plan, approved = false) {
     if (!this.allowed.has(plan.action) || !(plan.action in this.tools)) throw new Error("action is not allow-listed");
-    if (typeof plan.arguments !== "object" || plan.arguments === null) throw new Error("arguments must be an object");
+    if (typeof plan.arguments !== "object" || plan.arguments === null || Array.isArray(plan.arguments)) throw new Error("arguments must be an object");
     if (plan.requiresApproval && !approved) return { status: "awaiting_approval", action: plan.action };
     return { status: "completed", action: plan.action, result: this.tools[plan.action](plan.arguments) };
   }
