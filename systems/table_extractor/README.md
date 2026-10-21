@@ -29,4 +29,5 @@ See [`eval/results.json`](eval/results.json) for current cell-level exact match 
 
 - Row and column boundaries are fixed-gap thresholds (`row_gap`, `col_gap`), not learned from the layout; dense real tables or merged cells will break this.
 - Multi-line cells, rotated text, and ragged column counts across rows are not handled.
+- Fragments assigned to the same row and column are joined with spaces in left-to-right order instead of overwriting earlier text. This preserves text but does not infer merged cells or recover cell boundaries that the fixed-gap clustering missed.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
