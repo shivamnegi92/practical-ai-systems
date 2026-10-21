@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 
@@ -17,6 +18,13 @@ def decide(
     max_error_rate_delta: float = 0.02,
     max_latency_regression_pct: float = 0.20,
 ) -> dict:
+    for name, value in (("max_error_rate_delta", max_error_rate_delta), ("max_latency_regression_pct", max_latency_regression_pct)):
+        try:
+            valid = not isinstance(value, bool) and isinstance(value, (int, float)) and math.isfinite(value) and value >= 0
+        except OverflowError:
+            valid = False
+        if not valid:
+            raise ValueError(f"{name} must be a finite nonnegative number")
     error_delta = canary["error_rate"] - baseline["error_rate"]
     base_latency = baseline["p95_latency_ms"]
     latency_regression = (canary["p95_latency_ms"] - base_latency) / base_latency if base_latency else 0.0

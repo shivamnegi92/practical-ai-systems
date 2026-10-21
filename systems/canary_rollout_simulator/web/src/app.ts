@@ -13,6 +13,9 @@ export function decide(
   maxErrorRateDelta = 0.02,
   maxLatencyRegressionPct = 0.2
 ) {
+  for (const [name, value] of [["maxErrorRateDelta", maxErrorRateDelta], ["maxLatencyRegressionPct", maxLatencyRegressionPct]] as const) {
+    if (typeof value !== "number" || !Number.isFinite(value) || value < 0) throw new RangeError(`${name} must be a finite nonnegative number`);
+  }
   const errorDelta = canary.error_rate - baseline.error_rate;
   const baseLatency = baseline.p95_latency_ms;
   const latencyRegression = baseLatency ? (canary.p95_latency_ms - baseLatency) / baseLatency : 0;
