@@ -21,3 +21,7 @@ test("evaluation reports sensible metrics", () => {
   const metrics = evaluateAll();
   assert.ok(metrics.micro_like_average_f1 > 0.5);
 });
+test("money excludes trailing list comma", () => {
+  const money = extract("Fees were $500, $1,200, and $75.").filter((e) => e.type === "MONEY").map((e) => e.text);
+  assert.deepEqual(money, ["$500", "$1,200", "$75"]);
+});

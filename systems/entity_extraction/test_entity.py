@@ -11,3 +11,6 @@ class EntityTests(unittest.TestCase):
   gold=[{'text':'Maya Chen','type':'PERSON'}]
   self.assertEqual(score(gold,gold)['f1'],1)
   self.assertEqual(score([],gold)['recall'],0)
+ def test_money_excludes_trailing_list_comma(self):
+  money=[e['text'] for e in extract('Fees were $500, $1,200, and $75.') if e['type']=='MONEY']
+  self.assertEqual(money,['$500','$1,200','$75'])
