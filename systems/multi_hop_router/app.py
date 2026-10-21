@@ -49,6 +49,13 @@ class BM25:
     """Okapi BM25 over a {doc_id: text} mapping."""
 
     def __init__(self, docs: dict[str, str], k1: float = 1.5, b: float = 0.75):
+        for name, value in (("k1", k1), ("b", b)):
+            try:
+                valid = type(value) in (int, float) and math.isfinite(value) and value >= 0 and (name != "b" or value <= 1)
+            except OverflowError:
+                valid = False
+            if not valid:
+                raise ValueError(f"invalid BM25 {name}")
         self.k1, self.b = k1, b
         self.tokens = {doc_id: tokenize(text) for doc_id, text in docs.items()}
         self.avg_len = sum(map(len, self.tokens.values())) / max(len(self.tokens), 1)

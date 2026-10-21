@@ -32,6 +32,9 @@ class BM25 {
   avgLen: number;
   idf: Record<string, number> = {};
   constructor(docs: Record<string, string>, private k1 = 1.5, private b = 0.75) {
+    if (typeof k1 !== "number" || !Number.isFinite(k1) || k1 < 0 || typeof b !== "number" || !Number.isFinite(b) || b < 0 || b > 1) {
+      throw new RangeError("BM25 requires finite k1 >= 0 and 0 <= b <= 1");
+    }
     for (const [id, text] of Object.entries(docs)) this.tokens[id] = tokenize(text);
     const lens = Object.values(this.tokens).map((t) => t.length);
     this.avgLen = lens.length ? lens.reduce((a, b2) => a + b2, 0) / lens.length : 0;

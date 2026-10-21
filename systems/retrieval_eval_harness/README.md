@@ -30,3 +30,5 @@ See [`eval/results.json`](eval/results.json). This reuses the four-query, four-d
 - Four queries over four documents with binary relevance is enough to illustrate the metrics, not enough to generalize a strategy comparison.
 - nDCG here uses binary or small integer relevance grades supplied by hand; it is only as trustworthy as those judgments.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
+
+All bundled BM25 copies require finite numeric k1 ≥ 0 and b in [0,1]. k1=0 and b endpoints remain valid; invalid configuration is refused before indexing or scoring.
