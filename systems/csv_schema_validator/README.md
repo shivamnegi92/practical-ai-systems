@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for current row-validity accuracy o
 
 ## Known limitations
 
+- Browser records use only their own fields: inherited values do not satisfy required fields. Python dictionaries already have this behavior.
+
 - This checks only presence and Python type, not formats, ranges, enumerations, or cross-field business rules.
 - `bool` is a subtype of `int` in Python, so a "number" field will silently accept `true`/`false` values; document this when reusing the type map.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

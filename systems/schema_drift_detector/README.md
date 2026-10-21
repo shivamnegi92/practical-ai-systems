@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for current exact-report match on 2
 
 ## Known limitations
 
+- Browser schemas declare only their own fields. Inherited names such as `constructor` are reported as new record fields, without an additional spurious type mismatch. Python dictionaries already use explicit keys.
+
 - This only compares field presence and Python-inferred type; it has no notion of value ranges, formats, enumerations, or semantic meaning changes.
 - `bool` is a subtype of `int` in Python, so a declared "number" field will silently accept `true`/`false`.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
