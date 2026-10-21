@@ -30,7 +30,7 @@ class BoundedAgent:
 
     def plan(self, request: dict) -> Plan:
         action = request.get("action", "")
-        if action not in self.allowed or action not in self.tools:
+        if action not in self.allowed or action not in self.tools or not callable(self.tools[action]):
             raise ValueError("action is not allow-listed")
         args = request.get("arguments", {})
         if not isinstance(args, dict):
@@ -38,7 +38,7 @@ class BoundedAgent:
         return Plan(action, args, action in self.approval_required)
 
     def run(self, plan: Plan, approved: bool = False):
-        if plan.action not in self.allowed or plan.action not in self.tools:
+        if plan.action not in self.allowed or plan.action not in self.tools or not callable(self.tools[plan.action]):
             raise ValueError("action is not allow-listed")
         if not isinstance(plan.arguments, dict):
             raise ValueError("arguments must be an object")
