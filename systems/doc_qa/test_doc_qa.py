@@ -37,6 +37,12 @@ class DocQATests(unittest.TestCase):
         answer = DocQA(load_chunks(), llm=llm).answer("How much does the Pro plan cost?")
         self.assertTrue(answer.abstained)
 
+    def test_llm_abstention_with_citation_stays_abstained(self):
+        llm = StubLLM(lambda prompt: "I can't find that in the documentation. [billing.md#1]")
+        answer = DocQA(load_chunks(), llm=llm).answer("How much does the Pro plan cost?")
+        self.assertTrue(answer.abstained)
+        self.assertEqual(answer.citations, [])
+
     def test_evaluation_metrics_are_in_range(self):
         metrics = evaluate()["metrics"]
         self.assertGreaterEqual(metrics["recall_at_3"], 0.8)

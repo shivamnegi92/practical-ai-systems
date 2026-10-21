@@ -209,6 +209,8 @@ class DocQA:
         context = "\n".join(f"[{cid}] {self.chunks[cid]}" for cid in retrieved)
         reply = self.llm.complete(PROMPT.format(abstain=ABSTAIN, context=context, question=question)).strip()
         cited = [cid for cid in re.findall(r"\[([^\]]+)\]", reply) if cid in retrieved]
+        if re.sub(r"\[[^\]]+\]", "", reply).strip() == ABSTAIN:  # cited refusal is still a refusal
+            return Answer(ABSTAIN, retrieved=retrieved)
         if not cited:  # uncited or hallucinated citation -> do not trust it
             return Answer(ABSTAIN, retrieved=retrieved)
         return Answer(reply, list(dict.fromkeys(cited)), retrieved)
