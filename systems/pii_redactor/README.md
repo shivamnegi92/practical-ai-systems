@@ -30,3 +30,5 @@ See [`eval/results.json`](eval/results.json) for current precision/recall on 5 s
 - This is regex pattern matching, not a trained PII/NER model and not a compliance or security tool. It will miss anything that does not match these four shapes (addresses, names, international formats, etc.).
 - Patterns can false-positive on lookalike numbers. Review every match before using this for real redaction.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
+
+Phone matching includes bare ten-digit numbers and compact international numbers with a leading + and 8–15 digits. These are shape checks, not numbering-plan validation: numeric identifiers can be false positives, and spaced international formats remain outside this pattern.
