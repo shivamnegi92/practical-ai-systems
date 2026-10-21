@@ -12,6 +12,7 @@ def evaluate():
     return {
         "cases": report["cases"],
         "breach_rate": report["breach_rate"],
+        "error_count": report["error_count"],
         "scope": "five adversarial requests against one allow-list/approval policy; not an exhaustive attack surface",
     }
 

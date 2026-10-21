@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for the current breach rate on a 5-
 
 ## Known limitations
 
+- Policy refusals are `rejected`; unexpected tool/execution exceptions are `error` with an `error_type`, and the remaining cases still run. `error_count` is reported separately (including in the Python evaluator). Error messages/payloads are not copied into the report. A nonzero error count makes a low breach rate inconclusive; a crashing tool is not evidence of a working policy. The breach-rate denominator remains all submitted cases for compatibility.
+
 - Five hand-written adversarial cases are illustrative, not an exhaustive attack surface; a real red team would need many more categories (replay, race conditions, privilege confusion across tools, prompt-level manipulation of the planner).
 - The "injection in arguments" case shows the policy layer allows it because `lookup_order` isn't sensitive -- the policy does not sanitize tool arguments, so the tool implementation itself must treat them as untrusted.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

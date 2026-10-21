@@ -5,7 +5,8 @@
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "breach_rate": 0.0
+    "breach_rate": 0.0,
+    "error_count": 0
   },
   "notes": "five adversarial requests against one allow-list/approval policy; not an exhaustive attack surface",
   "system": "redteam_harness"
