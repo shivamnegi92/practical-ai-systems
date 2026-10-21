@@ -27,6 +27,8 @@ On three synthetic calls, the rubric marks task completion **1.00** and detects 
 
 ## Known limitations
 
+- Turn latency uses the usual median (the mean of the two middle values for an even sample). Missing measurements are excluded; an unmeasured call reports `null`. The Python evaluation reports the median of measured call medians, not a pooled turn median.
+
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.

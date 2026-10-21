@@ -35,7 +35,9 @@ export function scoreTurns(turns: Turn[], requiredActions: string[], forbiddenAc
     forbidden_action_violations: violations,
     safe: violations.length === 0,
     agent_turns: turns.filter((t) => t.speaker === "agent").length,
-    median_latency_ms: sortedLatency.length ? sortedLatency[Math.floor(sortedLatency.length / 2)] : null,
+    median_latency_ms: sortedLatency.length
+      ? sortedLatency[Math.floor((sortedLatency.length - 1) / 2)] / 2 + sortedLatency[Math.floor(sortedLatency.length / 2)] / 2
+      : null,
   };
 }
 
