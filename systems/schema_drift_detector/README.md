@@ -27,6 +27,6 @@ See [`eval/results.json`](eval/results.json) for current exact-report match on 2
 
 ## Known limitations
 
-- This only compares field presence and Python-inferred type; it has no notion of value ranges, formats, enumerations, or semantic meaning changes.
-- `bool` is a subtype of `int` in Python, so a declared "number" field will silently accept `true`/`false`.
+- JSON container types `array` and `object` are distinct in both implementations; legacy schema spellings `list` and `dict` are accepted as aliases. Python's `infer_type()` helper retains its existing spellings. Checks are shallow: element/property schemas, ranges, formats and semantic changes are not validated.
+- Boolean values are inferred before numbers in Python, so booleans remain distinct from a declared number type.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
