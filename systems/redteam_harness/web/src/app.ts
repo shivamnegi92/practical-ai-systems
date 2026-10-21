@@ -8,9 +8,8 @@ export class BoundedAgent {
   constructor(
     private tools: Record<string, (args: Record<string, unknown>) => unknown>,
     private allowed: Set<string>,
-    private approvalRequired: Set<string> = new Set()
+    private approvalRequired: Set<string> = new Set(allowed)
   ) {
-    if (approvalRequired.size === 0) this.approvalRequired = new Set(allowed);
   }
 
   plan(request: { action?: unknown; arguments?: unknown }): Plan {
