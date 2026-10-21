@@ -13,6 +13,7 @@
   pre { background: #f4f4f4; padding: 1rem; overflow-x: auto; white-space: pre-wrap; border-radius: 4px; min-height: 1.5rem; }
   .limits { font-size: 0.9rem; color: #555; border-top: 1px solid #ddd; margin-top: 2rem; padding-top: 1rem; }
   code { background: #eee; padding: 0.1rem 0.3rem; border-radius: 3px; }
+  button:focus-visible { outline: 3px solid #005fcc; outline-offset: 3px; }
 </style>
 </head>
 <body>
@@ -26,10 +27,10 @@
   <input id="n" type="number" min="1" value="1" />
 
   <button id="run">Summarize</button>
-  <pre id="output"></pre>
+  <pre id="output" role="status" aria-live="polite" aria-atomic="true" aria-label="Result"></pre>
 
   <button id="run-eval" class="secondary">Run evaluation (5 synthetic fixtures)</button>
-  <pre id="eval-output"></pre>
+  <pre id="eval-output" role="status" aria-live="polite" aria-atomic="true" aria-label="Evaluation result"></pre>
 
   <div class="limits">
     <strong>Known limitations:</strong> scoring is a plain term-frequency average with no notion of meaning, coreference, or discourse structure. See the project
