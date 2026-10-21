@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for current band accuracy on 4 synt
 
 ## Known limitations
 
+- Calculated grades are clamped to zero to keep the numeric API and avoid a negative grade for very short text such as `Hi`. Empty or punctuation-only input also returns zero. Short samples still give unreliable estimates; zero is a display floor, not a validated learning level.
+
 - Syllable counting is a vowel-run heuristic, not a dictionary or phoneme model; it will misjudge many real words (silent letters, diphthongs, compound words).
 - The simple/standard/complex cutoffs (6 and 12) are arbitrary bucket boundaries chosen for this fixture, not a validated pedagogical standard.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
