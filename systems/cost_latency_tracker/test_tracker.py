@@ -1,9 +1,20 @@
 import unittest
 
-from systems.cost_latency_tracker.app import check_budget, summarize
+from systems.cost_latency_tracker.app import check_budget, summarize, percentile
 
 
 class CostLatencyTrackerTests(unittest.TestCase):
+    def test_percentile_rejects_invalid_rank_even_with_empty_data(self):
+        for pct in (-1, 101, float('nan'), float('inf'), float('-inf')):
+            for data in ([], [1, 2]):
+                with self.subTest(pct=pct, data=data), self.assertRaisesRegex(ValueError, 'percentile'):
+                    percentile(data, pct)
+
+    def test_percentile_endpoints_interpolation_and_input_preservation(self):
+        values = [30, 10]
+        self.assertEqual([percentile(values, p) for p in (0, 25, 100)], [10, 15, 30])
+        self.assertEqual(values, [30, 10])
+        self.assertEqual(percentile([], 0), 0)
     def test_summarize_computes_percentiles_and_cost(self):
         requests = [{"latency_ms": 100, "cost_usd": 0.01, "tokens": 1000} for _ in range(5)]
         summary = summarize(requests)

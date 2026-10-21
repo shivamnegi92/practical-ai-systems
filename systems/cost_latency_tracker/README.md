@@ -1,5 +1,7 @@
 # Cost and latency guardrail tracker
 
+The percentile helper accepts finite ranks from 0 through 100 inclusive. Invalid ranks raise an error, including for empty data; valid empty-data queries still return zero. Endpoints and linear interpolation are unchanged.
+
 Summarize a request log into p50/p95 latency and cost, then flag budget breaches against configured thresholds.
 
 **Level:** intermediate · **Runs locally:** yes · **Credentials:** none · **Dependencies:** Python standard library only

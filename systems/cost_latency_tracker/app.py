@@ -3,9 +3,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 def percentile(values, pct: float) -> float:
+    if not math.isfinite(pct) or not 0 <= pct <= 100:
+        raise ValueError('percentile must be finite and between 0 and 100')
     ordered = sorted(values)
     if not ordered:
         return 0.0

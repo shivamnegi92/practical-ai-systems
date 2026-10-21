@@ -2,6 +2,19 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { checkBudget, evaluateAll, percentile, summarize } from "./app.js";
 
+test("percentile validates its rank even for empty data", () => {
+  for (const pct of [-1, 101, NaN, Infinity, -Infinity]) {
+    for (const values of [[], [1, 2]]) assert.throws(() => percentile(values, pct), /percentile/);
+  }
+});
+
+test("percentile preserves endpoints, interpolation and its input", () => {
+  const values = [30, 10];
+  assert.deepEqual([0, 25, 100].map(p => percentile(values, p)), [10, 15, 30]);
+  assert.deepEqual(values, [30, 10]);
+  assert.equal(percentile([], 0), 0);
+});
+
 test("percentile of empty list is zero", () => {
   assert.equal(percentile([], 50), 0);
 });
