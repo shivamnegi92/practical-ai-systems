@@ -9,7 +9,7 @@ export interface Finding {
 }
 
 const SECRET_PATTERNS: Array<[string, RegExp]> = [
-  ["private key", /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/],
+  ["private key", /-----BEGIN (?:RSA |EC |OPENSSH |ENCRYPTED )?PRIVATE KEY-----/],
   ["AWS access key", /\bAKIA[0-9A-Z]{16}\b/],
 ];
 const DANGEROUS_ACTIONS = /\b(?:chmod\s+777|curl\s+[^|]+\|\s*(?:sudo\s+)?sh|rm\s+-rf\s+\/|eval\s+\$\()/i;

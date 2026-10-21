@@ -2,6 +2,20 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { evaluateAll, scan } from "./app.js";
 
+test("recognizes encrypted PKCS8 and existing private key labels", () => {
+  for (const label of ["PRIVATE KEY", "RSA PRIVATE KEY", "EC PRIVATE KEY", "OPENSSH PRIVATE KEY", "ENCRYPTED PRIVATE KEY"]) {
+    assert.deepEqual(scan(`synthetic header fixture only\n-----BEGIN ${label}-----\nNOT-A-KEY\n`), [{ line: 2, kind: "private key" }]);
+  }
+});
+
+test("does not flag public, certificate, incomplete or end headers", () => {
+  assert.deepEqual(scan([
+    "-----BEGIN PUBLIC KEY-----", "-----BEGIN RSA PUBLIC KEY-----",
+    "-----BEGIN CERTIFICATE-----", "-----BEGIN ENCRYPTED PUBLIC KEY-----",
+    "-----BEGIN ENCRYPTED PRIVATE KEY", "-----END ENCRYPTED PRIVATE KEY-----",
+  ].join("\n")), []);
+});
+
 test("detects a private key", () => {
   const findings = scan("-----BEGIN PRIVATE KEY-----");
   assert.equal(findings.length, 1);

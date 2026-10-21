@@ -27,6 +27,8 @@ The toy regex rules match all **4/4** synthetic fixtures (precision/recall 1.00)
 
 ## Known limitations
 
+- Private-key header checks include encrypted PKCS #8 (`ENCRYPTED PRIVATE KEY`, [RFC 7468 section 11](https://www.rfc-editor.org/rfc/rfc7468.html#section-11)) as well as the existing generic/RSA/EC/OpenSSH labels. A matching header is only a review signal: the scanner does not parse, decrypt or validate key material. Public-key and certificate headers are not private-key findings.
+
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
