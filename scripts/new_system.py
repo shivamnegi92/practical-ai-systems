@@ -9,7 +9,9 @@ Then replace the placeholder logic, cases, and tests with your real system.
 from __future__ import annotations
 
 import argparse
+import html
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -24,9 +26,7 @@ TEMPLATE_DIR = ROOT / "templates" / "system"
 
 
 def render(text: str, values: dict[str, str]) -> str:
-    for key, value in values.items():
-        text = text.replace("{{" + key + "}}", value)
-    return text
+    return re.sub(r"\{\{(\w+)\}\}", lambda match: values.get(match.group(1), match.group(0)), text)
 
 
 def scaffold(name: str, title: str, level: str, hook: str, prerequisites: str, root: Path = ROOT) -> Path:
@@ -51,7 +51,17 @@ def scaffold(name: str, title: str, level: str, hook: str, prerequisites: str, r
         rel = Path(render(str(src.relative_to(TEMPLATE_DIR)), values).removesuffix(".tmpl"))
         dest = target / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(render(src.read_text(encoding="utf-8"), values), encoding="utf-8")
+        content_values = dict(values)
+        for key in ("title", "hook"):
+            value = content_values[key]
+            if dest.suffix == ".html":
+                value = html.escape(value)
+            elif dest.suffix == ".py":
+                value = value.encode("unicode_escape").decode("ascii").replace('"""', '\\"\\"\\"')
+            elif dest.suffix == ".ts":
+                value = " ".join(value.splitlines())
+            content_values[key] = value
+        dest.write_text(render(src.read_text(encoding="utf-8"), content_values), encoding="utf-8")
     manifest = {"title": title, "level": level, "order": max(same_level, default=0) + 1,
                 "prerequisites": prerequisites, "hook": hook}
     (target / "system.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
