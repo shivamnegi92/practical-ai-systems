@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json). This reuses the four-query, four-d
 
 ## Known limitations
 
+- Ranking cutoffs must be finite nonnegative integers, including when rankings/query lists are empty. Relevance grades must be finite nonnegative numbers; fractional weights and zero are valid. Invalid inputs raise `ValueError`/`RangeError`. `mrr` remains full-list reciprocal rank; the cutoff applies to recall/nDCG, as before.
+
 - Four queries over four documents with binary relevance is enough to illustrate the metrics, not enough to generalize a strategy comparison.
 - nDCG here uses binary or small integer relevance grades supplied by hand; it is only as trustworthy as those judgments.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

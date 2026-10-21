@@ -63,7 +63,18 @@ export function expandQuery(query: string): string {
   return [query, ...extra].join(" ");
 }
 
+function validateCutoff(k: number): void {
+  if (!Number.isInteger(k) || k < 0) throw new RangeError("k must be a finite nonnegative integer");
+}
+
+function validateRelevance(grades: Record<string, number>): void {
+  for (const grade of Object.values(grades)) {
+    if (typeof grade !== "number" || !Number.isFinite(grade) || grade < 0) throw new RangeError("relevance grades must be finite nonnegative numbers");
+  }
+}
+
 export function recallAtK(rankedIds: string[], relevantIds: Set<string>, k: number): number {
+  validateCutoff(k);
   if (relevantIds.size === 0) return 0;
   const top = new Set(rankedIds.slice(0, k));
   return [...top].filter((id) => relevantIds.has(id)).length / relevantIds.size;
@@ -75,6 +86,8 @@ export function reciprocalRank(rankedIds: string[], relevantIds: Set<string>): n
 }
 
 export function ndcgAtK(rankedIds: string[], relevance: Record<string, number>, k: number): number {
+  validateCutoff(k);
+  validateRelevance(relevance);
   const dcg = rankedIds.slice(0, k).reduce((sum, id, i) => sum + (relevance[id] ?? 0) / Math.log2(i + 2), 0);
   const ideal = Object.values(relevance).sort((a, b) => b - a).slice(0, k);
   const idcg = ideal.reduce((sum, rel, i) => sum + rel / Math.log2(i + 2), 0);
@@ -82,6 +95,8 @@ export function ndcgAtK(rankedIds: string[], relevance: Record<string, number>, 
 }
 
 export function evaluateRanking(rankedIds: string[], relevance: Record<string, number>, k = 3) {
+  validateCutoff(k);
+  validateRelevance(relevance);
   const relevantIds = new Set(Object.entries(relevance).filter(([, r]) => r > 0).map(([id]) => id));
   return {
     recall_at_k: Math.round(recallAtK(rankedIds, relevantIds, k) * 10000) / 10000,
@@ -93,6 +108,7 @@ export function evaluateRanking(rankedIds: string[], relevance: Record<string, n
 export interface Query { text: string; relevance: Record<string, number> }
 
 export function compareStrategies(corpus: Record<string, string>, queries: Query[], k = 3) {
+  validateCutoff(k);
   const index = new BM25(corpus);
   const baselineScores: ReturnType<typeof evaluateRanking>[] = [];
   const expandedScores: ReturnType<typeof evaluateRanking>[] = [];

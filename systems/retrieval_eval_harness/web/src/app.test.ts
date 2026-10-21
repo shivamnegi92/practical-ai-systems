@@ -1,6 +1,22 @@
 import { test } from "node:test";
+
+test("ranking cutoffs and relevance grades must be valid before scoring", () => {
+  for (const k of [-1, 1.5, NaN, Infinity, true, "2", null] as any[]) {
+    assert.throws(() => recallAtK([], new Set(), k), RangeError);
+    assert.throws(() => ndcgAtK([], {}, k), RangeError);
+    assert.throws(() => evaluateRanking([], {}, k), RangeError);
+    assert.throws(() => compareStrategies({}, [], k), RangeError);
+  }
+  for (const grade of [-1, NaN, Infinity, true, "1", null] as any[]) {
+    assert.throws(() => ndcgAtK([], { a: grade }, 1), RangeError);
+    assert.throws(() => evaluateRanking([], { a: grade }, 1), RangeError);
+  }
+  assert.equal(recallAtK(["a"], new Set(["a"]), 0), 0);
+  assert.equal(ndcgAtK(["a"], { a: .5 }, 0), 0);
+  assert.equal(ndcgAtK(["a"], { a: .5 }, 1), 1);
+});
 import { strict as assert } from "node:assert";
-import { evaluateAll, ndcgAtK, reciprocalRank, recallAtK } from "./app.js";
+import { compareStrategies, evaluateRanking, evaluateAll, ndcgAtK, reciprocalRank, recallAtK } from "./app.js";
 
 test("recall@k over relevant set", () => {
   assert.equal(recallAtK(["a", "b", "c"], new Set(["b"]), 2), 1);
