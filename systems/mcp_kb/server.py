@@ -131,6 +131,8 @@ def dispatch(message: dict, tools: KnowledgeTools) -> dict:
     elif method == "tools/list":
         result = {"tools": _tool_definitions()}
     elif method == "tools/call":
+        if not isinstance(params, dict):
+            return {"jsonrpc": "2.0", "id": request_id, "error": {"code": -32602, "message": "params must be an object"}}
         result = _call_tool(params, tools)
     else:
         return {"jsonrpc": "2.0", "id": request_id, "error": {"code": -32601, "message": "method not found"}}

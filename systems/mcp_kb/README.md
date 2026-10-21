@@ -1,5 +1,7 @@
 # Local knowledge-base MCP server
 
+The example's named `tools/call` parameters must be an object. Calls with null, array or scalar `params` return an invalid-params error (`-32602`) correlated with the request id; they do not terminate the Python stdio loop. This focused validation does not implement positional calls, batch requests or complete JSON-RPC/MCP conformance.
+
 Expose read-only search and chunk retrieval over bundled synthetic sample documentation.
 
 **Level:** starter · **Runs locally:** yes · **Credentials:** none · **Dependencies:** Python standard library only

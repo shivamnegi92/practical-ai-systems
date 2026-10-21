@@ -103,6 +103,9 @@ export function dispatch(message: { method?: string; params?: Record<string, unk
   } else if (method === "tools/list") {
     result = { tools: toolDefinitions() };
   } else if (method === "tools/call") {
+    if (params === null || typeof params !== "object" || Array.isArray(params)) {
+      return { jsonrpc: "2.0", id, error: { code: -32602, message: "params must be an object" } };
+    }
     result = callTool(params as { name?: string; arguments?: Record<string, unknown> }, tools);
   } else {
     return { jsonrpc: "2.0", id, error: { code: -32601, message: "method not found" } };
