@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-Exact replay is **4/4** across a four-query fixture. The illustrative two-pass workload would avoid 50% duplicate calls only because it intentionally repeats every exact query once; this is not an observed production savings claim. Paraphrases miss by design to avoid false semantic matches. See [`eval/results.json`](eval/results.json).
+Exact replay is **6/6** across six synthetic queries. Two additional lookups exercise an apostrophe/punctuation hit and a price/prize miss. The illustrative two-pass workload would avoid 50% duplicate calls only because it intentionally repeats every exact query once; this is not an observed production savings claim. Paraphrases miss by design. See [`eval/results.json`](eval/results.json).
 
 ## Known limitations
+
+- Apostrophes are removed and other Unicode punctuation becomes whitespace before keying; word boundaries are preserved. This heuristic can conflate punctuation-bearing meanings, so it is unsuitable for queries where punctuation changes the answer. Model/version keys are unchanged.
 
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.

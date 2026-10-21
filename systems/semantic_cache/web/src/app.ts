@@ -1,5 +1,5 @@
 // A bounded TTL LRU cache with normalized keys and hit/miss accounting.
-// Exact normalized-query cache (no embeddings, no false "semantic" matches).
+// Normalized-query cache; punctuation can conflate meaning, without embeddings.
 // Keys use the normalized query string directly rather than a SHA-256 digest
 // (the Python version hashes for fixed-length keys; functionally equivalent).
 
@@ -18,7 +18,7 @@ export class SemanticCache {
   }
 
   static key(query: string, model = "default", version = "1"): string {
-    const normalized = query.toLowerCase().trim().split(/\s+/).join(" ");
+    const normalized = query.toLowerCase().replace(/['\u2018\u2019]/gu, "").replace(/\p{P}/gu, " ").trim().split(/\s+/).join(" ");
     return `${model}\0${version}\0${normalized}`;
   }
 
@@ -65,5 +65,10 @@ export function evaluateAll() {
   time += 2000; // past TTL
   const expired = cache.get("second query") === null;
   const stats = cache.stats();
-  return { ...stats, lru_eviction_works: evicted, ttl_expiry_works: expired };
+  const normalization = new SemanticCache();
+  normalization.put("What's the price?", "answer");
+  const punctuationHit = normalization.get("whats the price") === "answer";
+  const spellingMiss = normalization.get("whats the prize") === null;
+  return { ...stats, lru_eviction_works: evicted, ttl_expiry_works: expired,
+    punctuation_hit_works: punctuationHit, spelling_miss_works: spellingMiss };
 }

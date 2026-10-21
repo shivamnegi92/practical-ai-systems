@@ -2,6 +2,7 @@
 from __future__ import annotations
 import hashlib
 import time
+import unicodedata
 from collections import OrderedDict
 from dataclasses import dataclass
 
@@ -11,13 +12,14 @@ class Entry:
  expires_at: float
 
 class SemanticCache:
- """Exact normalized-query cache (no embeddings, API calls, or false semantic match)."""
+ """Normalized-query cache; punctuation can conflate meaning, without embeddings."""
  def __init__(self,max_entries:int=100,ttl_seconds:float=300,clock=time.monotonic):
   if max_entries<1 or ttl_seconds<=0: raise ValueError('max_entries and ttl_seconds must be positive')
   self.max_entries=max_entries; self.ttl_seconds=ttl_seconds; self.clock=clock; self.data=OrderedDict(); self.hits=0; self.misses=0
  @staticmethod
  def key(query:str,model:str='default',version:str='1') -> str:
-  normalized=' '.join(query.casefold().split())
+  text=''.join('' if char in "'\u2018\u2019" else ' ' if unicodedata.category(char).startswith('P') else char for char in query.casefold())
+  normalized=' '.join(text.split())
   return hashlib.sha256(f'{model}\0{version}\0{normalized}'.encode()).hexdigest()
  def get(self,query:str,model:str='default',version:str='1') -> str|None:
   key=self.key(query,model,version); entry=self.data.get(key)

@@ -1,13 +1,15 @@
 {
   "dataset": {
-    "cases": 4,
+    "cases": 6,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
     "estimated_call_reduction_on_repeated_identical_workload": 0.5,
-    "exact_replay_rate": 1.0
+    "exact_replay_rate": 1.0,
+    "normalized_lookup_accuracy": 1.0,
+    "normalized_lookup_cases": 2
   },
-  "notes": "Illustrative two-pass exact-key workload, not production savings; similar paraphrases intentionally miss.",
+  "notes": "Synthetic replay and punctuation lookup cases only; illustrative two-pass exact-key workload, not production savings. No paraphrase matching; punctuation normalization can conflate meaning.",
   "system": "semantic_cache"
 }
