@@ -26,6 +26,12 @@ class CitationCheckerTests(unittest.TestCase):
         self.assertEqual(report["citations"], 0)
         self.assertTrue(report["all_supported"])
 
+    def test_invalid_min_overlap_raises_value_error(self):
+        for invalid in [-0.1, 1.1, "0.5", True, float("nan")]:
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValueError):
+                    check_citations("Claim [billing.md#1].", CHUNKS, min_overlap=invalid)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -35,6 +35,8 @@ CITATION = re.compile(r"\[([^\]]+)\]")
 
 
 def check_citations(answer: str, chunks: dict[str, str], min_overlap: float = 0.3) -> dict:
+    if not isinstance(min_overlap, (int, float)) or isinstance(min_overlap, bool) or not (0.0 <= min_overlap <= 1.0):
+        raise ValueError(f"min_overlap must be a number between 0.0 and 1.0, got {min_overlap!r}")
     results = []
     for sent in sentences(answer):
         for match in CITATION.finditer(sent):

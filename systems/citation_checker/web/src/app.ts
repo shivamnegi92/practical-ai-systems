@@ -35,6 +35,9 @@ export interface CitationResult {
 }
 
 export function checkCitations(answer: string, chunks: Record<string, string>, minOverlap = 0.3) {
+  if (typeof minOverlap !== "number" || Number.isNaN(minOverlap) || minOverlap < 0 || minOverlap > 1) {
+    throw new RangeError(`minOverlap must be a number between 0 and 1, got ${minOverlap}`);
+  }
   const results: CitationResult[] = [];
   for (const sent of sentences(answer)) {
     const re = new RegExp(CITATION.source, CITATION.flags);
