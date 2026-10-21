@@ -10,7 +10,15 @@ function matchesType(value: unknown, type: FieldType): boolean {
   return typeof value === "string";
 }
 
+function validateSchema(schema: Schema): void {
+  for (const [field, spec] of Object.entries(schema)) {
+    const type = spec.type === undefined ? "string" : spec.type;
+    if (!["string", "number", "boolean"].includes(type)) throw new Error(`unsupported type for field ${field}`);
+  }
+}
+
 export function validateRow(schema: Schema, row: Record<string, unknown>): string[] {
+  validateSchema(schema);
   const errors: string[] = [];
   for (const [field, spec] of Object.entries(schema)) {
     const value = row[field];
@@ -24,6 +32,7 @@ export function validateRow(schema: Schema, row: Record<string, unknown>): strin
 }
 
 export function validateRows(schema: Schema, rows: Array<Record<string, unknown>>) {
+  validateSchema(schema);
   return rows.map((row, i) => ({ row: i, errors: validateRow(schema, row) }));
 }
 

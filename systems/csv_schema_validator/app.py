@@ -12,7 +12,14 @@ from pathlib import Path
 TYPE_MAP = {"string": str, "number": (int, float), "boolean": bool}
 
 
+def _validate_schema(schema: dict) -> None:
+    for field, spec in schema.items():
+        if spec.get("type", "string") not in ("string", "number", "boolean"):
+            raise ValueError(f"unsupported type for field {field}")
+
+
 def validate_row(schema: dict, row: dict) -> list[str]:
+    _validate_schema(schema)
     errors = []
     for field, spec in schema.items():
         required = spec.get("required", False)
@@ -28,6 +35,7 @@ def validate_row(schema: dict, row: dict) -> list[str]:
 
 
 def validate_rows(schema: dict, rows: list[dict]) -> list[dict]:
+    _validate_schema(schema)
     return [{"row": i, "errors": validate_row(schema, row)} for i, row in enumerate(rows)]
 
 

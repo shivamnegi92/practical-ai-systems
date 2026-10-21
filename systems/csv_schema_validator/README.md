@@ -30,3 +30,5 @@ See [`eval/results.json`](eval/results.json) for current row-validity accuracy o
 - This checks only presence and Python type, not formats, ranges, enumerations, or cross-field business rules.
 - `bool` is a subtype of `int` in Python, so a "number" field will silently accept `true`/`false` values; document this when reusing the type map.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
+
+Unsupported declared field types are schema configuration errors, including when the input row set is empty. The supported types are string, number and boolean; an omitted type retains the string default.
