@@ -30,3 +30,5 @@ On 6 synthetic claims, the lexical heuristic agrees with rater A **0.50** of the
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
+
+The heuristic requires each digit-written integer/decimal literal in the claim to occur in the evidence before applying word overlap. This conservative lexical guard does not establish numeric entailment, align numbers to entities, convert units, or equate alternative number formats. Spelled-out numbers and negation remain limitations.

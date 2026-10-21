@@ -17,6 +17,9 @@ export function cohenKappa(a: string[], b: string[]): number {
 }
 
 export function judge(claim: string, evidence: string): "supported" | "unsupported" {
+  const claimNumbers = new Set(claim.match(/\b[0-9]+(?:\.[0-9]+)?\b/g) ?? []);
+  const evidenceNumbers = new Set(evidence.match(/\b[0-9]+(?:\.[0-9]+)?\b/g) ?? []);
+  if ([...claimNumbers].some((number) => !evidenceNumbers.has(number))) return "unsupported";
   const claimTerms = new Set(claim.toLowerCase().match(/[a-z0-9]+/g) ?? []);
   const evidenceTerms = new Set(evidence.toLowerCase().match(/[a-z0-9]+/g) ?? []);
   const overlap = claimTerms.size ? [...claimTerms].filter((t) => evidenceTerms.has(t)).length / claimTerms.size : 0;

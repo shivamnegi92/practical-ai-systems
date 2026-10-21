@@ -20,6 +20,11 @@ def cohen_kappa(a: list, b: list) -> float:
 
 
 def judge(claim: str, evidence: str) -> str:
+    number_pattern = r"\b[0-9]+(?:\.[0-9]+)?\b"
+    claim_numbers = set(re.findall(number_pattern, claim))
+    evidence_numbers = set(re.findall(number_pattern, evidence))
+    if not claim_numbers <= evidence_numbers:
+        return "unsupported"
     claim_terms=set(re.findall(r"[a-z0-9]+",claim.lower()))
     evidence_terms=set(re.findall(r"[a-z0-9]+",evidence.lower()))
     overlap=len(claim_terms & evidence_terms)/len(claim_terms) if claim_terms else 0
