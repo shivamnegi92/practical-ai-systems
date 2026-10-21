@@ -1,15 +1,16 @@
 """Normalize OCR line records and extract conservative key/value fields."""
 from __future__ import annotations
+import math
 import re
 
 def normalize_lines(lines: list[dict]) -> list[dict]:
  out=[]
  for line in lines:
-  text=' '.join(str(line.get('text','')).split())
+  text=' '.join(str(line.get('text') if line.get('text') is not None else '').split())
   box=line.get('bbox')
   if not text or not isinstance(box,list) or len(box)!=4: continue
   x1,y1,x2,y2=box
-  if not all(isinstance(v,(int,float)) for v in box) or x2<x1 or y2<y1: continue
+  if not all(isinstance(v,(int,float)) and not isinstance(v,bool) and (not isinstance(v,float) or math.isfinite(v)) for v in box) or x2<x1 or y2<y1: continue
   out.append({'text':text,'bbox':[float(x1),float(y1),float(x2),float(y2)]})
  return sorted(out,key=lambda x:(round(x['bbox'][1],3),x['bbox'][0]))
 
