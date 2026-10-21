@@ -20,11 +20,13 @@ COUNT_FIELDS = ("cases", "calls", "documents", "entries")
 def normalize(name: str, raw: dict) -> dict:
     """Convert per-system outputs to a consistent evidence packet."""
     count_key = next((key for key in COUNT_FIELDS if key in raw), None)
-    if count_key is None:
+    dataset = raw.get("dataset", {})
+    nested_count = "metrics" in raw and isinstance(dataset, dict) and "cases" in dataset
+    if count_key is None and not nested_count:
         raise ValueError(f"{name}: evaluation must report its workload size")
     if "metrics" in raw:
         metrics = raw["metrics"]
-        count = raw.get("dataset", {}).get("cases", raw[count_key])
+        count = dataset["cases"] if nested_count else raw[count_key]
     else:
         metadata = set(COUNT_FIELDS) | {
             "method", "dataset", "scope", "note", "notes", "warning",
