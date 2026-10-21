@@ -30,3 +30,5 @@ All **3** policy fixtures pass: an allowed lookup, an unapproved refund that mus
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
+
+Execution checks the current approval policy as well as the plan flag. A caller-supplied false flag cannot bypass a tool's required approval; a stricter true flag still requires it. The demo boolean is not authenticated human approval and this remains a local stub example.

@@ -42,7 +42,7 @@ class BoundedAgent:
             raise ValueError("action is not allow-listed")
         if not isinstance(plan.arguments, dict):
             raise ValueError("arguments must be an object")
-        if plan.requires_approval and not approved:
+        if (plan.requires_approval or plan.action in self.approval_required) and not approved:
             return {"status": "awaiting_approval", "action": plan.action}
         return {"status": "completed", "action": plan.action, "result": self.tools[plan.action](**plan.arguments)}
 
