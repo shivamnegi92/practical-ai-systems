@@ -2,6 +2,13 @@ import unittest
 from systems.mcp_kb.server import KnowledgeTools, dispatch
 
 class MCPTests(unittest.TestCase):
+ def test_unknown_prototype_like_chunk_ids_are_refused(self):
+  tools=KnowledgeTools()
+  for chunk_id in ['constructor','toString','__proto__','hasOwnProperty']:
+   with self.subTest(chunk_id=chunk_id),self.assertRaisesRegex(ValueError,'unknown chunk id'):
+    tools.read(chunk_id)
+   result=dispatch({'id':7,'method':'tools/call','params':{'name':'read_chunk','arguments':{'chunk_id':chunk_id}}},tools)
+   self.assertTrue(result['result']['isError'])
  def test_tools_list_and_call(self):
   tools=KnowledgeTools()
   listed=dispatch({'id':1,'method':'tools/list'},tools)

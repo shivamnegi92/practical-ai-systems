@@ -68,7 +68,7 @@ export class KnowledgeTools {
   }
 
   read(chunkId: string) {
-    if (!(chunkId in CHUNKS)) throw new Error("unknown chunk id");
+    if (!Object.prototype.hasOwnProperty.call(CHUNKS, chunkId)) throw new Error("unknown chunk id");
     return { id: chunkId, text: CHUNKS[chunkId] };
   }
 }
