@@ -32,6 +32,8 @@ This measured BM25 retrieval coverage, extractive sentence coverage, citation ma
 
 ## Known limitations
 
+- Browser BM25 document IDs are treated as data keys, including `__proto__`, `constructor` and `toString`. The token dictionary has no prototype. The same correction is applied to the independent query-rewriter, retrieval-harness, MCP and multi-hop copies; Python dictionaries already retain these IDs.
+
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.

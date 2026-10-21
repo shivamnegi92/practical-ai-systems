@@ -21,7 +21,7 @@ export function tokenize(text: string): string[] {
 }
 
 export class BM25 {
-  tokens: Record<string, string[]> = {};
+  tokens: Record<string, string[]> = Object.create(null);
   avgLen: number;
   idf: Record<string, number> = {};
 

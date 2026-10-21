@@ -22,7 +22,7 @@ function tokenize(text: string): string[] {
 }
 
 class BM25 {
-  tokens: Record<string, string[]> = {};
+  tokens: Record<string, string[]> = Object.create(null);
   avgLen: number;
   idf: Record<string, number> = {};
   constructor(docs: Record<string, string>, private k1 = 1.5, private b = 0.75) {
