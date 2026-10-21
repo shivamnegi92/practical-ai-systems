@@ -31,6 +31,7 @@ export function sentences(text: string): string[] {
 }
 
 export function summarize(text: string, n = 2): string[] {
+  if (!Number.isInteger(n) || n < 0) throw new RangeError("n must be a nonnegative integer");
   const sents = sentences(text);
   if (sents.length <= n) return sents;
   const freq = new Map<string, number>();
