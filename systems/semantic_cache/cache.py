@@ -26,7 +26,9 @@ class SemanticCache:
    self.misses+=1; return None
   self.data.move_to_end(key); self.hits+=1; return entry.value
  def put(self,query:str,value:str,model:str='default',version:str='1') -> None:
-  key=self.key(query,model,version); self.data[key]=Entry(value,self.clock()+self.ttl_seconds); self.data.move_to_end(key)
+  now=self.clock()
+  for expired in [key for key,entry in self.data.items() if entry.expires_at<=now]: del self.data[expired]
+  key=self.key(query,model,version); self.data[key]=Entry(value,now+self.ttl_seconds); self.data.move_to_end(key)
   while len(self.data)>self.max_entries: self.data.popitem(last=False)
  def stats(self):
   total=self.hits+self.misses

@@ -37,9 +37,11 @@ export class SemanticCache {
   }
 
   put(query: string, value: string, model = "default", version = "1"): void {
+    const now = this.clock();
+    for (const [cachedKey, entry] of this.data) if (entry.expiresAt <= now) this.data.delete(cachedKey);
     const key = SemanticCache.key(query, model, version);
     this.data.delete(key);
-    this.data.set(key, { value, expiresAt: this.clock() + this.ttlMs });
+    this.data.set(key, { value, expiresAt: now + this.ttlMs });
     while (this.data.size > this.maxEntries) {
       const oldest = this.data.keys().next().value;
       if (oldest === undefined) break;
