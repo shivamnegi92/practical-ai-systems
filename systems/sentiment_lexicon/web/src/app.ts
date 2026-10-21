@@ -9,6 +9,9 @@ function words(text: string): string[] {
 }
 
 export function classify(text: string): "positive" | "negative" | "neutral" {
+  if (typeof text !== "string") {
+    throw new TypeError(`text must be a string, got ${typeof text}`);
+  }
   const ws = words(text);
   const positive = ws.filter((w) => POSITIVE.has(w)).length;
   const negative = ws.filter((w) => NEGATIVE.has(w)).length;

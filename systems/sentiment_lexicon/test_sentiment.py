@@ -16,6 +16,12 @@ class SentimentLexiconTests(unittest.TestCase):
     def test_tied_counts_default_to_neutral(self):
         self.assertEqual(classify("I love this app but the login page is terrible."), "neutral")
 
+    def test_invalid_type_raises_type_error(self):
+        for invalid in [None, 123, ["good"], True]:
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(TypeError):
+                    classify(invalid)
+
 
 if __name__ == "__main__":
     unittest.main()

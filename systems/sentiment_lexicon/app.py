@@ -24,6 +24,8 @@ def _words(text: str) -> list[str]:
 
 
 def classify(text: str) -> str:
+    if not isinstance(text, str):
+        raise TypeError(f"text must be a str, got {type(text).__name__}")
     words = _words(text)
     positive = sum(w in POSITIVE for w in words)
     negative = sum(w in NEGATIVE for w in words)
