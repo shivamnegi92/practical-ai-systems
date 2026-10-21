@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for current handoff accuracy on 4 s
 
 ## Known limitations
 
+- Equal best keyword scores are ambiguous: triage returns a `null` category and keeps the top score for inspection; the request escalates even when the score meets the threshold. A unique winner still uses the existing threshold.
+
 - Triage is a fixed keyword-overlap scorer over three hand-picked categories; anything phrased without those words escalates even when a human would route it instantly.
 - The confidence threshold (2 keyword matches) is an arbitrary cutoff for this fixture, not a calibrated confidence score.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

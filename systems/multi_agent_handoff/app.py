@@ -45,7 +45,8 @@ def triage(text: str) -> tuple[str | None, int]:
     scores = {category: len(tokens & keywords) for category, keywords in CATEGORIES.items()}
     best_category = max(scores, key=scores.get)
     best_score = scores[best_category]
-    return (best_category, best_score) if best_score else (None, 0)
+    winners = [category for category, score in scores.items() if score == best_score]
+    return (best_category if len(winners) == 1 else None, best_score) if best_score else (None, 0)
 
 
 def handle(request: dict) -> dict:
