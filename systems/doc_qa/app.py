@@ -102,6 +102,12 @@ class StubLLM:
         return self.responder(prompt)
 
 
+def _response_text(value: object) -> str:
+    if not isinstance(value, str):
+        raise ValueError("provider response content must be text")
+    return value
+
+
 class _HTTPLLM:
     def __init__(self, url: str, model: str, headers: dict[str, str] | None = None, timeout: int = 120):
         self.url, self.model, self.timeout = url, model, timeout
@@ -119,7 +125,7 @@ class OllamaLLM(_HTTPLLM):
 
     def complete(self, prompt: str, system: str = "") -> str:
         body = {"model": self.model, "prompt": prompt, "system": system, "stream": False, "options": {"temperature": 0}}
-        return self._post(body)["response"]
+        return _response_text(self._post(body)["response"])
 
 
 class OpenAICompatibleLLM(_HTTPLLM):
@@ -129,7 +135,7 @@ class OpenAICompatibleLLM(_HTTPLLM):
     def complete(self, prompt: str, system: str = "") -> str:
         messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": prompt}]
         body = {"model": self.model, "messages": messages, "temperature": 0}
-        return self._post(body)["choices"][0]["message"]["content"]
+        return _response_text(self._post(body)["choices"][0]["message"]["content"])
 
 
 def from_env(provider: str | None = None) -> LLM | None:
