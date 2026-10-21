@@ -16,7 +16,7 @@ function stem(token: string): string {
 
 export function tokenize(text: string): string[] {
   const matches = text.toLowerCase().match(/[a-z0-9]+/g) ?? [];
-  return matches.map(stem).filter((t) => !STOPWORDS.has(t));
+  return matches.filter((t) => !STOPWORDS.has(t)).map(stem);
 }
 
 const INTENTS: Record<string, Set<string>> = {
