@@ -30,3 +30,5 @@ See [`eval/results.json`](eval/results.json) for current QC accuracy on 5 synthe
 - This never looks at the image; a fluent, well-formed caption that is simply wrong about the image's content will still pass.
 - The banned-phrase and length-bound lists are small and arbitrary; expand them for your own caption pipeline before relying on this.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
+
+Word limits count whitespace-separated tokens containing at least one letter or number; standalone punctuation does not count as a word. This remains a heuristic, not linguistic word segmentation.

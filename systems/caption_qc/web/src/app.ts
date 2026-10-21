@@ -9,7 +9,7 @@ const MAX_WORDS = 25;
 export function checkCaption(caption: string, requiredKeywords: string[] = []) {
   const lowered = caption.toLowerCase();
   const reasons: string[] = [];
-  const wordCount = caption.trim().split(/\s+/).filter(Boolean).length;
+  const wordCount = caption.trim().split(/\s+/).filter((token) => /[\p{L}\p{N}]/u.test(token)).length;
   if (wordCount < MIN_WORDS) reasons.push("too_short");
   if (wordCount > MAX_WORDS) reasons.push("too_long");
   for (const phrase of BANNED_PHRASES) if (lowered.includes(phrase)) reasons.push(`banned_phrase:${phrase}`);

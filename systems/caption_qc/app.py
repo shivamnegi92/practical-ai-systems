@@ -6,6 +6,7 @@ keywords before a caption ships. Does not look at the image itself.
 from __future__ import annotations
 
 import argparse
+import re
 
 BANNED_PHRASES = ["image of", "picture of", "no caption available", "untitled image"]
 MIN_WORDS, MAX_WORDS = 3, 25
@@ -15,7 +16,7 @@ def check_caption(caption: str, required_keywords: list[str] | None = None) -> d
     required_keywords = required_keywords or []
     lowered = caption.lower()
     reasons = []
-    word_count = len(caption.split())
+    word_count = sum(bool(re.search(r"[^\W_]", token)) for token in caption.split())
     if word_count < MIN_WORDS:
         reasons.append("too_short")
     if word_count > MAX_WORDS:
