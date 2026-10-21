@@ -78,10 +78,12 @@ def from_env(provider: str | None = None) -> LLM | None:
 
 def parse_json(text: str):
     """Pull the first JSON object out of a model reply; None if absent/invalid."""
-    match = re.search(r"\{.*\}", text, re.DOTALL)
-    if not match:
-        return None
-    try:
-        return json.loads(match.group(0))
-    except json.JSONDecodeError:
-        return None
+    decoder = json.JSONDecoder()
+    for match in re.finditer(r"\{", text):
+        try:
+            value, _ = decoder.raw_decode(text, match.start())
+        except json.JSONDecodeError:
+            continue
+        if isinstance(value, dict):
+            return value
+    return None
