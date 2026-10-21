@@ -7,7 +7,8 @@ SECRET_PATTERNS=[('private key',re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH )?PR
 DANGEROUS_ACTIONS=re.compile(r'\b(?:chmod\s+777|curl\s+[^|]+\|\s*(?:sudo\s+)?sh|rm\s+-rf\s+/|eval\s+\$\()',re.I)
 
 def scan(root:Path,ignore:set[str]|None=None)->list[dict]:
- ignore=ignore or {'.git','.venv','venv','node_modules','__pycache__'}; findings=[]
+ if ignore is None: ignore={'.git','.venv','venv','node_modules','__pycache__'}
+ findings=[]
  for path in root.rglob('*'):
   if not path.is_file() or any(part in ignore for part in path.relative_to(root).parts): continue
   try: text=path.read_text(errors='ignore')

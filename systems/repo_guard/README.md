@@ -2,6 +2,8 @@
 
 Scan local files for a tiny set of obvious patterns; this is not a security scanner.
 
+The Python `scan(root, ignore=None)` API skips common dependency and metadata folders by default. Pass a custom set to replace those exclusions, or `ignore=set()` to scan every folder. This option controls filesystem traversal; the browser's pasted-text example has no directory traversal.
+
 **Level:** starter · **Runs locally:** yes · **Credentials:** none · **Dependencies:** Python standard library only
 
 ## Quickstart
