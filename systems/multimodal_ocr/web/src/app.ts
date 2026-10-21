@@ -24,7 +24,7 @@ export function extractFields(lines: Array<{ text?: unknown; bbox?: unknown }>):
   const patterns: Record<string, RegExp> = {
     invoice_number: /Invoice\s*(?:No\.?|#)?\s*:?\s*([A-Z0-9-]+)/i,
     date: /\b(\d{4}-\d{2}-\d{2})\b/,
-    total: /Total\s*:?\s*\$?\s*([\d,]+\.\d{2})/i,
+    total: /\bTotal\b\s*:?\s*\$?\s*([\d,]+\.\d{2})/i,
   };
   const result: Record<string, string | null> = {};
   for (const [key, pattern] of Object.entries(patterns)) {
