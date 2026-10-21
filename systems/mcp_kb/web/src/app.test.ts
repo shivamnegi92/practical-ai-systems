@@ -25,3 +25,12 @@ test("unknown method returns a JSON-RPC error", () => {
 test("evaluation recall is perfect on the bundled fixtures", () => {
   assert.equal(evaluateAll().recall_at_3, 1);
 });
+
+test("MCP exposed index validates counts and preserves bounded valid hits", () => {
+ const index=new KnowledgeTools().index;
+ for (const k of [-1,1.5,NaN,Infinity]) assert.throws(()=>index.search("password",k),/nonnegative integer/);
+ assert.throws(()=>index.search("password",JSON.parse("true")),/nonnegative integer/);
+ assert.deepEqual(index.search("password",0),[]);
+ const hits=index.search("password",5);assert.ok(hits.length>0);
+ assert.deepEqual(index.search("password",1),hits.slice(0,1));
+});

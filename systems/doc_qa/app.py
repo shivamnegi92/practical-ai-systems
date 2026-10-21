@@ -78,6 +78,8 @@ class BM25:
         )
 
     def search(self, query: str, k: int = 5) -> list[tuple[str, float]]:
+        if not isinstance(k, int) or isinstance(k, bool) or k < 0:
+            raise ValueError("k must be a nonnegative integer")
         scored = ((doc_id, self.score(query, doc_id)) for doc_id in self.tokens)
         hits = sorted((h for h in scored if h[1] > 0), key=lambda h: (-h[1], h[0]))
         return hits[:k]

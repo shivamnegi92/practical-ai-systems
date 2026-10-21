@@ -30,3 +30,5 @@ The included evaluator finds the expected chunk within top 3 for **4/4** synthet
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
+
+The internal BM25 search count `k` must be a nonnegative integer. Zero returns no hits; negative, fractional and non-finite counts are rejected before searching, including empty indexes. Wrapper-specific default/clamping policies remain unchanged.

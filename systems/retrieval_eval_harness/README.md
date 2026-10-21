@@ -30,3 +30,5 @@ See [`eval/results.json`](eval/results.json). This reuses the four-query, four-d
 - Four queries over four documents with binary relevance is enough to illustrate the metrics, not enough to generalize a strategy comparison.
 - nDCG here uses binary or small integer relevance grades supplied by hand; it is only as trustworthy as those judgments.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
+
+The internal BM25 search count `k` must be a nonnegative integer. Zero returns no hits; negative, fractional and non-finite counts are rejected before searching, including empty indexes. Wrapper-specific default/clamping policies remain unchanged.
