@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 
@@ -33,7 +34,7 @@ def detect_drift(schema: dict, records: list[dict]) -> dict:
         present = {k for k, v in record.items() if v not in (None, "")}
         missing_required |= required - present
         for field, value in record.items():
-            if field in schema and value not in (None, "") and infer_type(value) != schema[field]["type"]:
+            if field in schema and value not in (None, "") and (infer_type(value) != schema[field]["type"] or (isinstance(value, float) and not math.isfinite(value))):
                 type_mismatches.add(field)
     return {
         "new_fields": sorted(new_fields),

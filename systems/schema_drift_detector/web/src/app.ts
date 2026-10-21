@@ -25,7 +25,7 @@ export function detectDrift(schema: Schema, records: Array<Record<string, unknow
     const present = new Set(Object.entries(record).filter(([, v]) => v !== null && v !== "" && v !== undefined).map(([k]) => k));
     for (const field of required) if (!present.has(field)) missingRequired.add(field);
     for (const [field, value] of Object.entries(record)) {
-      if (schema[field] && value !== null && value !== "" && value !== undefined && inferType(value) !== schema[field].type) {
+      if (schema[field] && value !== null && value !== "" && value !== undefined && (inferType(value) !== schema[field].type || (typeof value === "number" && !Number.isFinite(value)))) {
         typeMismatches.add(field);
       }
     }
