@@ -11,14 +11,30 @@ BANNED_PHRASES = ["image of", "picture of", "no caption available", "untitled im
 MIN_WORDS, MAX_WORDS = 3, 25
 
 
-def check_caption(caption: str, required_keywords: list[str] | None = None) -> dict:
+def check_caption(
+    caption: str,
+    required_keywords: list[str] | None = None,
+    min_words: int = MIN_WORDS,
+    max_words: int = MAX_WORDS,
+) -> dict:
+    if not isinstance(caption, str):
+        raise TypeError("caption must be a string")
+    if (
+        not isinstance(min_words, int)
+        or isinstance(min_words, bool)
+        or not isinstance(max_words, int)
+        or isinstance(max_words, bool)
+        or min_words < 0
+        or max_words < min_words
+    ):
+        raise ValueError("invalid min_words or max_words bounds")
     required_keywords = required_keywords or []
     lowered = caption.lower()
     reasons = []
     word_count = len(caption.split())
-    if word_count < MIN_WORDS:
+    if word_count < min_words:
         reasons.append("too_short")
-    if word_count > MAX_WORDS:
+    if word_count > max_words:
         reasons.append("too_long")
     for phrase in BANNED_PHRASES:
         if phrase in lowered:

@@ -6,12 +6,30 @@ const BANNED_PHRASES = ["image of", "picture of", "no caption available", "untit
 const MIN_WORDS = 3;
 const MAX_WORDS = 25;
 
-export function checkCaption(caption: string, requiredKeywords: string[] = []) {
+export function checkCaption(
+  caption: string,
+  requiredKeywords: string[] = [],
+  minWords = MIN_WORDS,
+  maxWords = MAX_WORDS
+) {
+  if (typeof caption !== "string") {
+    throw new TypeError("caption must be a string");
+  }
+  if (
+    typeof minWords !== "number" ||
+    !Number.isInteger(minWords) ||
+    typeof maxWords !== "number" ||
+    !Number.isInteger(maxWords) ||
+    minWords < 0 ||
+    maxWords < minWords
+  ) {
+    throw new RangeError("invalid minWords or maxWords bounds");
+  }
   const lowered = caption.toLowerCase();
   const reasons: string[] = [];
   const wordCount = caption.trim().split(/\s+/).filter(Boolean).length;
-  if (wordCount < MIN_WORDS) reasons.push("too_short");
-  if (wordCount > MAX_WORDS) reasons.push("too_long");
+  if (wordCount < minWords) reasons.push("too_short");
+  if (wordCount > maxWords) reasons.push("too_long");
   for (const phrase of BANNED_PHRASES) if (lowered.includes(phrase)) reasons.push(`banned_phrase:${phrase}`);
   const missing = requiredKeywords.filter((kw) => !lowered.includes(kw.toLowerCase()));
   if (missing.length) reasons.push("missing_keywords:" + missing.join(","));

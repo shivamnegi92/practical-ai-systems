@@ -23,6 +23,18 @@ class CaptionQcTests(unittest.TestCase):
         result = check_caption("A sunny beach with waves.", ["dog"])
         self.assertTrue(any("missing_keywords" in r for r in result["reasons"]))
 
+    def test_rejects_non_string_caption(self):
+        with self.assertRaises(TypeError):
+            check_caption(None)
+        with self.assertRaises(TypeError):
+            check_caption(123)
+
+    def test_rejects_invalid_bounds(self):
+        with self.assertRaises(ValueError):
+            check_caption("A valid caption", min_words=-1)
+        with self.assertRaises(ValueError):
+            check_caption("A valid caption", min_words=10, max_words=5)
+
 
 if __name__ == "__main__":
     unittest.main()
