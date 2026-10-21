@@ -63,11 +63,14 @@ export class KnowledgeTools {
   index = new BM25(CHUNKS);
 
   search(query: string, limit = 3) {
+    if (typeof query !== "string") throw new Error("query must be a string");
+    if (!Number.isInteger(limit)) throw new Error("limit must be an integer");
     const hits = this.index.search(query, Math.max(1, Math.min(limit, 10)));
     return { results: hits.map(([id, score]) => ({ id, text: CHUNKS[id], score: Math.round(score * 10000) / 10000 })) };
   }
 
   read(chunkId: string) {
+    if (typeof chunkId !== "string") throw new Error("chunk_id must be a string");
     if (!(chunkId in CHUNKS)) throw new Error("unknown chunk id");
     return { id: chunkId, text: CHUNKS[chunkId] };
   }
