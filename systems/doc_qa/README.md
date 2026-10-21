@@ -35,3 +35,5 @@ This measured BM25 retrieval coverage, extractive sentence coverage, citation ma
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
+
+Generated answers are refused if any citation names a chunk outside the retrieved context, including replies that also contain a valid citation. This checks citation membership; it does not establish semantic entailment.
