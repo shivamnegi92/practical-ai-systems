@@ -45,7 +45,8 @@ def render_readme(readme: str, root: Path = ROOT) -> str:
     if end < start:
         raise ValueError("README systems markers are out of order")
 
-    counts = {level: sum(entry["level"] == level for entry in SYSTEMS.values()) for level in LEVEL_SUMMARIES}
+    systems = load_manifests(root)
+    counts = {level: sum(entry["level"] == level for entry in systems.values()) for level in LEVEL_SUMMARIES}
     lines = [
         "",
         "Choose a level that feels right. You can skip ahead if you already know the basics.",
@@ -58,7 +59,7 @@ def render_readme(readme: str, root: Path = ROOT) -> str:
 
     for level, summary in LEVEL_SUMMARIES.items():
         lines.extend([f"### {level}", "", summary, ""])
-        for name, info in SYSTEMS.items():
+        for name, info in systems.items():
             if info["level"] != level:
                 continue
             count, metrics = _packet(root, name)
