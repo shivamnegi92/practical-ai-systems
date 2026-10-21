@@ -30,3 +30,5 @@ On three synthetic OCR-line records with supplied bounding boxes, field exact-ma
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.
+
+Invoice identifiers require an explicit Number, No., # or colon label after the Invoice word. A bare heading or Invoice Date is not treated as an invoice number.

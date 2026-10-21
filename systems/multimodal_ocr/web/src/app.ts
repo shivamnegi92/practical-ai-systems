@@ -22,7 +22,7 @@ export function normalizeLines(lines: Array<{ text?: unknown; bbox?: unknown }>)
 export function extractFields(lines: Array<{ text?: unknown; bbox?: unknown }>): Record<string, string | null> {
   const text = normalizeLines(lines).map((l) => l.text).join("\n");
   const patterns: Record<string, RegExp> = {
-    invoice_number: /Invoice\s*(?:No\.?|#)?\s*:?\s*([A-Z0-9-]+)/i,
+    invoice_number: /\bInvoice[ \t]*(?:Number\b|No\b\.?|#|:)[ \t]*:?\s*([A-Z0-9-]+)/i,
     date: /\b(\d{4}-\d{2}-\d{2})\b/,
     total: /Total\s*:?\s*\$?\s*([\d,]+\.\d{2})/i,
   };

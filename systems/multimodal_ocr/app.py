@@ -15,5 +15,5 @@ def normalize_lines(lines: list[dict]) -> list[dict]:
 
 def extract_fields(lines: list[dict]) -> dict:
  text='\n'.join(x['text'] for x in normalize_lines(lines))
- patterns={'invoice_number':r'Invoice\s*(?:No\.?|#)?\s*:?\s*([A-Z0-9-]+)','date':r'\b(\d{4}-\d{2}-\d{2})\b','total':r'Total\s*:?\s*\$?\s*([\d,]+\.\d{2})'}
+ patterns={'invoice_number':r'\bInvoice[ \t]*(?:Number\b|No\b\.?|#|:)[ \t]*:?\s*([A-Z0-9-]+)','date':r'\b(\d{4}-\d{2}-\d{2})\b','total':r'Total\s*:?\s*\$?\s*([\d,]+\.\d{2})'}
  return {key:(m.group(1) if (m:=re.search(pattern,text,re.I)) else None) for key,pattern in patterns.items()}
