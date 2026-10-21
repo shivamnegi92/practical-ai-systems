@@ -8,6 +8,19 @@ const SCHEMA: Schema = {
   active: { type: "boolean", required: false },
 };
 
+test("boolean values are not numbers, whether required or optional", () => {
+  for (const required of [true, false]) {
+    for (const value of [true, false]) {
+      assert.deepEqual(validateRow({ a: { type: "number", required } }, { a: value }), ["type:a"]);
+    }
+  }
+});
+
+test("number and boolean fields keep their own values", () => {
+  for (const value of [0, 1, -2, 1.5]) assert.deepEqual(validateRow({ a: { type: "number" } }, { a: value }), []);
+  for (const value of [true, false]) assert.deepEqual(validateRow({ a: { type: "boolean" } }, { a: value }), []);
+});
+
 test("valid row has no errors", () => {
   assert.deepEqual(validateRow(SCHEMA, { id: 1, name: "Alice", active: true }), []);
 });

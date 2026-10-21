@@ -10,6 +10,23 @@ SCHEMA = {
 
 
 class CsvSchemaValidatorTests(unittest.TestCase):
+    def test_boolean_values_are_not_numbers(self):
+        for required in (True, False):
+            for value in (True, False):
+                with self.subTest(required=required, value=value):
+                    self.assertEqual(
+                        validate_row({"a": {"type": "number", "required": required}}, {"a": value}),
+                        ["type:a"],
+                    )
+
+    def test_number_and_boolean_fields_keep_their_own_values(self):
+        for value in (0, 1, -2, 1.5):
+            with self.subTest(number=value):
+                self.assertEqual(validate_row({"a": {"type": "number"}}, {"a": value}), [])
+        for value in (True, False):
+            with self.subTest(boolean=value):
+                self.assertEqual(validate_row({"a": {"type": "boolean"}}, {"a": value}), [])
+
     def test_valid_row_has_no_errors(self):
         self.assertEqual(validate_row(SCHEMA, {"id": 1, "name": "Alice", "active": True}), [])
 

@@ -28,5 +28,5 @@ See [`eval/results.json`](eval/results.json) for current row-validity accuracy o
 ## Known limitations
 
 - This checks only presence and Python type, not formats, ranges, enumerations, or cross-field business rules.
-- `bool` is a subtype of `int` in Python, so a "number" field will silently accept `true`/`false` values; document this when reusing the type map.
+- Python's `bool` subclasses `int`, so number fields explicitly reject `true`/`false` to match the web app. Boolean fields still accept both values, and numeric zero is a valid number.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
