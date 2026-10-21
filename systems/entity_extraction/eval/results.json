@@ -5,9 +5,9 @@
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "micro_like_average_f1": 0.6286,
+    "micro_like_average_f1": 0.6786,
     "micro_like_average_precision": 0.625,
-    "micro_like_average_recall": 0.6667
+    "micro_like_average_recall": 0.75
   },
   "notes": "Macro average across cases; small synthetic set.",
   "system": "entity_extraction"

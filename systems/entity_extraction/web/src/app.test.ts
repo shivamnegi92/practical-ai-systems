@@ -2,6 +2,15 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { evaluateAll, extract, score } from "./app.js";
 
+test("ISO dates do not require or consume a following day number", () => {
+  for (const text of ["Due 2026-10-16.", "Due 2026-10-16 12 items", "2026-10-16 and January 5, 2026"]) {
+    const dates = extract(text).filter(e => e.type === "DATE");
+    const expected = ["2026-10-16", ...(text.includes("January") ? ["January 5, 2026"] : [])];
+    assert.deepEqual(dates.map(e => e.text), expected);
+    assert.deepEqual(dates.map(e => text.slice(e.start, e.end)), expected);
+  }
+});
+
 test("extracts person, date, and money", () => {
   const entities = extract("Jane Doe signed the contract on January 5, 2026 for $1,200.");
   const types = entities.map((e) => e.type);
