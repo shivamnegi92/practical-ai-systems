@@ -18,6 +18,10 @@ class ReadabilityTests(unittest.TestCase):
     def test_empty_text_has_zero_grade(self):
         self.assertEqual(grade_level(""), 0.0)
 
+    def test_contractions_count_as_single_words(self):
+        self.assertEqual(grade_level("It's late. Don't wait."), grade_level("Its late. Dont wait."))
+        self.assertEqual(grade_level("It\u2019s late."), grade_level("Its late."))
+
     def test_band_boundaries(self):
         self.assertEqual(band(6.0), "simple")
         self.assertEqual(band(6.1), "standard")

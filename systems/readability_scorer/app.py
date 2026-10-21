@@ -14,7 +14,8 @@ _SENTENCE_RE = re.compile(r"(?<=[.!?])\s+")
 def sentences(text: str) -> list[str]:
     return [s.strip() for s in _SENTENCE_RE.split(text.strip()) if s.strip()]
 
-_WORD = re.compile(r"[A-Za-z]+")
+# Keep contractions/possessives ("don't", "it's") as one word.
+_WORD = re.compile(r"[A-Za-z]+(?:['\u2019][A-Za-z]+)*")
 _VOWEL_GROUP = re.compile(r"[aeiouy]+")
 
 

@@ -12,7 +12,7 @@ function syllables(word: string): number {
 }
 
 export function gradeLevel(text: string): number {
-  const words = text.match(/[A-Za-z]+/g) ?? [];
+  const words = text.match(/[A-Za-z]+(?:['\u2019][A-Za-z]+)*/g) ?? [];
   const sents = sentences(text).length ? sentences(text) : [text];
   if (words.length === 0) return 0;
   const totalSyllables = words.reduce((sum, w) => sum + syllables(w), 0);

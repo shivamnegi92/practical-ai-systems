@@ -12,6 +12,10 @@ test("dense long words are complex", () => {
 test("empty text has zero grade", () => {
   assert.equal(gradeLevel(""), 0);
 });
+test("contractions count as single words", () => {
+  assert.equal(gradeLevel("It's late. Don't wait."), gradeLevel("Its late. Dont wait."));
+  assert.equal(gradeLevel("It\u2019s late."), gradeLevel("Its late."));
+});
 test("band boundaries", () => {
   assert.equal(band(6.0), "simple");
   assert.equal(band(6.1), "standard");
