@@ -5,7 +5,7 @@ import json
 from dataclasses import dataclass, asdict
 from decimal import Decimal, InvalidOperation
 
-MONEY = r"\$?\s*([0-9,]+\.\d{2})"
+MONEY = r"\$?[ \t]*([0-9,]+\.\d{2})"
 
 @dataclass
 class Invoice:
@@ -24,14 +24,14 @@ class Invoice:
 def extract(text: str) -> Invoice:
     def one(pattern):
         m = re.search(pattern, text, re.I | re.M)
-        return m.group(1).strip() if m else None
+        return (m.group(1).strip() or None) if m else None
     invoice = Invoice(
-        vendor=one(r"^Vendor:\s*(.+)$"),
-        invoice_number=one(r"^Invoice(?:\s+(?:No\.?|Number))?:\s*([\w-]+)"),
-        invoice_date=one(r"^Date:\s*(\d{4}-\d{2}-\d{2})"),
-        subtotal=one(r"^Subtotal:\s*" + MONEY),
-        tax=one(r"^Tax:\s*" + MONEY),
-        total=one(r"^Total:\s*" + MONEY),
+        vendor=one(r"^Vendor:[ \t]*(.+)$"),
+        invoice_number=one(r"^Invoice(?:[ \t]+(?:No\.?|Number))?:[ \t]*([\w-]+)"),
+        invoice_date=one(r"^Date:[ \t]*(\d{4}-\d{2}-\d{2})"),
+        subtotal=one(r"^Subtotal:[ \t]*" + MONEY),
+        tax=one(r"^Tax:[ \t]*" + MONEY),
+        total=one(r"^Total:[ \t]*" + MONEY),
         errors=[],
     )
     for field in ("vendor", "invoice_number", "invoice_date", "subtotal", "tax", "total"):

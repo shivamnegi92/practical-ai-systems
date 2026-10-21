@@ -1,4 +1,19 @@
 import { test } from "node:test";
+
+test("empty invoice fields cannot borrow values from another line", () => {
+ for (const nl of ["\n","\r\n"]) {
+  const invoice=extract(`Vendor:  ${nl}Invoice: X-1${nl}Date: 2026-01-01`);
+  assert.equal(invoice.vendor,null);assert.ok(invoice.errors.includes("missing:vendor"));
+  assert.equal(invoice.invoice_number,"X-1");
+ }
+ assert.equal(extract("Vendor:   ").vendor,null);
+ for (const field of ["Subtotal","Tax","Total"]) {
+  const invoice=extract(`${field}:\n12.00`);
+  assert.equal(invoice[field.toLowerCase() as "subtotal"|"tax"|"total"],null);
+ }
+ const valid=extract("Vendor:\tAcme\r\nInvoice No:\tX-1\r\nDate:\t2026-01-01\r\nSubtotal:\t$10.00\r\nTax:\t$2.00\r\nTotal:\t$12.00\r\n");
+ assert.deepEqual(valid.errors,[]);
+});
 import { strict as assert } from "node:assert";
 import { evaluateAll, extract } from "./app.js";
 

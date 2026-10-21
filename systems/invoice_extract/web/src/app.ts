@@ -10,11 +10,11 @@ export interface Invoice {
   errors: string[];
 }
 
-const MONEY = String.raw`\$?\s*([0-9,]+\.\d{2})`;
+const MONEY = String.raw`\$?[ \t]*([0-9,]+\.\d{2})`;
 
 function one(text: string, pattern: string): string | null {
   const match = new RegExp(pattern, "im").exec(text);
-  return match ? match[1].trim() : null;
+  return match ? (match[1].trim() || null) : null;
 }
 
 function isValidIsoDate(value: string): boolean {
@@ -24,12 +24,12 @@ function isValidIsoDate(value: string): boolean {
 
 export function extract(text: string): Invoice {
   const invoice: Invoice = {
-    vendor: one(text, "^Vendor:\\s*(.+)$"),
-    invoice_number: one(text, "^Invoice(?:\\s+(?:No\\.?|Number))?:\\s*([\\w-]+)"),
-    invoice_date: one(text, "^Date:\\s*(\\d{4}-\\d{2}-\\d{2})"),
-    subtotal: one(text, "^Subtotal:\\s*" + MONEY),
-    tax: one(text, "^Tax:\\s*" + MONEY),
-    total: one(text, "^Total:\\s*" + MONEY),
+    vendor: one(text, "^Vendor:[ \\t]*(.+)$"),
+    invoice_number: one(text, "^Invoice(?:[ \\t]+(?:No\\.?|Number))?:[ \\t]*([\\w-]+)"),
+    invoice_date: one(text, "^Date:[ \\t]*(\\d{4}-\\d{2}-\\d{2})"),
+    subtotal: one(text, "^Subtotal:[ \\t]*" + MONEY),
+    tax: one(text, "^Tax:[ \\t]*" + MONEY),
+    total: one(text, "^Total:[ \\t]*" + MONEY),
     errors: [],
   };
   for (const field of ["vendor", "invoice_number", "invoice_date", "subtotal", "tax", "total"] as const) {
