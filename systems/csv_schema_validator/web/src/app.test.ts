@@ -8,6 +8,15 @@ const SCHEMA: Schema = {
   active: { type: "boolean", required: false },
 };
 
+test("number fields reject non-finite values without rejecting finite zero", () => {
+  for (const required of [true,false]) {
+    const schema: Schema={value:{type:"number",required}};
+    for (const value of [NaN,Infinity,-Infinity]) assert.deepEqual(validateRow(schema,{value}),["type:value"]);
+    for (const value of [0,-2,1.25]) assert.deepEqual(validateRow(schema,{value}),[]);
+  }
+  assert.deepEqual(validateRow({value:{type:"string"}},{value:"NaN"}),[]);
+});
+
 test("valid row has no errors", () => {
   assert.deepEqual(validateRow(SCHEMA, { id: 1, name: "Alice", active: true }), []);
 });

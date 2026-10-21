@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 TYPE_MAP = {"string": str, "number": (int, float), "boolean": bool}
@@ -22,7 +23,7 @@ def validate_row(schema: dict, row: dict) -> list[str]:
             if required:
                 errors.append(f"missing:{field}")
             continue
-        if not isinstance(value, expected_type):
+        if not isinstance(value, expected_type) or (spec.get("type") == "number" and isinstance(value, float) and not math.isfinite(value)):
             errors.append(f"type:{field}")
     return errors
 

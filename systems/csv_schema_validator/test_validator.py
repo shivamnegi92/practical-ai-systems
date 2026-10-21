@@ -10,6 +10,15 @@ SCHEMA = {
 
 
 class CsvSchemaValidatorTests(unittest.TestCase):
+    def test_number_fields_reject_nonfinite_values(self):
+        for required in (True, False):
+            schema={'value': {'type':'number','required':required}}
+            for value in (float('nan'),float('inf'),float('-inf')):
+                with self.subTest(required=required,value=value):
+                    self.assertEqual(validate_row(schema,{'value':value}),['type:value'])
+            for value in (0,-2,1.25,10**400):
+                self.assertEqual(validate_row(schema,{'value':value}),[])
+        self.assertEqual(validate_row({'value':{'type':'string'}},{'value':'NaN'}),[])
     def test_valid_row_has_no_errors(self):
         self.assertEqual(validate_row(SCHEMA, {"id": 1, "name": "Alice", "active": True}), [])
 
