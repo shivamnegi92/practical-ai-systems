@@ -1,4 +1,6 @@
 [
+  {"text": "This is not good", "label": "negative"},
+  {"text": "not bad at all", "label": "positive"},
   {"text": "This product is great and the support team is fantastic.", "label": "positive"},
   {"text": "The checkout process is slow and confusing.", "label": "negative"},
   {"text": "It's okay, does the job.", "label": "neutral"},

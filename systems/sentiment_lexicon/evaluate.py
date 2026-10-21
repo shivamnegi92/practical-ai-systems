@@ -15,7 +15,7 @@ def evaluate():
     return {
         "cases": len(cases),
         "accuracy": round(mean(correct), 4),
-        "scope": "small hand-built lexicon; exact word match only, no stemming or negation handling",
+        "scope": "small hand-built lexicon; exact word match, no stemming, heuristic three-token negation window",
     }
 
 
