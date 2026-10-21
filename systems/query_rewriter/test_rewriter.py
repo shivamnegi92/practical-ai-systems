@@ -24,6 +24,10 @@ class QueryRewriterTests(unittest.TestCase):
         self.assertTrue(hits)
         self.assertEqual(hits[0][0], "d1")
 
+    def test_expand_query_deduplicates_and_skips_present_terms(self):
+        self.assertEqual(expand_query("erase or remove account"), "erase or remove account delete")
+        self.assertEqual(expand_query("What is the price and cost?"), "What is the price and cost?")
+
 
 if __name__ == "__main__":
     unittest.main()

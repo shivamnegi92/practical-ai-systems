@@ -69,8 +69,16 @@ SYNONYMS = {
 
 
 def expand_query(query: str) -> str:
-    extra = [synonym for term in tokenize(query) for synonym in SYNONYMS.get(term, [])]
-    return " ".join([query] + extra)
+    query_terms = tokenize(query)
+    seen = set(query_terms)
+    extra = []
+    for term in query_terms:
+        for synonym in SYNONYMS.get(term, []):
+            if _stem(synonym) not in seen and synonym not in seen:
+                seen.add(_stem(synonym))
+                seen.add(synonym)
+                extra.append(synonym)
+    return " ".join([query] + extra) if extra else query
 
 
 def search(corpus: dict[str, str], query: str, expand: bool = False, k: int = 1):

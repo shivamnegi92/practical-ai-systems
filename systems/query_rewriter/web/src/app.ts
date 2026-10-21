@@ -66,8 +66,20 @@ const SYNONYMS: Record<string, string[]> = {
 };
 
 export function expandQuery(query: string): string {
-  const extra = tokenize(query).flatMap((t) => SYNONYMS[t] ?? []);
-  return [query, ...extra].join(" ");
+  const queryTerms = tokenize(query);
+  const seen = new Set(queryTerms);
+  const extra: string[] = [];
+  for (const term of queryTerms) {
+    for (const synonym of SYNONYMS[term] ?? []) {
+      const stemmed = stem(synonym);
+      if (!seen.has(stemmed) && !seen.has(synonym)) {
+        seen.add(stemmed);
+        seen.add(synonym);
+        extra.push(synonym);
+      }
+    }
+  }
+  return extra.length ? [query, ...extra].join(" ") : query;
 }
 
 export function search(corpus: Record<string, string>, query: string, expand = false, k = 1) {
