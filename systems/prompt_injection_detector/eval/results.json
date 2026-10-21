@@ -1,13 +1,13 @@
 {
   "dataset": {
-    "cases": 6,
+    "cases": 16,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "f1": 1.0,
-    "precision": 1.0,
-    "recall": 1.0
+    "f1": 0.4444,
+    "precision": 0.4444,
+    "recall": 0.4444
   },
   "notes": "five hand-written regex heuristics; not trained on real attack traffic",
   "system": "prompt_injection_detector"

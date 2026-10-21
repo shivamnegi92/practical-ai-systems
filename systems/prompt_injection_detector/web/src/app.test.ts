@@ -11,6 +11,8 @@ test("flags role override attempts", () => {
 test("clean text passes", () => {
   assert.equal(scan("What's the weather like today?").flagged, false);
 });
-test("evaluation is perfect on the bundled fixtures", () => {
-  assert.equal(evaluateAll().accuracy, 1);
+test("expanded evaluation reports its known mistakes honestly", () => {
+  const result = evaluateAll();
+  assert.equal(result.cases, 15);
+  assert.equal(result.accuracy, 1 / 3);
 });
