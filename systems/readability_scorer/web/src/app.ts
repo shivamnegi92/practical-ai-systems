@@ -1,7 +1,7 @@
 // Approximate Flesch-Kincaid reading grade level using a vowel-run syllable heuristic.
 
 export function sentences(text: string): string[] {
-  return text.trim().split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
+  return text.trim().split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter((s) => /[A-Za-z]/.test(s));
 }
 
 function syllables(word: string): number {

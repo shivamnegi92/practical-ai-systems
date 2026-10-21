@@ -12,7 +12,7 @@ _SENTENCE_RE = re.compile(r"(?<=[.!?])\s+")
 
 
 def sentences(text: str) -> list[str]:
-    return [s.strip() for s in _SENTENCE_RE.split(text.strip()) if s.strip()]
+    return [s.strip() for s in _SENTENCE_RE.split(text.strip()) if re.search(r"[A-Za-z]", s)]
 
 _WORD = re.compile(r"[A-Za-z]+")
 _VOWEL_GROUP = re.compile(r"[aeiouy]+")
