@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 import json
 from dataclasses import dataclass, asdict
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, localcontext
 
 MONEY = r"\$?\s*([0-9,]+\.\d{2})"
 
@@ -45,8 +45,10 @@ def extract(text: str) -> Invoice:
             invoice.errors.append("invalid:invoice_date")
     if invoice.subtotal and invoice.tax and invoice.total:
         try:
-            if Decimal(invoice.subtotal) + Decimal(invoice.tax) != Decimal(invoice.total):
-                invoice.errors.append("mismatch:total")
+            with localcontext() as context:
+                context.prec = max(len(value) for value in (invoice.subtotal, invoice.tax, invoice.total)) + 2
+                if Decimal(invoice.subtotal) + Decimal(invoice.tax) != Decimal(invoice.total):
+                    invoice.errors.append("mismatch:total")
         except InvalidOperation:
             invoice.errors.append("invalid:amount")
     return invoice

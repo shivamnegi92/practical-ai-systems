@@ -39,14 +39,12 @@ export function extract(text: string): Invoice {
     invoice.errors.push("invalid:invoice_date");
   }
   if (invoice.subtotal && invoice.tax && invoice.total) {
-    const subtotal = Number(invoice.subtotal.replace(/,/g, ""));
-    const tax = Number(invoice.tax.replace(/,/g, ""));
-    const total = Number(invoice.total.replace(/,/g, ""));
-    if (Number.isNaN(subtotal) || Number.isNaN(tax) || Number.isNaN(total)) {
-      invoice.errors.push("invalid:amount");
-    } else if (Math.round((subtotal + tax) * 100) !== Math.round(total * 100)) {
-      invoice.errors.push("mismatch:total");
-    }
+    // The extractor returns two-decimal strings; integer cents avoid float rounding.
+    const cents = (value: string) => BigInt(value.replace(/,/g, "").replace(".", ""));
+    const subtotal = cents(invoice.subtotal);
+    const tax = cents(invoice.tax);
+    const total = cents(invoice.total);
+    if (subtotal + tax !== total) invoice.errors.push("mismatch:total");
   }
   return invoice;
 }
