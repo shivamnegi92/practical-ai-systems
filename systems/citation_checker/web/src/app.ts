@@ -45,12 +45,12 @@ export function checkCitations(answer: string, chunks: Record<string, string>, m
         results.push({ chunk_id: chunkId, sentence: sent, overlap: 0, status: "unknown_chunk" });
         continue;
       }
-      const claimTokens = new Set(tokenize(sent));
+      const claimTokens = new Set(tokenize(sent.replace(CITATION, "")));
       const chunkTokens = new Set(tokenize(chunks[chunkId]));
       const overlap = claimTokens.size
         ? [...claimTokens].filter((t) => chunkTokens.has(t)).length / claimTokens.size
         : 0;
-      const status = overlap >= minOverlap ? "supported" : "unsupported";
+      const status = claimTokens.size > 0 && overlap >= minOverlap ? "supported" : "unsupported";
       results.push({ chunk_id: chunkId, sentence: sent, overlap: Math.round(overlap * 10000) / 10000, status });
     }
   }
