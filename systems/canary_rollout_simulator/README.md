@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for current decision accuracy on 3 
 
 ## Known limitations
 
+- Baseline/canary error rates must be numeric proportions from 0 through 1. Missing, boolean, non-finite or out-of-range rates return `hold` with source-specific reasons and null comparison metrics; they cannot justify promote/rollback. This guard does not validate latency or thresholds and does not make the simulation a production rollout gate.
+
 - This is a two-sample point comparison against fixed thresholds, not a statistical test; it has no concept of sample size, variance, or confidence, and will over-react to noisy small samples.
 - Guardrail thresholds (2% error delta, 20% latency regression) are illustrative constants, not values validated against any real service.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
