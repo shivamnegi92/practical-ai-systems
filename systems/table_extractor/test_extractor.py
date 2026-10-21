@@ -28,6 +28,15 @@ class TableExtractorTests(unittest.TestCase):
     def test_empty_input_returns_empty_grid(self):
         self.assertEqual(extract_table([]), [])
 
+    def test_invalid_gap_raises_value_error(self):
+        lines = [{"text": "A", "bbox": [0, 0, 10, 8]}]
+        for invalid in [-1, -0.01, "5", True, float("nan"), float("inf")]:
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValueError):
+                    extract_table(lines, row_gap=invalid)
+                with self.assertRaises(ValueError):
+                    extract_table(lines, col_gap=invalid)
+
 
 if __name__ == "__main__":
     unittest.main()

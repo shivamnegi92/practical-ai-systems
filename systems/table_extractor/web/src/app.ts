@@ -32,6 +32,11 @@ export function extractTable(
   rowGap = 5.0,
   colGap = 40.0
 ): string[][] {
+  for (const [name, gap] of [["rowGap", rowGap], ["colGap", colGap]] as const) {
+    if (typeof gap !== "number" || !Number.isFinite(gap) || gap < 0) {
+      throw new RangeError(`${name} must be a non-negative finite number, got ${gap}`);
+    }
+  }
   const normalized = normalizeLines(lines);
   if (!normalized.length) return [];
   const rowClusters = cluster(normalized.map((l) => l.bbox[1]), rowGap);

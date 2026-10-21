@@ -36,6 +36,9 @@ def _cluster(values: list[float], gap: float) -> list[list[int]]:
 
 
 def extract_table(lines: list[dict], row_gap: float = 5.0, col_gap: float = 40.0) -> list[list[str]]:
+    for name, gap in (("row_gap", row_gap), ("col_gap", col_gap)):
+        if not isinstance(gap, (int, float)) or isinstance(gap, bool) or not (0.0 <= gap < float("inf")):
+            raise ValueError(f"{name} must be a non-negative finite number, got {gap!r}")
     normalized = normalize_lines(lines)
     if not normalized:
         return []
