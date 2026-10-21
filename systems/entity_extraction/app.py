@@ -19,5 +19,5 @@ def extract(text: str) -> list[dict]:
     return sorted(entities,key=lambda x:(x["start"],x["end"],x["type"]))
 
 def score(predicted: list[dict], gold: list[dict]) -> dict:
-    p={(x["text"],x["type"]) for x in predicted}; g={(x["text"],x["type"]) for x in gold}
+    p={(x["text"],x["type"],x["start"],x["end"]) for x in predicted}; g={(x["text"],x["type"],x["start"],x["end"]) for x in gold}
     return prf(len(p&g),len(p-g),len(g-p))

@@ -36,8 +36,8 @@ function prf(tp: number, fp: number, fn: number) {
 }
 
 export function score(predicted: Entity[], gold: Entity[]) {
-  const p = new Set(predicted.map((e) => `${e.text}\u0000${e.type}`));
-  const g = new Set(gold.map((e) => `${e.text}\u0000${e.type}`));
+  const p = new Set(predicted.map((e) => JSON.stringify([e.text, e.type, e.start, e.end])));
+  const g = new Set(gold.map((e) => JSON.stringify([e.text, e.type, e.start, e.end])));
   const tp = [...p].filter((x) => g.has(x)).length;
   return prf(tp, p.size - tp, g.size - tp);
 }
@@ -52,15 +52,15 @@ export const EVAL_CASES: EvalCase[] = [
     text: "Jane Doe signed the contract on January 5, 2026 for $1,200.",
     gold: [
       { text: "Jane Doe", type: "PERSON", start: 0, end: 8 },
-      { text: "January 5, 2026", type: "DATE", start: 29, end: 44 },
-      { text: "$1,200", type: "MONEY", start: 53, end: 59 },
+      { text: "January 5, 2026", type: "DATE", start: 32, end: 47 },
+      { text: "$1,200", type: "MONEY", start: 52, end: 58 },
     ],
   },
   {
     text: "Invoice total: $450.00. Contact John Smith.",
     gold: [
       { text: "$450.00", type: "MONEY", start: 15, end: 22 },
-      { text: "John Smith", type: "PERSON", start: 33, end: 43 },
+      { text: "John Smith", type: "PERSON", start: 32, end: 42 },
     ],
   },
 ];

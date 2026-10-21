@@ -1,6 +1,75 @@
 [
- {"text":"On March 4, 2026, Maya Chen approved a $2,500.00 credit.","gold":[{"text":"March 4, 2026","type":"DATE"},{"text":"Maya Chen","type":"PERSON"},{"text":"$2,500.00","type":"MONEY"}]},
- {"text":"Eli Turner signed the $80 agreement on 2025-01-12.","gold":[{"text":"Eli Turner","type":"PERSON"},{"text":"$80","type":"MONEY"},{"text":"2025-01-12","type":"DATE"}]},
- {"text":"River North paid $1,200.50 to Acme Labs on May 9.","gold":[{"text":"River North","type":"PERSON"},{"text":"$1,200.50","type":"MONEY"},{"text":"May 9","type":"DATE"}]},
- {"text":"No person, date, or amount appears here.","gold":[]}
+  {
+    "text": "On March 4, 2026, Maya Chen approved a $2,500.00 credit.",
+    "gold": [
+      {
+        "text": "March 4, 2026",
+        "type": "DATE",
+        "start": 3,
+        "end": 16
+      },
+      {
+        "text": "Maya Chen",
+        "type": "PERSON",
+        "start": 18,
+        "end": 27
+      },
+      {
+        "text": "$2,500.00",
+        "type": "MONEY",
+        "start": 39,
+        "end": 48
+      }
+    ]
+  },
+  {
+    "text": "Eli Turner signed the $80 agreement on 2025-01-12.",
+    "gold": [
+      {
+        "text": "Eli Turner",
+        "type": "PERSON",
+        "start": 0,
+        "end": 10
+      },
+      {
+        "text": "$80",
+        "type": "MONEY",
+        "start": 22,
+        "end": 25
+      },
+      {
+        "text": "2025-01-12",
+        "type": "DATE",
+        "start": 39,
+        "end": 49
+      }
+    ]
+  },
+  {
+    "text": "River North paid $1,200.50 to Acme Labs on May 9.",
+    "gold": [
+      {
+        "text": "River North",
+        "type": "PERSON",
+        "start": 0,
+        "end": 11
+      },
+      {
+        "text": "$1,200.50",
+        "type": "MONEY",
+        "start": 17,
+        "end": 26
+      },
+      {
+        "text": "May 9",
+        "type": "DATE",
+        "start": 43,
+        "end": 48
+      }
+    ]
+  },
+  {
+    "text": "No person, date, or amount appears here.",
+    "gold": []
+  }
 ]

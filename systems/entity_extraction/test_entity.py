@@ -8,6 +8,6 @@ class EntityTests(unittest.TestCase):
   self.assertEqual([text[e['start']:e['end']] for e in entities],[e['text'] for e in entities])
   self.assertIn({'text':'Maya Chen','type':'PERSON','start':0,'end':9},entities)
  def test_exact_span_metrics(self):
-  gold=[{'text':'Maya Chen','type':'PERSON'}]
+  gold=[{'text':'Maya Chen','type':'PERSON','start':0,'end':9}]
   self.assertEqual(score(gold,gold)['f1'],1)
   self.assertEqual(score([],gold)['recall'],0)
