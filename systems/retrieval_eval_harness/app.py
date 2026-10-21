@@ -87,7 +87,12 @@ def reciprocal_rank(ranked_ids: list[str], relevant_ids: set[str]) -> float:
 
 
 def ndcg_at_k(ranked_ids: list[str], relevance: dict[str, int], k: int) -> float:
-    dcg = sum(relevance.get(doc_id, 0) / math.log2(i + 1) for i, doc_id in enumerate(ranked_ids[:k], start=1))
+    seen = set()
+    dcg = 0.0
+    for i, doc_id in enumerate(ranked_ids[:k], start=1):
+        if doc_id not in seen:
+            dcg += relevance.get(doc_id, 0) / math.log2(i + 1)
+            seen.add(doc_id)
     ideal = sorted(relevance.values(), reverse=True)[:k]
     idcg = sum(rel / math.log2(i + 1) for i, rel in enumerate(ideal, start=1))
     return dcg / idcg if idcg else 0.0

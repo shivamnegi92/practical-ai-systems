@@ -75,7 +75,13 @@ export function reciprocalRank(rankedIds: string[], relevantIds: Set<string>): n
 }
 
 export function ndcgAtK(rankedIds: string[], relevance: Record<string, number>, k: number): number {
-  const dcg = rankedIds.slice(0, k).reduce((sum, id, i) => sum + (relevance[id] ?? 0) / Math.log2(i + 2), 0);
+  const seen = new Set<string>();
+  const dcg = rankedIds.slice(0, k).reduce((sum, id, i) => {
+    if (seen.has(id)) return sum;
+    seen.add(id);
+    const gain = Object.prototype.hasOwnProperty.call(relevance, id) ? relevance[id] : 0;
+    return sum + gain / Math.log2(i + 2);
+  }, 0);
   const ideal = Object.values(relevance).sort((a, b) => b - a).slice(0, k);
   const idcg = ideal.reduce((sum, rel, i) => sum + rel / Math.log2(i + 2), 0);
   return idcg ? dcg / idcg : 0;
