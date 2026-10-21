@@ -1,6 +1,21 @@
 import { test } from "node:test";
 import { strict as assert } from "node:assert";
-import { compressionRatio, evaluateAll, summarize } from "./app.js";
+import { compressionRatio, evaluateAll, sentences, summarize } from "./app.js";
+
+test("abbreviations preserve the complete example sentence", () => {
+  const text = "Dr. Smith arrived at 3 p.m. today. He left. The end.";
+  assert.deepEqual(sentences(text), ["Dr. Smith arrived at 3 p.m. today.", "He left.", "The end."]);
+  assert.deepEqual(summarize(text, 1), ["Dr. Smith arrived at 3 p.m. today."]);
+});
+
+test("fixed abbreviation list, case and ordinary boundary controls", () => {
+  for (const abbreviation of ["Dr.", "Mr.", "Mrs.", "Ms.", "e.g.", "i.e.", "a.m.", "p.m.", "etc.", "DR."]) {
+    assert.deepEqual(sentences(`Use ${abbreviation} here. Next!`), [`Use ${abbreviation} here.`, "Next!"]);
+  }
+  assert.deepEqual(sentences("Really? Yes! Ready. Done."), ["Really?", "Yes!", "Ready.", "Done."]);
+  assert.deepEqual(sentences("Notadr. Next."), ["Notadr.", "Next."]);
+  assert.deepEqual(sentences(""), []);
+});
 
 test("short text returned unchanged", () => {
   assert.deepEqual(summarize("One sentence only."), ["One sentence only."]);

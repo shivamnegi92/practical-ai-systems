@@ -23,11 +23,18 @@ export function tokenize(text: string): string[] {
 }
 
 export function sentences(text: string): string[] {
-  return text
-    .trim()
-    .split(/(?<=[.!?])\s+/)
-    .map((s) => s.trim())
-    .filter(Boolean);
+  text = text.trim();
+  const result: string[] = [];
+  let start = 0;
+  const abbreviation = /\b(?:dr|mr|mrs|ms|e\.g|i\.e|a\.m|p\.m|etc)\.$/i;
+  for (const boundary of text.matchAll(/(?<=[.!?])\s+/g)) {
+    const index = boundary.index!;
+    if (abbreviation.test(text.slice(Math.max(0, index - 5), index))) continue;
+    result.push(text.slice(start, index).trim());
+    start = index + boundary[0].length;
+  }
+  if (text.slice(start).trim()) result.push(text.slice(start).trim());
+  return result;
 }
 
 export function summarize(text: string, n = 2): string[] {
@@ -57,6 +64,11 @@ export interface EvalCase {
 }
 
 export const EVAL_CASES: EvalCase[] = [
+  {
+    text: "Dr. Smith arrived at 3 p.m. today. He left. The end.",
+    key_sentence: "Dr. Smith arrived at 3 p.m. today.",
+    n: 1,
+  },
   {
     text: "Database indexing speeds up queries. Indexing indexing indexing is crucial for performance. The weather was nice yesterday.",
     key_sentence: "Indexing indexing indexing",

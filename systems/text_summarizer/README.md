@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json) for the current numbers on 5 handcrafted fixtures, each designed so one sentence repeats a topic word three times.
+See [`eval/results.json`](eval/results.json) for the current numbers on 6 handcrafted fixtures: five repeat a topic word three times, and one preserves a sentence containing Dr. and p.m.
 
 ## Known limitations
+
+- The sentence splitter protects a fixed, case-insensitive list: Dr., Mr., Mrs., Ms., e.g., i.e., a.m., p.m., etc. It will miss other abbreviations and cannot determine when a listed abbreviation also ends a sentence. This is a small heuristic rather than a full language-aware segmenter.
 
 - Scoring is a plain term-frequency average; it has no notion of meaning, coreference, or discourse structure, so it can pick a sentence that repeats a word without actually being the most important one.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

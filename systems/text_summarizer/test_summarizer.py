@@ -1,9 +1,24 @@
 import unittest
 
-from systems.text_summarizer.app import compression_ratio, summarize
+from systems.text_summarizer.app import compression_ratio, sentences, summarize
 
 
 class SummarizerTests(unittest.TestCase):
+    def test_abbreviations_keep_the_complete_example_sentence(self):
+        text = "Dr. Smith arrived at 3 p.m. today. He left. The end."
+        self.assertEqual(sentences(text), ["Dr. Smith arrived at 3 p.m. today.", "He left.", "The end."])
+        self.assertEqual(summarize(text, n=1), ["Dr. Smith arrived at 3 p.m. today."])
+
+    def test_fixed_abbreviation_list_and_case(self):
+        for abbreviation in ("Dr.", "Mr.", "Mrs.", "Ms.", "e.g.", "i.e.", "a.m.", "p.m.", "etc.", "DR."):
+            with self.subTest(abbreviation=abbreviation):
+                self.assertEqual(sentences(f"Use {abbreviation} here. Next!"), [f"Use {abbreviation} here.", "Next!"])
+
+    def test_ordinary_boundaries_and_abbreviation_suffix_control(self):
+        self.assertEqual(sentences("Really? Yes! Ready. Done."), ["Really?", "Yes!", "Ready.", "Done."])
+        self.assertEqual(sentences("Notadr. Next."), ["Notadr.", "Next."])
+        self.assertEqual(sentences(""), [])
+
     def test_short_text_returned_unchanged(self):
         self.assertEqual(summarize("One sentence only."), ["One sentence only."])
 

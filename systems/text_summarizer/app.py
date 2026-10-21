@@ -11,6 +11,7 @@ _STOPWORDS = frozenset(
 )
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
 _SENTENCE_RE = re.compile(r"(?<=[.!?])\s+")
+_ABBREVIATION_RE = re.compile(r"\b(?:dr|mr|mrs|ms|e\.g|i\.e|a\.m|p\.m|etc)\.$", re.IGNORECASE)
 
 
 def _stem(token: str) -> str:
@@ -25,7 +26,17 @@ def tokenize(text: str) -> list[str]:
 
 
 def sentences(text: str) -> list[str]:
-    return [s.strip() for s in _SENTENCE_RE.split(text.strip()) if s.strip()]
+    text = text.strip()
+    result = []
+    start = 0
+    for boundary in _SENTENCE_RE.finditer(text):
+        if _ABBREVIATION_RE.search(text[max(0, boundary.start() - 5):boundary.start()]):
+            continue
+        result.append(text[start:boundary.start()].strip())
+        start = boundary.end()
+    if text[start:].strip():
+        result.append(text[start:].strip())
+    return result
 
 
 def summarize(text: str, n: int = 2) -> list[str]:
