@@ -30,3 +30,5 @@ See [`eval/results.json`](eval/results.json). This reuses the four-query, four-d
 - Four queries over four documents with binary relevance is enough to illustrate the metrics, not enough to generalize a strategy comparison.
 - nDCG here uses binary or small integer relevance grades supplied by hand; it is only as trustworthy as those judgments.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
+
+Declared synonym keys use the same tokenization/stemming as queries, so aliases such as `pricing` remain reachable after stemming. The original query is retained; this does not add new synonym terms or general semantic understanding.

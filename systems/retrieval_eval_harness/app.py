@@ -69,7 +69,8 @@ SYNONYMS = {
 
 
 def expand_query(query: str) -> str:
-    extra = [synonym for term in tokenize(query) for synonym in SYNONYMS.get(term, [])]
+    normalized = {stem: aliases for word, aliases in SYNONYMS.items() for stem in tokenize(word)}
+    extra = [synonym for term in tokenize(query) for synonym in normalized.get(term, [])]
     return " ".join([query] + extra)
 
 
