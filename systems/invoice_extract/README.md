@@ -27,6 +27,8 @@ On four synthetic cases (two balanced invoices, one total mismatch, one invalid 
 
 ## Known limitations
 
+- `Date:` expects one complete `YYYY-MM-DD` value on the same line, with optional horizontal whitespace and LF/CRLF endings. Extra digits, suffixes and timestamps are not silently truncated to a date. Calendar validation uses years 0001–9999 in both ports; year 0000 is invalid.
+
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.

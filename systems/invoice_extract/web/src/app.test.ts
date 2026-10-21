@@ -1,4 +1,21 @@
 import { test } from "node:test";
+
+test("requires a whole ISO calendar date field", () => {
+  for (const value of ["2026-01-010", "2026-01-01junk", "2026-01-01T10:00:00", "", "\n2026-01-01"]) {
+    const result = extract("Date: " + value + "\nVendor: Demo\n");
+    assert.equal(result.invoice_date, null);
+    assert.ok(result.errors.includes("missing:invoice_date"));
+  }
+  for (const value of ["0001-01-01", "9999-12-31", "2024-02-29"]) {
+    for (const newline of ["\n", "\r\n"]) {
+      const result = extract("Date:\t" + value + " \t" + newline);
+      assert.equal(result.invoice_date, value);
+      assert.equal(result.errors.includes("invalid:invoice_date"), false);
+    }
+  }
+  assert.ok(extract("Date: 0000-01-01\n").errors.includes("invalid:invoice_date"));
+  assert.ok(extract("Date: 2026-02-29\n").errors.includes("invalid:invoice_date"));
+});
 import { strict as assert } from "node:assert";
 import { evaluateAll, extract } from "./app.js";
 
