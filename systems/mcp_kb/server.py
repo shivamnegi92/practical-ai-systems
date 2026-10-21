@@ -58,7 +58,7 @@ def load_chunks(data_dir: Path = DATA_DIR) -> list[tuple[str, str]]:
     """Split each markdown file into paragraph chunks with stable ids (file#n)."""
     chunks = []
     for path in sorted(data_dir.glob("*.md")):
-        paragraphs = [p.strip() for p in path.read_text().split("\n\n") if p.strip() and not p.startswith("#")]
+        paragraphs = [p.strip() for p in path.read_text(encoding="utf-8-sig").split("\n\n") if p.strip() and not p.startswith("#")]
         chunks += [(f"{path.name}#{i}", text) for i, text in enumerate(paragraphs, start=1)]
     return chunks
 
