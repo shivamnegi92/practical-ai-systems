@@ -12,3 +12,16 @@ class CacheTests(unittest.TestCase):
  def test_expiry(self):
   now=[0.0]; c=SemanticCache(ttl_seconds=5,clock=lambda:now[0]); c.put('a','x'); now[0]=6
   self.assertIsNone(c.get('a'))
+
+ def test_capacity_must_be_a_positive_integer(self):
+  for value in [0,-1,1.5,float('nan'),float('inf'),float('-inf'),True]:
+   with self.subTest(capacity=value),self.assertRaises(ValueError):
+    SemanticCache(max_entries=value)
+ def test_ttl_must_be_finite_and_positive(self):
+  for value in [0,-1,float('nan'),float('inf'),float('-inf')]:
+   with self.subTest(ttl=value),self.assertRaises(ValueError):
+    SemanticCache(ttl_seconds=value)
+ def test_fractional_positive_ttl_expires_at_the_boundary(self):
+  now=[0.0]; c=SemanticCache(max_entries=1,ttl_seconds=0.5,clock=lambda:now[0])
+  c.put('a','x'); self.assertEqual(c.get('a'),'x')
+  now[0]=0.5; self.assertIsNone(c.get('a'))

@@ -35,3 +35,16 @@ test("evaluation demonstrates both eviction and expiry", () => {
   assert.equal(result.lru_eviction_works, true);
   assert.equal(result.ttl_expiry_works, true);
 });
+
+test("capacity must be a positive integer", () => {
+  for (const value of [0,-1,1.5,NaN,Infinity,-Infinity]) assert.throws(()=>new SemanticCache(value));
+});
+test("ttl must be finite and positive", () => {
+  for (const value of [0,-1,NaN,Infinity,-Infinity]) assert.throws(()=>new SemanticCache(1,value));
+});
+test("fractional positive ttl expires at its exact boundary", () => {
+  let time=0;
+  const cache=new SemanticCache(1,0.5,()=>time);
+  cache.put("a","x"); assert.equal(cache.get("a"),"x");
+  time=0.5; assert.equal(cache.get("a"),null);
+});
