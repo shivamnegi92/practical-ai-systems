@@ -6,14 +6,21 @@ const BANNED_PHRASES = ["image of", "picture of", "no caption available", "untit
 const MIN_WORDS = 3;
 const MAX_WORDS = 25;
 
+function containsPhrase(text: string, phrase: string): boolean {
+  const normalized = phrase.toLowerCase().trim().split(/\s+/).join(" ");
+  if (!normalized) return false;
+  const escaped = normalized.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(?<![\\p{L}\\p{N}_])${escaped}(?![\\p{L}\\p{N}_])`, "u").test(text);
+}
+
 export function checkCaption(caption: string, requiredKeywords: string[] = []) {
-  const lowered = caption.toLowerCase();
+  const lowered = caption.toLowerCase().trim().split(/\s+/).join(" ");
   const reasons: string[] = [];
   const wordCount = caption.trim().split(/\s+/).filter(Boolean).length;
   if (wordCount < MIN_WORDS) reasons.push("too_short");
   if (wordCount > MAX_WORDS) reasons.push("too_long");
-  for (const phrase of BANNED_PHRASES) if (lowered.includes(phrase)) reasons.push(`banned_phrase:${phrase}`);
-  const missing = requiredKeywords.filter((kw) => !lowered.includes(kw.toLowerCase()));
+  for (const phrase of BANNED_PHRASES) if (containsPhrase(lowered, phrase)) reasons.push(`banned_phrase:${phrase}`);
+  const missing = requiredKeywords.filter((kw) => !containsPhrase(lowered, kw));
   if (missing.length) reasons.push("missing_keywords:" + missing.join(","));
   return { passed: reasons.length === 0, reasons };
 }

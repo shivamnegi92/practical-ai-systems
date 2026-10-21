@@ -27,6 +27,8 @@ See [`eval/results.json`](eval/results.json) for current QC accuracy on 5 synthe
 
 ## Known limitations
 
+- Placeholder and required phrase checks ignore case and repeated whitespace, and require word boundaries. Thus `car` does not match `scarf`, while `(car)` matches. Phrases are literal, including punctuation; empty required phrases are unsatisfied. This is still lexical matching, not semantic or visual verification.
+
 - This never looks at the image; a fluent, well-formed caption that is simply wrong about the image's content will still pass.
 - The banned-phrase and length-bound lists are small and arbitrary; expand them for your own caption pipeline before relying on this.
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.

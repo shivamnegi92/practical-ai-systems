@@ -2,6 +2,19 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { checkCaption, evaluateAll } from "./app.js";
 
+test("phrase matching normalizes whitespace and respects word boundaries", () => {
+  for (const phrase of ["IMAGE   OF", "picture\tof", "no caption\navailable", "untitled  image"]) {
+    assert.ok(checkCaption(phrase + " a dog running").reasons.some(r => r.startsWith("banned_phrase:")));
+  }
+  assert.equal(checkCaption("A scarf hangs outside.", ["car"]).passed, false);
+  assert.equal(checkCaption("A red carpet outside.", ["red car"]).passed, false);
+  assert.equal(checkCaption("A RED\tCAR waits outside.", ["red  car"]).passed, true);
+  assert.equal(checkCaption("A (car) waits outside.", ["car"]).passed, true);
+  assert.equal(checkCaption("A C++ manual lies open.", ["C++"]).passed, true);
+  assert.equal(checkCaption("A dog runs outside.", ["  "]).passed, false);
+  assert.equal(checkCaption("A sculpture with a miniatureimage of clouds.").passed, true);
+});
+
 test("good caption passes", () => {
   assert.equal(checkCaption("A golden retriever running across a sunny beach.").passed, true);
 });
