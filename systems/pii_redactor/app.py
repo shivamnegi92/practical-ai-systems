@@ -27,7 +27,15 @@ def detect(text: str) -> list[dict]:
 
 
 def redact(text: str) -> str:
-    for finding in sorted(detect(text), key=lambda f: -f["start"]):
+    # Merge on original offsets before replacement changes the string length.
+    # The earliest match labels the union; ties prefer the longest match.
+    spans = []
+    for finding in sorted(detect(text), key=lambda f: (f["start"], -f["end"])):
+        if spans and finding["start"] < spans[-1]["end"]:
+            spans[-1]["end"] = max(spans[-1]["end"], finding["end"])
+        else:
+            spans.append(dict(finding))
+    for finding in reversed(spans):
         tag = f"[REDACTED:{finding['type'].upper()}]"
         text = text[: finding["start"]] + tag + text[finding["end"] :]
     return text

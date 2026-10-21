@@ -1,4 +1,13 @@
 import { test } from "node:test";
+
+test("overlapping email/SSN spans are replaced once using original offsets", () => {
+  for (const email of ["123-45-6789@example.com","user.123-45-6789@example.com"]) {
+    const text=`Contact ${email} today.`;
+    assert.deepEqual(new Set(detect(text).map(f=>f.type)),new Set(["email","ssn"]));
+    assert.equal(redact(text),"Contact [REDACTED:EMAIL] today.");
+  }
+  assert.equal(redact("📧 user.123-45-6789@example.com; SSN 987-65-4321. End."),"📧 [REDACTED:EMAIL]; SSN [REDACTED:SSN]. End.");
+});
 import { strict as assert } from "node:assert";
 import { detect, evaluateAll, redact } from "./app.js";
 
