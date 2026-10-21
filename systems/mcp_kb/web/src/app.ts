@@ -94,6 +94,9 @@ function callTool(params: { name?: string; arguments?: Record<string, unknown> }
 }
 
 export function dispatch(message: { method?: string; params?: Record<string, unknown>; id?: unknown }, tools: KnowledgeTools) {
+  if (typeof message !== "object" || message === null || Array.isArray(message) || typeof message.method !== "string") {
+    return { jsonrpc: "2.0", id: null, error: { code: -32600, message: "invalid request" } };
+  }
   const { method, params = {}, id } = message;
   let result: unknown;
   if (method === "initialize") {
