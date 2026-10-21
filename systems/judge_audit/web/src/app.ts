@@ -31,10 +31,19 @@ export interface Row {
 }
 
 export function audit(rows: Row[]) {
+  if (rows.length === 0) {
+    return {
+      cases: 0,
+      judge_human_a_agreement: 0,
+      human_interrater_kappa: 0,
+      judge_vs_human_kappa: 0,
+      warning: "Synthetic labels; a lexical heuristic, not an LLM judge or quality claim.",
+    };
+  }
   const predictions = rows.map((r) => judge(r.claim, r.evidence));
   const humanA = rows.map((r) => r.human_a);
   const humanB = rows.map((r) => r.human_b);
-  const agreement = rows.length ? predictions.filter((p, i) => p === humanA[i]).length / rows.length : 0;
+  const agreement = predictions.filter((p, i) => p === humanA[i]).length / rows.length;
   return {
     cases: rows.length,
     judge_human_a_agreement: agreement,
