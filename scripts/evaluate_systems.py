@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -58,12 +59,17 @@ def validate(results: dict[str, dict], expected: tuple[str, ...] = SYSTEMS) -> l
         errors.append("system evaluation set does not match the declared systems")
     for name, result in results.items():
         dataset = result.get("dataset", {})
-        if not isinstance(dataset.get("cases"), int) or dataset["cases"] <= 0:
+        if isinstance(dataset.get("cases"), bool) or not isinstance(dataset.get("cases"), int) or dataset["cases"] <= 0:
             errors.append(f"{name}: invalid case count")
         if not result.get("system") or not result.get("method"):
             errors.append(f"{name}: missing system/method metadata")
-        if not result.get("metrics"):
+        metrics = result.get("metrics")
+        if not isinstance(metrics, dict) or not metrics:
             errors.append(f"{name}: no metrics reported")
+        else:
+            for metric, value in metrics.items():
+                if not isinstance(value, (int, float)) or (isinstance(value, float) and not math.isfinite(value)):
+                    errors.append(f"{name}: {metric} must be a finite numeric metric")
     return errors
 
 
@@ -79,15 +85,15 @@ def main() -> int:
     selected = (args.only,) if args.only else SYSTEMS
     results = run_all(selected)
     errors = validate(results, selected) if args.check else []
+    if errors:
+        print("\n".join(errors), file=sys.stderr)
+        return 1
     for name, result in results.items():
         print(f"{name}: {json.dumps(result, sort_keys=True)}")
         if args.write:
             path = ROOT / "systems" / name / "eval" / "results.json"
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
-    if errors:
-        print("\n".join(errors), file=sys.stderr)
-        return 1
     return 0
 
 
