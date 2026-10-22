@@ -23,10 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-All **3** policy fixtures pass: an allowed lookup, an unapproved refund that must pause, and a disallowed delete. This measures only deterministic policy enforcement, not model planning or real tool integration. Do not connect side-effectful tools without authorization, audit logs, and stronger boundary tests. See [`eval/results.json`](eval/results.json).
+All **10** policy fixtures pass in the shared Python/TypeScript matrix. The original three cases remain; web demonstration requests, approval true/false controls, malformed array/string arguments and another disallowed action expand the refusal side. Approved lookup/refund controls and two unapproved refunds distinguish permission from approval. The existing web demonstration fields are preserved alongside case counts and policy accuracy. This measures only deterministic policy enforcement, not model planning or real tool integration. Do not connect side-effectful tools without authorization, audit logs, and stronger boundary tests. See [`eval/results.json`](eval/results.json).
 
 ## Known limitations
 
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
+- Status-only evaluation uses stub tools and plans created by `plan()`. It does not test forged plan objects, real identity/approval authentication, argument schemas for individual tools, or side-effect execution. Refusal controls are abstention cases; no newly discovered runtime failure or exhaustive security coverage is claimed.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.

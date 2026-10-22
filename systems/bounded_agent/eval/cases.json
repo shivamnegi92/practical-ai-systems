@@ -1,5 +1,99 @@
 [
- {"request":{"action":"lookup_order","arguments":{"order_id":"A-1"}},"approved":true,"expected":"completed"},
- {"request":{"action":"send_refund","arguments":{"amount":900}},"approved":false,"expected":"awaiting_approval"},
- {"request":{"action":"delete_account","arguments":{}},"approved":true,"expected":"rejected"}
+  {
+    "request": {
+      "action": "lookup_order",
+      "arguments": {
+        "order_id": "A-1"
+      }
+    },
+    "approved": true,
+    "expected": "completed"
+  },
+  {
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": 900
+      }
+    },
+    "approved": false,
+    "expected": "awaiting_approval"
+  },
+  {
+    "request": {
+      "action": "delete_account",
+      "arguments": {}
+    },
+    "approved": true,
+    "expected": "rejected"
+  },
+  {
+    "name": "web lookup without approval",
+    "request": {
+      "action": "lookup_order",
+      "arguments": {
+        "order_id": "A1"
+      }
+    },
+    "approved": false,
+    "expected": "completed"
+  },
+  {
+    "name": "web refund awaits approval",
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": 10
+      }
+    },
+    "approved": false,
+    "expected": "awaiting_approval"
+  },
+  {
+    "name": "web refund approved",
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": 10
+      }
+    },
+    "approved": true,
+    "expected": "completed"
+  },
+  {
+    "name": "array arguments refused",
+    "request": {
+      "action": "lookup_order",
+      "arguments": []
+    },
+    "approved": true,
+    "expected": "rejected"
+  },
+  {
+    "name": "unknown export refused",
+    "request": {
+      "action": "export_customers",
+      "arguments": {}
+    },
+    "approved": true,
+    "expected": "rejected"
+  },
+  {
+    "name": "malformed refund arguments refused",
+    "request": {
+      "action": "send_refund",
+      "arguments": "amount=10"
+    },
+    "approved": true,
+    "expected": "rejected"
+  },
+  {
+    "name": "approval does not allow delete",
+    "request": {
+      "action": "delete_account",
+      "arguments": {}
+    },
+    "approved": false,
+    "expected": "rejected"
+  }
 ]

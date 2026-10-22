@@ -12,3 +12,11 @@ class AgentTests(unittest.TestCase):
  def test_plan_is_immutable(self):
   plan=self.agent.plan({'action':'lookup','arguments':{'key':'x'}})
   with self.assertRaises(Exception): plan.action='shell'
+
+
+class EvaluationCoverage(unittest.TestCase):
+    def test_expanded_policy_matrix(self):
+        from systems.bounded_agent.evaluate import evaluate
+        result = evaluate()
+        self.assertEqual(result["cases"], 10)
+        self.assertEqual(result["policy_cases_passed"], 10)

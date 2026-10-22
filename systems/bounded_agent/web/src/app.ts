@@ -39,7 +39,7 @@ export function buildSampleAgent(): BoundedAgent {
   return new BoundedAgent(tools, new Set(["lookup_order", "send_refund"]), new Set(["send_refund"]));
 }
 
-export function evaluateAll() {
+function evaluateDemo() {
   const agent = buildSampleAgent();
   const lookupPlan = agent.plan({ action: "lookup_order", arguments: { order_id: "A1" } });
   const lookupResult = agent.run(lookupPlan);
@@ -58,4 +58,125 @@ export function evaluateAll() {
     refund_completes_once_approved: approved.status === "completed",
     disallowed_action_rejected: rejected,
   };
+}
+
+export interface EvalCase {
+  name?: string;
+  request: { action?: string; arguments?: unknown };
+  approved: boolean;
+  expected: string;
+}
+export const EVAL_CASES: EvalCase[] = [
+  {
+    "request": {
+      "action": "lookup_order",
+      "arguments": {
+        "order_id": "A-1"
+      }
+    },
+    "approved": true,
+    "expected": "completed"
+  },
+  {
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": 900
+      }
+    },
+    "approved": false,
+    "expected": "awaiting_approval"
+  },
+  {
+    "request": {
+      "action": "delete_account",
+      "arguments": {}
+    },
+    "approved": true,
+    "expected": "rejected"
+  },
+  {
+    "name": "web lookup without approval",
+    "request": {
+      "action": "lookup_order",
+      "arguments": {
+        "order_id": "A1"
+      }
+    },
+    "approved": false,
+    "expected": "completed"
+  },
+  {
+    "name": "web refund awaits approval",
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": 10
+      }
+    },
+    "approved": false,
+    "expected": "awaiting_approval"
+  },
+  {
+    "name": "web refund approved",
+    "request": {
+      "action": "send_refund",
+      "arguments": {
+        "amount": 10
+      }
+    },
+    "approved": true,
+    "expected": "completed"
+  },
+  {
+    "name": "array arguments refused",
+    "request": {
+      "action": "lookup_order",
+      "arguments": []
+    },
+    "approved": true,
+    "expected": "rejected"
+  },
+  {
+    "name": "unknown export refused",
+    "request": {
+      "action": "export_customers",
+      "arguments": {}
+    },
+    "approved": true,
+    "expected": "rejected"
+  },
+  {
+    "name": "malformed refund arguments refused",
+    "request": {
+      "action": "send_refund",
+      "arguments": "amount=10"
+    },
+    "approved": true,
+    "expected": "rejected"
+  },
+  {
+    "name": "approval does not allow delete",
+    "request": {
+      "action": "delete_account",
+      "arguments": {}
+    },
+    "approved": false,
+    "expected": "rejected"
+  }
+];
+export function evaluateAll() {
+  const agent = buildSampleAgent();
+  let passed = 0;
+  for (const item of EVAL_CASES) {
+    let status: string;
+    try { status = agent.run(agent.plan(item.request), item.approved).status; }
+    catch (error) {
+      if (!(error instanceof Error) || !["action is not allow-listed", "arguments must be an object"].includes(error.message)) throw error;
+      status = "rejected";
+    }
+    if (status === item.expected) passed++;
+  }
+  return {...evaluateDemo(), cases: EVAL_CASES.length, policy_cases_passed: passed,
+    policy_accuracy: passed / EVAL_CASES.length};
 }
