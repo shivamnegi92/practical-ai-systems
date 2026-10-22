@@ -137,7 +137,7 @@ A compact directory of projects by level. Read a system guide for its focus and 
 | [Canary rollout simulator](systems/canary_rollout_simulator/README.md) | [3](systems/canary_rollout_simulator/eval/results.json) |
 | [Adversarial red-team harness](systems/redteam_harness/README.md) | [5](systems/redteam_harness/eval/results.json) |
 | [Trace anomaly detector](systems/trace_anomaly_detector/README.md) | [4](systems/trace_anomaly_detector/eval/results.json) |
-| [Multi-hop reasoning router](systems/multi_hop_router/README.md) | [3](systems/multi_hop_router/eval/results.json) |
+| [Multi-hop reasoning router](systems/multi_hop_router/README.md) | [10](systems/multi_hop_router/eval/results.json) |
 <!-- SYSTEMS:END -->
 
 The project index is grouped by experience level; the next sections are optional deep dives.

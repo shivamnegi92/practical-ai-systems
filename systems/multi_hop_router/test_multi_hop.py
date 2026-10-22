@@ -27,3 +27,11 @@ class MultiHopRouterTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EvaluationCoverage(unittest.TestCase):
+    def test_expanded_abstention_matrix(self):
+        from systems.multi_hop_router.evaluate import evaluate
+        result = evaluate()
+        self.assertEqual(result["cases"], 10)
+        self.assertEqual(result["abstention_accuracy"], 0.8)
