@@ -19,3 +19,9 @@ test("audit reports agreement and kappa", () => {
 test("evaluation runs end to end", () => {
   assert.equal(evaluateAll().cases, SAMPLE_ROWS.length);
 });
+
+test("numeric and polarity contradictions remain measured misses", () => {
+  for (const [claim,evidence] of [["Pro costs $80 per user per month","Pro costs $8 per user per month."],["Public links can be disabled","Public links cannot be disabled."],["SMS codes are supported","SMS codes are not supported."]]) assert.equal(judge(claim,evidence), "supported");
+  assert.equal(evaluateAll().cases,14);
+  assert.ok(evaluateAll().judge_human_a_agreement < 1);
+});
