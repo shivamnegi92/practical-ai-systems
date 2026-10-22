@@ -1,13 +1,13 @@
 {
   "dataset": {
-    "cases": 4,
+    "cases": 8,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
     "precision": 1.0,
-    "recall": 1.0
+    "recall": 0.6666666666666666
   },
-  "notes": "toy patterns only; not a security scanner",
+  "notes": "file-level finding presence through the public scanner; toy patterns, not a security scanner",
   "system": "repo_guard"
 }

