@@ -111,7 +111,7 @@ A compact directory of projects by level. Read a system guide for its focus and 
 
 | System | Eval cases |
 |:--|--:|
-| [Post-OCR document extraction](systems/multimodal_ocr/README.md) | [3](systems/multimodal_ocr/eval/results.json) |
+| [Post-OCR document extraction](systems/multimodal_ocr/README.md) | [9](systems/multimodal_ocr/eval/results.json) |
 | [Entity spans and error analysis](systems/entity_extraction/README.md) | [4](systems/entity_extraction/eval/results.json) |
 | [Exact-response cache](systems/semantic_cache/README.md) | [4](systems/semantic_cache/eval/results.json) |
 | [Synonym query rewriter](systems/query_rewriter/README.md) | [4](systems/query_rewriter/eval/results.json) |
