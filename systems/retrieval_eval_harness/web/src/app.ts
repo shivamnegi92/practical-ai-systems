@@ -119,9 +119,74 @@ export const CORPUS: Record<string, string> = {
 };
 
 export const QUERIES: Query[] = [
-  { text: "What is the price?", relevance: { d1: 1 } },
-  { text: "How do I terminate my account?", relevance: { d3: 1 } },
-  { text: "How can I erase my data?", relevance: { d4: 1 } },
+  {
+    "text": "price information please",
+    "relevance": {
+      "d1": 1
+    }
+  },
+  {
+    "text": "terminate account help",
+    "relevance": {
+      "d3": 1
+    }
+  },
+  {
+    "text": "erase my files now",
+    "relevance": {
+      "d4": 1
+    }
+  },
+  {
+    "text": "weather today",
+    "relevance": {
+      "d2": 1
+    }
+  },
+  {
+    "text": "What is the price?",
+    "relevance": {
+      "d1": 1
+    }
+  },
+  {
+    "text": "How do I terminate my account?",
+    "relevance": {
+      "d3": 1
+    }
+  },
+  {
+    "text": "How can I erase my data?",
+    "relevance": {
+      "d4": 1
+    }
+  },
+  {
+    "text": "cancel delete requests",
+    "relevance": {
+      "d3": 1,
+      "d4": 1
+    }
+  },
+  {
+    "text": "business day",
+    "relevance": {
+      "d3": 1,
+      "d4": 1
+    }
+  },
+  {
+    "text": "membership tariff",
+    "relevance": {
+      "d1": 1
+    }
+  },
+  {
+    "text": "end subscription",
+    "relevance": {
+      "d3": 1
+    }
+  }
 ];
 
 export function evaluateAll() {

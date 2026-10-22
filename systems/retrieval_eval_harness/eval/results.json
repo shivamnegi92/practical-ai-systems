@@ -1,16 +1,16 @@
 {
   "dataset": {
-    "cases": 4,
+    "cases": 11,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "baseline_mrr": 0.25,
-    "baseline_ndcg_at_k": 0.25,
-    "baseline_recall_at_k": 0.25,
-    "expanded_mrr": 1.0,
-    "expanded_ndcg_at_k": 1.0,
-    "expanded_recall_at_k": 1.0
+    "baseline_mrr": 0.2727,
+    "baseline_ndcg_at_k": 0.2727,
+    "baseline_recall_at_k": 0.2727,
+    "expanded_mrr": 0.8182,
+    "expanded_ndcg_at_k": 0.8182,
+    "expanded_recall_at_k": 0.8182
   },
   "notes": "tiny four-document synthetic corpus; binary relevance judgments",
   "system": "retrieval_eval_harness"
