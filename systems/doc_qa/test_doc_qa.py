@@ -46,3 +46,15 @@ class DocQATests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class UnsupportedQualifierEvaluation(unittest.TestCase):
+    def test_retrieval_overlap_is_not_support_for_currency_or_future_price(self):
+        qa = DocQA(load_chunks())
+        for question in ["How much does the Pro plan cost in Japanese yen?", "What is the price of the Pro plan in 2035?"]:
+            self.assertFalse(qa.answer(question).abstained)
+        for question in ["How many days is version history kept on the Enterprise plan?", "How long are reset links valid after five failed sign-in attempts?"]:
+            self.assertTrue(qa.answer(question).abstained)
+        result = evaluate()
+        self.assertEqual(result["cases"], 26)
+        self.assertEqual(result["metrics"]["correct_abstention_rate"], 0.75)
