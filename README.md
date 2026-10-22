@@ -116,7 +116,7 @@ A compact directory of projects by level. Read a system guide for its focus and 
 | [Exact-response cache](systems/semantic_cache/README.md) | [4](systems/semantic_cache/eval/results.json) |
 | [Synonym query rewriter](systems/query_rewriter/README.md) | [4](systems/query_rewriter/eval/results.json) |
 | [Prompt-injection pattern scanner](systems/prompt_injection_detector/README.md) | [6](systems/prompt_injection_detector/eval/results.json) |
-| [Cost and latency guardrail tracker](systems/cost_latency_tracker/README.md) | [3](systems/cost_latency_tracker/eval/results.json) |
+| [Cost and latency guardrail tracker](systems/cost_latency_tracker/README.md) | [10](systems/cost_latency_tracker/eval/results.json) |
 | [Post-OCR table reconstruction](systems/table_extractor/README.md) | [2](systems/table_extractor/eval/results.json) |
 | [Image caption QC](systems/caption_qc/README.md) | [5](systems/caption_qc/eval/results.json) |
 | [RAG citation support checker](systems/citation_checker/README.md) | [4](systems/citation_checker/eval/results.json) |

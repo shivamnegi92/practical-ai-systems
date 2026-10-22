@@ -1,11 +1,11 @@
 {
   "dataset": {
-    "cases": 3,
+    "cases": 10,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "breach_decision_accuracy": 1.0
+    "breach_decision_accuracy": 0.8
   },
   "notes": "two-threshold guardrail check on synthetic request logs; no statistical significance testing",
   "system": "cost_latency_tracker"

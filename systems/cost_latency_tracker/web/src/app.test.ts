@@ -22,3 +22,10 @@ test("evaluation produces a budget verdict", () => {
   const result = evaluateAll();
   assert.ok("breached" in result.budget);
 });
+
+test("expanded budget matrix exposes rounding misses", () => {
+  assert.equal(evaluateAll().cases, 10);
+  assert.equal(evaluateAll().breach_decision_accuracy, 0.8);
+  assert.equal(checkBudget(summarize([{latency_ms:100,cost_usd:0.00004}]),200,0.00003).breached, false);
+  assert.equal(checkBudget(summarize([{latency_ms:100.004,cost_usd:0.01}]),100.002,1).breached, false);
+});
