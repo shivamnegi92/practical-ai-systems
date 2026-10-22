@@ -1,6 +1,67 @@
 [
-  {"text": "There is a refund issue with my invoice payment.", "gold_status": "resolved"},
-  {"text": "My password login keeps showing an error and the app crashes.", "gold_status": "resolved"},
-  {"text": "Can you tell me about your company history?", "gold_status": "escalated"},
-  {"text": "There was an error.", "gold_status": "escalated"}
+  {
+    "text": "There is a refund issue with my invoice payment.",
+    "gold_status": "resolved",
+    "gold_category": "billing"
+  },
+  {
+    "text": "My password login keeps showing an error and the app crashes.",
+    "gold_status": "resolved",
+    "gold_category": "technical"
+  },
+  {
+    "text": "Can you tell me about your company history?",
+    "gold_status": "escalated",
+    "gold_category": null
+  },
+  {
+    "text": "There was an error.",
+    "gold_status": "escalated",
+    "gold_category": "technical"
+  },
+  {
+    "text": "I was charged for my invoice payment",
+    "gold_status": "resolved",
+    "gold_category": "billing"
+  },
+  {
+    "text": "The app keeps crashing with a login error",
+    "gold_status": "resolved",
+    "gold_category": "technical"
+  },
+  {
+    "text": "I need to delete my profile and change my username",
+    "gold_status": "resolved",
+    "gold_category": "account"
+  },
+  {
+    "text": "Hello there",
+    "gold_status": "escalated",
+    "gold_category": null
+  },
+  {
+    "text": "There's a bug somewhere",
+    "gold_status": "escalated",
+    "gold_category": "technical"
+  },
+  {
+    "text": "refund payment error crash",
+    "gold_status": "escalated",
+    "gold_category": null
+  },
+  {
+    "text": "password username error crash",
+    "gold_status": "escalated",
+    "gold_category": null
+  },
+  {
+    "text": "error error error",
+    "gold_status": "escalated",
+    "gold_category": "technical"
+  },
+  {
+    "text": "",
+    "gold_status": "escalated",
+    "gold_category": null
+  }
 ]

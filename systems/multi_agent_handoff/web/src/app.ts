@@ -57,11 +57,71 @@ export function handle(request: { text: string }) {
 
 export interface EvalCase { text: string; expectStatus: string; expectCategory: string | null }
 export const EVAL_CASES: EvalCase[] = [
-  { text: "I was charged for my invoice payment", expectStatus: "resolved", expectCategory: "billing" },
-  { text: "The app keeps crashing with a login error", expectStatus: "resolved", expectCategory: "technical" },
-  { text: "I need to delete my profile and change my username", expectStatus: "resolved", expectCategory: "account" },
-  { text: "Hello there", expectStatus: "escalated", expectCategory: null },
-  { text: "There's a bug somewhere", expectStatus: "escalated", expectCategory: "technical" },
+  {
+    "text": "There is a refund issue with my invoice payment.",
+    "expectStatus": "resolved",
+    "expectCategory": "billing"
+  },
+  {
+    "text": "My password login keeps showing an error and the app crashes.",
+    "expectStatus": "resolved",
+    "expectCategory": "technical"
+  },
+  {
+    "text": "Can you tell me about your company history?",
+    "expectStatus": "escalated",
+    "expectCategory": null
+  },
+  {
+    "text": "There was an error.",
+    "expectStatus": "escalated",
+    "expectCategory": "technical"
+  },
+  {
+    "text": "I was charged for my invoice payment",
+    "expectStatus": "resolved",
+    "expectCategory": "billing"
+  },
+  {
+    "text": "The app keeps crashing with a login error",
+    "expectStatus": "resolved",
+    "expectCategory": "technical"
+  },
+  {
+    "text": "I need to delete my profile and change my username",
+    "expectStatus": "resolved",
+    "expectCategory": "account"
+  },
+  {
+    "text": "Hello there",
+    "expectStatus": "escalated",
+    "expectCategory": null
+  },
+  {
+    "text": "There's a bug somewhere",
+    "expectStatus": "escalated",
+    "expectCategory": "technical"
+  },
+  {
+    "text": "refund payment error crash",
+    "expectStatus": "escalated",
+    "expectCategory": null
+  },
+  {
+    "text": "password username error crash",
+    "expectStatus": "escalated",
+    "expectCategory": null
+  },
+  {
+    "text": "error error error",
+    "expectStatus": "escalated",
+    "expectCategory": "technical"
+  },
+  {
+    "text": "",
+    "expectStatus": "escalated",
+    "expectCategory": null
+  }
 ];
 
 export function evaluateAll() {

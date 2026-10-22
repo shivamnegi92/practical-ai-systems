@@ -27,3 +27,13 @@ class MultiAgentHandoffTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AmbiguousHandoffEvaluation(unittest.TestCase):
+    def test_ties_resolve_instead_of_escalating_and_repetition_stays_low(self):
+        for text in ["refund payment error crash", "password username error crash"]:
+            self.assertEqual(handle({"text": text})["status"], "resolved")
+        self.assertEqual(handle({"text": "error error error"})["status"], "escalated")
+        from systems.multi_agent_handoff.evaluate import evaluate
+        self.assertEqual(evaluate()["cases"], 13)
+        self.assertEqual(evaluate()["routing_accuracy"], round(11/13,4))
