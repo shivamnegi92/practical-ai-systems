@@ -27,6 +27,14 @@ The included evaluator finds the expected chunk within top 3 for **4/4** synthet
 
 ## Known limitations
 
+A valid JSON-RPC 2.0 envelope without an `id` is a notification: the server processes a supported
+method but emits no response, including for an unknown notification method
+([JSON-RPC 2.0 §4.1](https://www.jsonrpc.org/specification#notification)).
+Missing/wrong `jsonrpc` versions and invalid methods receive invalid-request
+errors (`-32600`); they are never silently discarded as notifications.
+Explicit IDs such as `0`, `""` and `null` still receive responses. These narrow
+tests cover dispatch and the local stdio stream, not full MCP conformance.
+
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.
 - Read the source, evaluation case file, and printed method/scope before reusing.

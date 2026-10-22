@@ -93,8 +93,14 @@ function callTool(params: { name?: string; arguments?: Record<string, unknown> }
   }
 }
 
-export function dispatch(message: { method?: string; params?: Record<string, unknown>; id?: unknown }, tools: KnowledgeTools) {
-  const { method, params = {}, id } = message;
+export function dispatch(message: unknown, tools: KnowledgeTools) {
+  const invalid = {jsonrpc: "2.0", id: null, error: {code: -32600, message: "invalid request"}};
+  if (message === null || typeof message !== "object" || Array.isArray(message)) return invalid;
+  const {jsonrpc, method, params = {}, id} = message as {
+    jsonrpc?: unknown; method?: unknown; params?: Record<string, unknown>; id?: unknown;
+  };
+  if (jsonrpc !== "2.0" || typeof method !== "string" || method.length === 0) return invalid;
+  const notification = typeof method === "string" && method.length > 0 && !Object.prototype.hasOwnProperty.call(message, "id");
   let result: unknown;
   if (method === "initialize") {
     result = { protocolVersion: "2024-11-05", capabilities: { tools: {} }, serverInfo: { name: "local-knowledge-base", version: "0.1.0" } };
@@ -105,8 +111,10 @@ export function dispatch(message: { method?: string; params?: Record<string, unk
   } else if (method === "tools/call") {
     result = callTool(params as { name?: string; arguments?: Record<string, unknown> }, tools);
   } else {
+    if (notification) return {};
     return { jsonrpc: "2.0", id, error: { code: -32601, message: "method not found" } };
   }
+  if (notification) return {};
   return { jsonrpc: "2.0", id, result };
 }
 
