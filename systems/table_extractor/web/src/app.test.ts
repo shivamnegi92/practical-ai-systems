@@ -23,3 +23,10 @@ test("malformed lines are dropped before clustering", () => {
 test("evaluation matches the expected grid", () => {
   assert.equal(evaluateAll().matches_expected_grid, true);
 });
+
+test("shared layout matrix reports two failures without changing clustering", () => {
+  const result = evaluateAll();
+  assert.equal(result.documents, 10);
+  assert.equal(result.exact_grid_match, 0.8);
+  assert.deepEqual(extractTable([{text:"A",bbox:[0,0,10,2]},{text:"B",bbox:[30,0,40,2]}]), [["B"]]);
+});

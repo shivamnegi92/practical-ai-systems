@@ -31,3 +31,11 @@ class TableExtractorTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EvaluationCoverage(unittest.TestCase):
+    def test_expanded_layout_matrix(self):
+        from systems.table_extractor.evaluate import evaluate
+        result = evaluate()
+        self.assertEqual(result["documents"], 10)
+        self.assertEqual(result["exact_grid_match"], 0.8)

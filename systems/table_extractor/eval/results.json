@@ -1,11 +1,12 @@
 {
   "dataset": {
-    "cases": 2,
+    "cases": 10,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "cell_exact_match": 1.0
+    "cell_exact_match": 0.931,
+    "exact_grid_match": 0.8
   },
   "notes": "synthetic OCR line+bbox records; row/column gaps are fixed thresholds, not learned",
   "system": "table_extractor"
