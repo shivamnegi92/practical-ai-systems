@@ -1,7 +1,10 @@
 [
   {
     "caption": "A golden retriever running across a sunny beach.",
-    "required_keywords": ["retriever", "beach"],
+    "required_keywords": [
+      "retriever",
+      "beach"
+    ],
     "gold_pass": true
   },
   {
@@ -11,7 +14,9 @@
   },
   {
     "caption": "Red car.",
-    "required_keywords": ["car"],
+    "required_keywords": [
+      "car"
+    ],
     "gold_pass": false
   },
   {
@@ -23,5 +28,70 @@
     "caption": "No caption available for this slide.",
     "required_keywords": [],
     "gold_pass": false
+  },
+  {
+    "caption": "A golden retriever running across a sunny beach.",
+    "required_keywords": [],
+    "gold_pass": true
+  },
+  {
+    "caption": "image of a dog",
+    "required_keywords": [],
+    "gold_pass": false
+  },
+  {
+    "caption": "A cat.",
+    "required_keywords": [],
+    "gold_pass": false
+  },
+  {
+    "caption": "A red sports car parked outside a brick building.",
+    "required_keywords": [
+      "car"
+    ],
+    "gold_pass": true
+  },
+  {
+    "caption": "A red sports car parked outside a brick building.",
+    "required_keywords": [
+      "truck"
+    ],
+    "gold_pass": false
+  },
+  {
+    "caption": "image   of a dog",
+    "required_keywords": [],
+    "gold_pass": false
+  },
+  {
+    "caption": "picture\tof a dog",
+    "required_keywords": [],
+    "gold_pass": false
+  },
+  {
+    "caption": "A carpet covers the floor.",
+    "required_keywords": [
+      "car"
+    ],
+    "gold_pass": false
+  },
+  {
+    "caption": "A cart rests near the wall.",
+    "required_keywords": [
+      "art"
+    ],
+    "gold_pass": false
+  },
+  {
+    "caption": "A red car",
+    "required_keywords": [
+      "car"
+    ],
+    "gold_pass": true
+  },
+  {
+    "caption": "word word word word word word word word word word word word word word word word word word word word word word word word word",
+    "required_keywords": [],
+    "gold_pass": true
   }
 ]

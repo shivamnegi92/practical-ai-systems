@@ -1,4 +1,6 @@
 import unittest
+import json
+from pathlib import Path
 
 from systems.caption_qc.app import check_caption
 
@@ -26,3 +28,13 @@ class CaptionQcTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CaptionEvaluationTests(unittest.TestCase):
+    def test_gold_labels_expose_four_current_misses(self):
+        cases = json.loads((Path(__file__).parent / "eval/cases.json").read_text())
+        missed = [c["caption"] for c in cases if check_caption(c["caption"], c["required_keywords"])["passed"] != c["gold_pass"]]
+        self.assertEqual(missed, ["image   of a dog", "picture\tof a dog", "A carpet covers the floor.", "A cart rests near the wall."])
+        from systems.caption_qc.evaluate import evaluate
+        self.assertEqual(evaluate()["cases"], 16)
+        self.assertEqual(evaluate()["qc_accuracy"], 0.75)

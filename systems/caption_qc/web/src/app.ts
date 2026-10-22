@@ -25,11 +25,101 @@ export interface EvalCase {
 }
 
 export const EVAL_CASES: EvalCase[] = [
-  { caption: "A golden retriever running across a sunny beach.", required: [], passed: true },
-  { caption: "image of a dog", required: [], passed: false },
-  { caption: "A cat.", required: [], passed: false },
-  { caption: "A red sports car parked outside a brick building.", required: ["car"], passed: true },
-  { caption: "A red sports car parked outside a brick building.", required: ["truck"], passed: false },
+  {
+    "caption": "A golden retriever running across a sunny beach.",
+    "required": [
+      "retriever",
+      "beach"
+    ],
+    "passed": true
+  },
+  {
+    "caption": "image of a cat.",
+    "required": [],
+    "passed": false
+  },
+  {
+    "caption": "Red car.",
+    "required": [
+      "car"
+    ],
+    "passed": false
+  },
+  {
+    "caption": "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix",
+    "required": [],
+    "passed": false
+  },
+  {
+    "caption": "No caption available for this slide.",
+    "required": [],
+    "passed": false
+  },
+  {
+    "caption": "A golden retriever running across a sunny beach.",
+    "required": [],
+    "passed": true
+  },
+  {
+    "caption": "image of a dog",
+    "required": [],
+    "passed": false
+  },
+  {
+    "caption": "A cat.",
+    "required": [],
+    "passed": false
+  },
+  {
+    "caption": "A red sports car parked outside a brick building.",
+    "required": [
+      "car"
+    ],
+    "passed": true
+  },
+  {
+    "caption": "A red sports car parked outside a brick building.",
+    "required": [
+      "truck"
+    ],
+    "passed": false
+  },
+  {
+    "caption": "image   of a dog",
+    "required": [],
+    "passed": false
+  },
+  {
+    "caption": "picture\tof a dog",
+    "required": [],
+    "passed": false
+  },
+  {
+    "caption": "A carpet covers the floor.",
+    "required": [
+      "car"
+    ],
+    "passed": false
+  },
+  {
+    "caption": "A cart rests near the wall.",
+    "required": [
+      "art"
+    ],
+    "passed": false
+  },
+  {
+    "caption": "A red car",
+    "required": [
+      "car"
+    ],
+    "passed": true
+  },
+  {
+    "caption": "word word word word word word word word word word word word word word word word word word word word word word word word word",
+    "required": [],
+    "passed": true
+  }
 ];
 
 export function evaluateAll() {
