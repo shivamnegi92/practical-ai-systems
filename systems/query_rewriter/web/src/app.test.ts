@@ -20,3 +20,10 @@ test("evaluation shows expansion helps", () => {
   const result = evaluateAll();
   assert.ok(result.recall_at_1_expanded >= result.recall_at_1_baseline);
 });
+
+test("shared morphology cases expose dictionary misses without retuning", () => {
+  for (const query of ["pricing information", "erasing my files"]) assert.equal(expandQuery(query),query);
+  assert.ok(expandQuery("remove my files").includes("delete"));
+  assert.equal(evaluateAll().cases,10);
+  assert.ok(evaluateAll().recall_at_1_expanded < 1);
+});

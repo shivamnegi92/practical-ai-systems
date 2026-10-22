@@ -84,9 +84,46 @@ export const CORPUS: Record<string, string> = {
 
 export interface EvalQuery { text: string; gold: string }
 export const EVAL_QUERIES: EvalQuery[] = [
-  { text: "What is the price?", gold: "d1" },
-  { text: "How do I terminate my account?", gold: "d3" },
-  { text: "How can I erase my data?", gold: "d4" },
+  {
+    "text": "price information please",
+    "gold": "d1"
+  },
+  {
+    "text": "terminate account help",
+    "gold": "d3"
+  },
+  {
+    "text": "erase my files now",
+    "gold": "d4"
+  },
+  {
+    "text": "weather today",
+    "gold": "d2"
+  },
+  {
+    "text": "What is the price?",
+    "gold": "d1"
+  },
+  {
+    "text": "How do I terminate my account?",
+    "gold": "d3"
+  },
+  {
+    "text": "How can I erase my data?",
+    "gold": "d4"
+  },
+  {
+    "text": "pricing information",
+    "gold": "d1"
+  },
+  {
+    "text": "erasing my files",
+    "gold": "d4"
+  },
+  {
+    "text": "remove my files",
+    "gold": "d4"
+  }
 ];
 
 export function evaluateAll() {
