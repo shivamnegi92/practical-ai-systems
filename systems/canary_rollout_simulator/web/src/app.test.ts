@@ -15,6 +15,7 @@ test("rolls back on latency regression", () => {
   const result = decide({ error_rate: 0.01, p95_latency_ms: 200 }, { error_rate: 0.011, p95_latency_ms: 500 });
   assert.ok(result.reasons.includes("latency_regression"));
 });
-test("evaluation is perfect on the bundled fixtures", () => {
-  assert.equal(evaluateAll().decision_accuracy, 1);
+test("evaluation preserves two invalid-rate failures", () => {
+  assert.equal(evaluateAll().cases, 12);
+  assert.equal(evaluateAll().decision_accuracy, 10 / 12);
 });

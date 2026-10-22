@@ -1,17 +1,143 @@
 [
   {
-    "baseline": {"error_rate": 0.01, "p95_latency_ms": 200},
-    "canary": {"error_rate": 0.015, "p95_latency_ms": 210},
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.015,
+      "p95_latency_ms": 210
+    },
     "gold_decision": "promote"
   },
   {
-    "baseline": {"error_rate": 0.01, "p95_latency_ms": 200},
-    "canary": {"error_rate": 0.05, "p95_latency_ms": 205},
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.05,
+      "p95_latency_ms": 205
+    },
     "gold_decision": "rollback"
   },
   {
-    "baseline": {"error_rate": 0.01, "p95_latency_ms": 200},
-    "canary": {"error_rate": 0.012, "p95_latency_ms": 400},
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.012,
+      "p95_latency_ms": 400
+    },
     "gold_decision": "rollback"
+  },
+  {
+    "name": "original web promote",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.011,
+      "p95_latency_ms": 210
+    },
+    "gold_decision": "promote"
+  },
+  {
+    "name": "original web error regression",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.05,
+      "p95_latency_ms": 210
+    },
+    "gold_decision": "rollback"
+  },
+  {
+    "name": "original web latency regression",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.011,
+      "p95_latency_ms": 500
+    },
+    "gold_decision": "rollback"
+  },
+  {
+    "name": "exact error threshold",
+    "baseline": {
+      "error_rate": 0,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.02,
+      "p95_latency_ms": 200
+    },
+    "gold_decision": "promote"
+  },
+  {
+    "name": "exact latency threshold",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 240
+    },
+    "gold_decision": "promote"
+  },
+  {
+    "name": "both regressions",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.05,
+      "p95_latency_ms": 400
+    },
+    "gold_decision": "rollback"
+  },
+  {
+    "name": "improved metrics",
+    "baseline": {
+      "error_rate": 0.02,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 150
+    },
+    "gold_decision": "promote"
+  },
+  {
+    "name": "invalid negative baseline rate",
+    "baseline": {
+      "error_rate": -0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 0,
+      "p95_latency_ms": 200
+    },
+    "gold_decision": "hold"
+  },
+  {
+    "name": "invalid canary rate above one",
+    "baseline": {
+      "error_rate": 0.01,
+      "p95_latency_ms": 200
+    },
+    "canary": {
+      "error_rate": 1.1,
+      "p95_latency_ms": 200
+    },
+    "gold_decision": "hold"
   }
 ]
