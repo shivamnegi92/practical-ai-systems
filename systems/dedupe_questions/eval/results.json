@@ -1,13 +1,13 @@
 {
   "dataset": {
-    "cases": 5,
+    "cases": 13,
     "source": "synthetic fixtures committed with system"
   },
   "method": "token jaccard similarity >= 0.6",
   "metrics": {
-    "f1": 1.0,
-    "precision": 1.0,
-    "recall": 1.0
+    "f1": 0.6,
+    "precision": 0.75,
+    "recall": 0.5
   },
   "notes": "",
   "system": "dedupe_questions"

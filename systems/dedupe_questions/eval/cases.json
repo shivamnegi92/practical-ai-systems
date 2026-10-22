@@ -1,7 +1,67 @@
 [
-  {"a": "How do I reset my password?", "b": "How can I reset my password?", "duplicate": true},
-  {"a": "What is your refund policy?", "b": "What is your return policy?", "duplicate": false},
-  {"a": "Where is my order?", "b": "Track my order status", "duplicate": false},
-  {"a": "Cancel my subscription please", "b": "I want to cancel my subscription", "duplicate": true},
-  {"a": "What time do you open?", "b": "What's your return policy?", "duplicate": false}
+  {
+    "a": "How do I reset my password?",
+    "b": "How can I reset my password?",
+    "duplicate": true
+  },
+  {
+    "a": "What is your refund policy?",
+    "b": "What is your return policy?",
+    "duplicate": false
+  },
+  {
+    "a": "Where is my order?",
+    "b": "Track my order status",
+    "duplicate": false
+  },
+  {
+    "a": "Cancel my subscription please",
+    "b": "I want to cancel my subscription",
+    "duplicate": true
+  },
+  {
+    "a": "What time do you open?",
+    "b": "What's your return policy?",
+    "duplicate": false
+  },
+  {
+    "a": "Can I enable email alerts?",
+    "b": "Can I disable email alerts?",
+    "duplicate": false
+  },
+  {
+    "a": "How do I recover my account?",
+    "b": "How do I delete my account?",
+    "duplicate": false
+  },
+  {
+    "a": "How can I change my password?",
+    "b": "How can I update my password?",
+    "duplicate": true
+  },
+  {
+    "a": "I forgot my password",
+    "b": "Reset forgotten password",
+    "duplicate": true
+  },
+  {
+    "a": "Can I pay monthly?",
+    "b": "Can I pay annually?",
+    "duplicate": false
+  },
+  {
+    "a": "RESET password now!",
+    "b": "reset password now",
+    "duplicate": true
+  },
+  {
+    "a": "How do I activate notifications?",
+    "b": "How do I enable alerts?",
+    "duplicate": true
+  },
+  {
+    "a": "How do I enable email alerts?",
+    "b": "How do I not enable email alerts?",
+    "duplicate": false
+  }
 ]

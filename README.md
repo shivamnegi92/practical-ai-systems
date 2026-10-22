@@ -98,7 +98,7 @@ A compact directory of projects by level. Read a system guide for its focus and 
 | [Invoice field extraction](systems/invoice_extract/README.md) | [4](systems/invoice_extract/eval/results.json) |
 | [Repository hygiene checks](systems/repo_guard/README.md) | [4](systems/repo_guard/eval/results.json) |
 | [Extractive text summarizer](systems/text_summarizer/README.md) | [5](systems/text_summarizer/eval/results.json) |
-| [Near-duplicate question detector](systems/dedupe_questions/README.md) | [5](systems/dedupe_questions/eval/results.json) |
+| [Near-duplicate question detector](systems/dedupe_questions/README.md) | [13](systems/dedupe_questions/eval/results.json) |
 | [PII pattern redactor](systems/pii_redactor/README.md) | [5](systems/pii_redactor/eval/results.json) |
 | [Lexicon-based sentiment classifier](systems/sentiment_lexicon/README.md) | [5](systems/sentiment_lexicon/eval/results.json) |
 | [Readability grade scorer](systems/readability_scorer/README.md) | [4](systems/readability_scorer/eval/results.json) |

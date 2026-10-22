@@ -19,7 +19,13 @@ test("find duplicates returns index pairs", () => {
   assert.ok(pairs.some(([i, j]) => i === 0 && j === 1));
 });
 
-test("evaluation is perfect on the bundled fixtures", () => {
+test("evaluation reports semantic misses on the shared fixtures", () => {
   const result = evaluateAll();
-  assert.equal(result.f1, 1);
+  assert.equal(result.cases, 13);
+  assert.ok(result.f1 < 1);
+});
+
+test("negation and paraphrases remain measured failures", () => {
+  assert.ok(similarity("How do I enable email alerts?", "How do I not enable email alerts?") >= 0.6);
+  assert.ok(similarity("How do I activate notifications?", "How do I enable alerts?") < 0.6);
 });
