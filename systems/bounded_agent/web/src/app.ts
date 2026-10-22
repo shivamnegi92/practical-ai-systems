@@ -7,15 +7,20 @@ export interface Plan {
 }
 
 export class BoundedAgent {
+  private approvalRequired: Set<string>;
+
   constructor(
     private tools: Record<string, (args: Record<string, unknown>) => unknown>,
     private allowed: Set<string>,
-    private approvalRequired: Set<string> = new Set()
+    approvalRequired?: Set<string>
   ) {
-    if (approvalRequired.size === 0) this.approvalRequired = new Set(allowed);
+    this.approvalRequired = approvalRequired === undefined ? new Set(allowed) : new Set(approvalRequired);
   }
 
   plan(request: { action?: string; arguments?: unknown }): Plan {
+    if (typeof request !== "object" || request === null || Array.isArray(request)) {
+      throw new Error("request must be an object");
+    }
     const action = request.action ?? "";
     if (!this.allowed.has(action) || !(action in this.tools)) throw new Error("action is not allow-listed");
     const args = request.arguments ?? {};
