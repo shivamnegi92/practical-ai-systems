@@ -22,6 +22,12 @@ test("unknown method returns a JSON-RPC error", () => {
   const response = dispatch({ method: "bogus", id: 4 }, new KnowledgeTools());
   assert.ok("error" in response);
 });
-test("evaluation recall is perfect on the bundled fixtures", () => {
-  assert.equal(evaluateAll().recall_at_3, 1);
+test("evaluation includes lexical and reduced-corpus misses", () => {
+  assert.equal(evaluateAll().cases, 10);
+  assert.ok(evaluateAll().recall_at_3 < 1);
+});
+
+test("synonym queries have no hits without query expansion", () => {
+  const tools = new KnowledgeTools();
+  for (const query of ["forgotten credentials", "paid tier price"]) assert.deepEqual(tools.search(query).results, []);
 });

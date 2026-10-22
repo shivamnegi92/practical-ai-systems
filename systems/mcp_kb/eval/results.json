@@ -1,11 +1,11 @@
 {
   "dataset": {
-    "cases": 4,
+    "cases": 10,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
   "metrics": {
-    "recall_at_3": 1.0
+    "recall_at_3": 0.8
   },
   "notes": "synthetic local documents; illustrative MCP JSON-RPC subset",
   "system": "mcp_kb"
