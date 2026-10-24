@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json) for current precision/recall on 4 synthetic traces scored against a 10-point baseline: a normal duration, a large spike, an error-flagged fast trace, and a borderline-but-normal duration.
+See [`eval/results.json`](eval/results.json) for current precision/recall on 10 synthetic traces: the original four variable-baseline cases plus constant/zero-mean baselines, the reported 100x spike, and tolerance controls.
 
 ## Known limitations
+
+- For a nonempty baseline with zero standard deviation, a duration is anomalous only when its absolute deviation is strictly greater than 50% of the absolute mean. Equality stays normal; a zero mean flags any nonzero deviation. Empty history supplies no latency inference, but explicit error flags still apply. This deterministic fallback avoids inventing a standard deviation; `z_score` remains the existing 0 placeholder and is not evidence of normality in these cases.
 
 - A 10-point baseline is far too small to estimate a stable mean/standard deviation for any real service; this is illustrative, not production-grade statistics.
 - The z-score threshold (3.0) assumes a roughly normal distribution of durations, which real latency data rarely is (it's typically right-skewed).

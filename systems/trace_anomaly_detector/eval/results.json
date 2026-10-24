@@ -1,6 +1,6 @@
 {
   "dataset": {
-    "cases": 4,
+    "cases": 10,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",
@@ -9,6 +9,6 @@
     "precision": 1.0,
     "recall": 1.0
   },
-  "notes": "z-score heuristic against a 10-point synthetic baseline; not a trained anomaly model",
+  "notes": "synthetic variable, constant and zero-mean baselines; z-score with a strict 50% constant-baseline tolerance; not a trained anomaly model",
   "system": "trace_anomaly_detector"
 }
