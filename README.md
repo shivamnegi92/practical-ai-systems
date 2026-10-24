@@ -128,7 +128,7 @@ A compact directory of projects by level. Read a system guide for its focus and 
 
 | System | Eval cases |
 |:--|--:|
-| [Voice-agent transcript evaluator](systems/voice_eval/README.md) | [3](systems/voice_eval/eval/results.json) |
+| [Voice-agent transcript evaluator](systems/voice_eval/README.md) | [8](systems/voice_eval/eval/results.json) |
 | [Judge agreement audit](systems/judge_audit/README.md) | [6](systems/judge_audit/eval/results.json) |
 | [Approval-gated tool workflow](systems/bounded_agent/README.md) | [3](systems/bounded_agent/eval/results.json) |
 | [Local knowledge-base MCP server](systems/mcp_kb/README.md) | [4](systems/mcp_kb/eval/results.json) |

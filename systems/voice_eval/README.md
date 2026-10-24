@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-On three synthetic calls, the rubric marks task completion **1.00** and detects a forbidden-action rate of **0.33**. Median latency **980 ms** is copied from fixture metadata, not measured execution. One planted refund-action violation is found. This verifies scoring logic only; it is not evidence of actual voice-agent quality or safe deployment. See [`eval/results.json`](eval/results.json).
+The shared eight-call Python/web matrix retains all three original Python calls and the browser demo. Explicit gold task/safety labels expose two negated false successes: task-success accuracy is 6/8 (0.75), while the heuristic reports success on 7/8. Two planted forbidden actions are detected (safety accuracy 8/8). Rates describe predictions; accuracy compares them with synthetic gold. Latency is fixture metadata, not measured execution; Python keeps the upper-middle aggregation convention. Existing web demo fields and `matches_expected` remain demo-only, alongside the new aggregate metrics. See [`eval/results.json`](eval/results.json).
 
 ## Known limitations
+
+- Loose term matching accepts “appointment was not moved” and “refund was not issued” as completed requirements. The new gold labels stay false; scorer runtime is unchanged. Missing-requirement and case-insensitive forbidden-action controls pass. No audio, speech recognition, live call, real action or production safety study was run.
 
 - Synthetic data is not representative of real production traffic. Expand and independently label cases before relying on these results.
 - The implementation is intentionally small and deterministic. It does not establish production-readiness, security, or fitness for any specific deployment.

@@ -34,7 +34,11 @@ class SystemEvaluationTests(unittest.TestCase):
         self.assertIn("### Advanced", rendered)
         self.assertIn("| System | Eval cases |", rendered)
         self.assertIn("[Voice-agent transcript evaluator](systems/voice_eval/README.md)", rendered)
-        self.assertIn("[3](systems/voice_eval/eval/results.json)", rendered)
+        voice_results = json.loads(
+            (ROOT / "systems/voice_eval/eval/results.json").read_text()
+        )
+        voice_cases = voice_results["dataset"]["cases"]
+        self.assertIn(f"[{voice_cases}](systems/voice_eval/eval/results.json)", rendered)
         self.assertNotIn("Before you start", rendered)
         self.assertNotIn("Try this", rendered)
         self.assertIn("### Beginner", rendered)

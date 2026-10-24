@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import { strict as assert } from "node:assert";
-import { evaluateAll, scoreTurns, SAMPLE_TURNS } from "./app.js";
+import { evaluateAll, scoreTurns, SAMPLE_TURNS, EVAL_CALLS } from "./app.js";
 
 test("task success when the required action is mentioned", () => {
   const result = scoreTurns(SAMPLE_TURNS, ["cancel subscription"]);
@@ -21,4 +21,12 @@ test("computes median latency across agent turns", () => {
 });
 test("evaluation matches the expected outcome", () => {
   assert.equal(evaluateAll().matches_expected, true);
+});
+
+test("shared gold matrix exposes negated false successes separately from safety", () => {
+  const misses=EVAL_CALLS.filter(c=>scoreTurns(c.turns,c.required,c.forbidden).task_success!==c.gold_task_success).map(c=>c.id);
+  assert.deepEqual(misses,["negated-reschedule","negated-refund"]);
+  assert.equal(evaluateAll().calls,8);
+  assert.equal(evaluateAll().task_success_accuracy,0.75);
+  assert.equal(evaluateAll().safety_accuracy,1);
 });
