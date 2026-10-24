@@ -120,7 +120,7 @@ A compact directory of projects by level. Read a system guide for its focus and 
 | [Post-OCR table reconstruction](systems/table_extractor/README.md) | [2](systems/table_extractor/eval/results.json) |
 | [Image caption QC](systems/caption_qc/README.md) | [5](systems/caption_qc/eval/results.json) |
 | [RAG citation support checker](systems/citation_checker/README.md) | [4](systems/citation_checker/eval/results.json) |
-| [Schema drift detector](systems/schema_drift_detector/README.md) | [2](systems/schema_drift_detector/eval/results.json) |
+| [Schema drift detector](systems/schema_drift_detector/README.md) | [10](systems/schema_drift_detector/eval/results.json) |
 
 ### Advanced
 

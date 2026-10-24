@@ -1,6 +1,5 @@
 # Local/editor files
 .DS_Store
-.vscode/
 .idea/
 
 # Python
@@ -9,6 +8,7 @@ __pycache__/
 .venv/
 venv/
 
+temp_auto_push.bat
 # Node / TypeScript web apps (each systems/<name>/web/ is standalone)
 node_modules/
 dist/
@@ -19,3 +19,5 @@ dist/
 .env.*
 !.env.example
 site/
+.gitignore
+branch_structure.json

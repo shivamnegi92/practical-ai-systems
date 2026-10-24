@@ -23,3 +23,8 @@ test("no drift on clean records", () => {
 test("evaluation flags drift on the bundled fixture", () => {
   assert.equal(evaluateAll().matches_expected_drift, true);
 });
+
+test("the expanded shared matrix includes known container limitations", () => {
+  assert.equal(evaluateAll().cases,10);
+  assert.equal(evaluateAll().exact_report_match,0.8);
+});
