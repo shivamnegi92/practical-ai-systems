@@ -41,6 +41,9 @@ export interface EvalCase {
 }
 
 export const EVAL_CASES: EvalCase[] = [
+  // Correct gold labels retained for two known phone-format misses.
+  { text: "Call +44 20 7946 0958", gold_types: ["phone"] },
+  { text: "Call 5551234567", gold_types: ["phone"] },
   { text: "Contact me at jane.doe@example.com for details.", gold_types: ["email"] },
   { text: "Call us at (555) 123-4567 anytime.", gold_types: ["phone"] },
   { text: "SSN on file: 123-45-6789.", gold_types: ["ssn"] },

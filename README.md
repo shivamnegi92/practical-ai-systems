@@ -99,7 +99,7 @@ A compact directory of projects by level. Read a system guide for its focus and 
 | [Repository hygiene checks](systems/repo_guard/README.md) | [4](systems/repo_guard/eval/results.json) |
 | [Extractive text summarizer](systems/text_summarizer/README.md) | [5](systems/text_summarizer/eval/results.json) |
 | [Near-duplicate question detector](systems/dedupe_questions/README.md) | [5](systems/dedupe_questions/eval/results.json) |
-| [PII pattern redactor](systems/pii_redactor/README.md) | [5](systems/pii_redactor/eval/results.json) |
+| [PII pattern redactor](systems/pii_redactor/README.md) | [7](systems/pii_redactor/eval/results.json) |
 | [Lexicon-based sentiment classifier](systems/sentiment_lexicon/README.md) | [5](systems/sentiment_lexicon/eval/results.json) |
 | [Readability grade scorer](systems/readability_scorer/README.md) | [4](systems/readability_scorer/eval/results.json) |
 | [FAQ intent router](systems/faq_router/README.md) | [6](systems/faq_router/eval/results.json) |
