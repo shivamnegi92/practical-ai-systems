@@ -23,9 +23,11 @@ The evaluation uses the small synthetic dataset shipped in this folder. Results 
 
 ## Results snapshot
 
-See [`eval/results.json`](eval/results.json) for current decision accuracy on 3 synthetic scenarios: a within-guardrail promote, an error-rate spike, and a latency regression.
+See [`eval/results.json`](eval/results.json) for current decision accuracy on 7 synthetic scenarios: the original promote/rollback cases plus zero/missing baseline holds, zero-on-zero and known-error controls.
 
 ## Known limitations
+
+- A missing or nonpositive baseline p95 cannot define a percentage regression. The comparison returns `hold` with `missing_latency_baseline` and a null percentage, rather than promoting on a fabricated zero. A known error-rate regression still returns `rollback`. This conservative pause does not establish a valid baseline; collect representative measurements before deciding.
 
 - This is a two-sample point comparison against fixed thresholds, not a statistical test; it has no concept of sample size, variance, or confidence, and will over-react to noisy small samples.
 - Guardrail thresholds (2% error delta, 20% latency regression) are illustrative constants, not values validated against any real service.

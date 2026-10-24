@@ -1,6 +1,6 @@
 {
   "dataset": {
-    "cases": 3,
+    "cases": 7,
     "source": "synthetic fixtures committed with system"
   },
   "method": "deterministic evaluation on synthetic fixtures",

@@ -1,4 +1,4 @@
-"""Two-sample canary vs. baseline guardrail check for a promote/rollback decision.
+"""Two-sample canary guardrail check for a promote/rollback/hold decision.
 
 This is a fixed-threshold comparison, not a statistically rigorous A/B
 test: it ignores sample size, variance, and confidence intervals. Use it
@@ -18,18 +18,21 @@ def decide(
     max_latency_regression_pct: float = 0.20,
 ) -> dict:
     error_delta = canary["error_rate"] - baseline["error_rate"]
-    base_latency = baseline["p95_latency_ms"]
-    latency_regression = (canary["p95_latency_ms"] - base_latency) / base_latency if base_latency else 0.0
+    base_latency = baseline.get("p95_latency_ms")
+    latency_regression = (canary["p95_latency_ms"] - base_latency) / base_latency if base_latency is not None and base_latency > 0 else None
     reasons = []
     if error_delta > max_error_rate_delta:
         reasons.append("error_rate_regression")
-    if latency_regression > max_latency_regression_pct:
+    if latency_regression is not None and latency_regression > max_latency_regression_pct:
         reasons.append("latency_regression")
+    decision = "rollback" if reasons else "hold" if latency_regression is None else "promote"
+    if latency_regression is None:
+        reasons.append("missing_latency_baseline")
     return {
-        "decision": "rollback" if reasons else "promote",
+        "decision": decision,
         "reasons": reasons,
         "error_rate_delta": round(error_delta, 4),
-        "latency_regression_pct": round(latency_regression, 4),
+        "latency_regression_pct": round(latency_regression, 4) if latency_regression is not None else None,
     }
 
 
