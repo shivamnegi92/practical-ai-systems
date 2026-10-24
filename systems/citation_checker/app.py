@@ -1,8 +1,8 @@
 """Check whether inline [chunk_id] citations are lexically supported by the cited chunk.
 
 This flags fabricated or mismatched citations using token overlap. It
-cannot verify numeric facts or anything a cited chunk merely implies; it
-only checks whether the claim's vocabulary appears in the cited source.
+also rejects literal numeric-token mismatches. It cannot verify semantic
+entailment or facts a cited chunk merely implies.
 """
 from __future__ import annotations
 
@@ -32,6 +32,11 @@ def sentences(text: str) -> list[str]:
     return [s.strip() for s in _SENTENCE_RE.split(text.strip()) if s.strip()]
 
 CITATION = re.compile(r"\[([^\]]+)\]")
+NUMBER = re.compile(r"(?<!\w)[$€£]?[+-]?\d+(?:[.,:/-]\d+)*(?:\s*%)?")
+
+
+def number_tokens(text: str) -> set[str]:
+    return {re.sub(r'\s+', '', match.group()) for match in NUMBER.finditer(text)}
 
 
 def check_citations(answer: str, chunks: dict[str, str], min_overlap: float = 0.3) -> dict:
@@ -46,7 +51,11 @@ def check_citations(answer: str, chunks: dict[str, str], min_overlap: float = 0.
             chunk_tokens = set(tokenize(chunks[chunk_id]))
             overlap = len(claim_tokens & chunk_tokens) / len(claim_tokens) if claim_tokens else 0.0
             status = "supported" if overlap >= min_overlap else "unsupported"
-            results.append({"chunk_id": chunk_id, "sentence": sent, "overlap": round(overlap, 4), "status": status})
+            mismatch = not number_tokens(CITATION.sub('', sent)).issubset(number_tokens(chunks[chunk_id]))
+            row = {"chunk_id": chunk_id, "sentence": sent, "overlap": round(overlap, 4), "status": 'unsupported' if mismatch else status}
+            if mismatch:
+                row['reason'] = 'number_mismatch'
+            results.append(row)
     return {
         "citations": len(results),
         "results": results,
