@@ -59,6 +59,11 @@ export interface EvalCase {
 
 export const EVAL_CASES: EvalCase[] = [
   {
+    text: "Vendor: A\nInvoice: 1\nDate: 2026-01-01\nSubtotal: 1,000.00\nTax: 80.00\nTotal: 1,080.00",
+    fields: { subtotal: "1,000.00", tax: "80.00", total: "1,080.00" },
+    valid: true,
+  },
+  {
     text: "Vendor: Acme Corp\nInvoice No: INV-1001\nDate: 2026-01-15\nSubtotal: 100.00\nTax: 8.00\nTotal: 108.00\n",
     fields: { vendor: "Acme Corp", total: "108.00" },
     valid: true,

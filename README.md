@@ -95,7 +95,7 @@ A compact directory of projects by level. Read a system guide for its focus and 
 | System | Eval cases |
 |:--|--:|
 | [Document Q&A with citations](systems/doc_qa/README.md) | [22](systems/doc_qa/eval/results.json) |
-| [Invoice field extraction](systems/invoice_extract/README.md) | [4](systems/invoice_extract/eval/results.json) |
+| [Invoice field extraction](systems/invoice_extract/README.md) | [5](systems/invoice_extract/eval/results.json) |
 | [Repository hygiene checks](systems/repo_guard/README.md) | [4](systems/repo_guard/eval/results.json) |
 | [Extractive text summarizer](systems/text_summarizer/README.md) | [5](systems/text_summarizer/eval/results.json) |
 | [Near-duplicate question detector](systems/dedupe_questions/README.md) | [5](systems/dedupe_questions/eval/results.json) |
